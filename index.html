@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="BELENTANI // OMEGA CORE — JUDAS_OS v12.0. Un organismo vivo: música, arte, misión, oráculos y archivos recuperados del colapso. 432 Hz.">
+<title>BELENTANI // OMEGA CORE — JUDAS_OS v12.0</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' fill='%23ff073a' font-family='monospace'%3E%CE%A9%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#000000;
+  --bg2:#050208;
+  --red:#ff073a;
+  --red-dim:#7a0e1e;
+  --blood:#8a0303;
+  --gold:#d4af37;
+  --cyan:#4de8e0;
+  --text:#e8e2e0;
+  --muted:#7d7472;
+  --green:#39ff8a;
+  --glass:rgba(10,4,8,.55);
+  --glass2:rgba(20,6,12,.72);
+  --border:rgba(255,7,58,.28);
+  --mono:'Share Tech Mono',ui-monospace,Consolas,monospace;
+  --display:'Orbitron',var(--mono);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--mono);
+  overflow-x:hidden;
+  min-height:100vh;
+  cursor:crosshair;
+}
+::selection{background:var(--red);color:#000}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:#0a0205}
+::-webkit-scrollbar-thumb{background:var(--red-dim);border-radius:0}
+::-webkit-scrollbar-thumb:hover{background:var(--red)}
+a{color:var(--red);text-decoration:none}
+button{font-family:var(--mono);cursor:pointer}
+input,select,textarea{font-family:var(--mono)}
+
+/* ---------- LAYERS ---------- */
+#starfield{position:fixed;inset:0;z-index:0;display:block}
+#crt{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.10;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.55) 0 1px,transparent 1px 3px);
+  mix-blend-mode:multiply}
+#vignette{position:fixed;inset:0;z-index:55;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(0,0,0,.78) 100%)}
+#red-pulse{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;
+  background:radial-gradient(ellipse at 50% 120%,rgba(138,3,3,.22),transparent 60%)}
+#app{position:relative;z-index:10;max-width:1280px;margin:0 auto;padding:0 16px 120px}
+
+/* ---------- BOOT ---------- */
+#boot{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;gap:18px;transition:opacity .8s ease}
+#boot.off{opacity:0;pointer-events:none}
+#boot-lines{width:min(640px,88vw);height:38vh;overflow:hidden;font-size:13px;color:var(--red);
+  text-shadow:0 0 8px rgba(255,7,58,.7);white-space:pre-wrap;line-height:1.7}
+#enter-btn{display:none;background:transparent;border:1px solid var(--red);color:var(--red);
+  padding:16px 42px;font-size:16px;letter-spacing:.35em;text-transform:uppercase;
+  box-shadow:0 0 24px rgba(255,7,58,.35),inset 0 0 12px rgba(255,7,58,.12);
+  animation:breath 2.4s ease-in-out infinite}
+#enter-btn:hover{background:var(--red);color:#000;box-shadow:0 0 60px rgba(255,7,58,.8)}
+@keyframes breath{0%,100%{box-shadow:0 0 18px rgba(255,7,58,.3)}50%{box-shadow:0 0 42px rgba(255,7,58,.75)}}
+
+/* ---------- TOP BAR ---------- */
+#topbar{display:flex;align-items:center;gap:14px;padding:14px 4px;border-bottom:1px solid var(--border);
+  flex-wrap:wrap;backdrop-filter:blur(6px)}
+#brand{font-family:var(--display);font-weight:900;font-size:clamp(15px,3vw,22px);letter-spacing:.14em;
+  color:#fff;text-shadow:0 0 14px rgba(255,7,58,.9)}
+#brand .os{color:var(--red);font-size:.72em;letter-spacing:.28em}
+#status-chips{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.chip{font-size:10px;letter-spacing:.12em;padding:4px 8px;border:1px solid var(--border);
+  background:var(--glass);color:#a99d9a;white-space:nowrap}
+.chip b{color:var(--red);font-weight:400}
+.chip .bar{display:inline-block;width:44px;height:4px;background:#20040a;vertical-align:middle;margin-left:6px;position:relative;overflow:hidden}
+.chip .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--blood),var(--red));width:50%;transition:width .9s ease}
+
+/* ---------- HERO ---------- */
+#hero{padding:52px 0 30px;text-align:center}
+#hero h1{font-family:var(--display);font-weight:900;font-size:clamp(30px,7.5vw,84px);letter-spacing:.12em;
+  color:#fff;line-height:1.05;text-shadow:0 0 30px rgba(255,7,58,.55)}
+#hero h1 .omega{color:var(--red);text-shadow:0 0 40px rgba(255,7,58,.95)}
+#hero .sub{margin-top:14px;color:#b3a8a5;letter-spacing:.3em;font-size:clamp(9px,1.6vw,13px);text-transform:uppercase;text-shadow:0 0 10px rgba(255,7,58,.35)}
+#hero .tag{margin-top:22px;color:var(--text);opacity:.85;font-size:clamp(12px,1.8vw,15px);max-width:640px;margin-left:auto;margin-right:auto;line-height:1.8}
+.neon-line{height:1px;margin:26px auto 0;width:min(560px,80%);
+  background:linear-gradient(90deg,transparent,var(--red),transparent);box-shadow:0 0 18px var(--red)}
+
+/* ---------- GEMS ---------- */
+#gems{display:flex;justify-content:center;gap:clamp(10px,3vw,34px);flex-wrap:wrap;padding:34px 0 10px}
+.gem{position:relative;width:clamp(84px,14vw,132px);text-align:center;background:none;border:none;color:var(--muted)}
+.gem .shape{width:clamp(52px,9vw,84px);height:clamp(52px,9vw,84px);margin:0 auto 10px;position:relative;
+  display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:clamp(16px,3vw,26px);
+  border:1px solid var(--border);background:linear-gradient(160deg,rgba(255,7,58,.12),rgba(0,0,0,.7));
+  clip-path:polygon(50% 0,100% 28%,100% 72%,50% 100%,0 72%,0 28%);
+  transition:all .35s ease;color:var(--red)}
+.gem:hover .shape,.gem:focus .shape{transform:translateY(-4px) scale(1.06);border-color:var(--red);
+  box-shadow:0 0 30px rgba(255,7,58,.55);color:#fff;text-shadow:0 0 12px var(--red)}
+.gem .g-name{font-size:10px;letter-spacing:.22em;text-transform:uppercase}
+.gem .g-title{font-size:9px;color:#c25a68;letter-spacing:.14em;margin-top:2px}
+.gem.lit .shape{border-color:var(--red);color:#fff;box-shadow:0 0 34px rgba(255,7,58,.8),inset 0 0 18px rgba(255,7,58,.35);
+  animation:gemPulse 2.8s ease-in-out infinite}
+.gem.lit .g-title{color:var(--red)}
+@keyframes gemPulse{0%,100%{box-shadow:0 0 20px rgba(255,7,58,.55),inset 0 0 10px rgba(255,7,58,.25)}
+  50%{box-shadow:0 0 46px rgba(255,7,58,.95),inset 0 0 22px rgba(255,7,58,.45)}}
+#gem-progress{text-align:center;font-size:10px;letter-spacing:.3em;color:var(--red-dim);padding-bottom:8px}
+
+/* ---------- SECTIONS ---------- */
+section{margin-top:44px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-left:3px solid var(--red);padding-left:12px;margin-bottom:18px}
+.sec-head h2{font-family:var(--display);font-size:clamp(15px,2.6vw,22px);letter-spacing:.24em;color:#fff;text-transform:uppercase}
+.sec-head .hint{color:#b0707c;font-size:11px;letter-spacing:.1em}
+
+/* ---------- GRID ---------- */
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.node{position:relative;border:1px solid var(--border);background:var(--glass);backdrop-filter:blur(10px);
+  padding:18px 16px 14px;min-height:150px;text-align:left;color:var(--text);overflow:hidden;
+  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.node:hover,.node:focus{transform:translateY(-3px);border-color:var(--red);
+  box-shadow:0 0 28px rgba(255,7,58,.35),inset 0 0 24px rgba(255,7,58,.06)}
+.node .n-cmd{font-size:11px;color:var(--red);letter-spacing:.18em}
+.node .n-name{font-family:var(--display);font-size:17px;letter-spacing:.1em;color:#fff;margin:6px 0 8px}
+.node .n-desc{font-size:11px;color:var(--muted);line-height:1.6}
+.node .n-tag{position:absolute;top:10px;right:10px;font-size:9px;color:#b0707c;letter-spacing:.2em;border:1px solid rgba(255,7,58,.18);padding:2px 6px}
+.node .n-foot{margin-top:12px;font-size:10px;color:#b0707c;letter-spacing:.14em}
+.node:hover .n-foot{color:var(--red)}
+.node::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--red);transition:width .35s ease}
+.node:hover::after{width:100%}
+.node.zion-node{border-color:var(--gold);display:none}
+.node.zion-node .n-cmd,.node.zion-node .n-name{color:var(--gold);text-shadow:0 0 14px rgba(212,175,55,.6)}
+
+/* ---------- TERMINAL ---------- */
+#terminal-panel{border:1px solid var(--border);background:rgba(3,1,4,.82);backdrop-filter:blur(12px);
+  box-shadow:0 0 40px rgba(255,7,58,.12)}
+#term-head{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border);font-size:10px;letter-spacing:.24em;color:var(--red)}
+#term-head .dots{display:flex;gap:5px}
+#term-head .dots i{width:8px;height:8px;border-radius:50%;background:var(--red-dim);display:block}
+#term-head .dots i:first-child{background:var(--red);box-shadow:0 0 8px var(--red)}
+#syslog{height:180px;overflow-y:auto;padding:12px 14px;font-size:11.5px;line-height:1.85;color:#b8aca9}
+#syslog .ln{white-space:pre-wrap;word-break:break-word}
+#syslog .t{color:#5a4f4c;margin-right:8px}
+#syslog .sys{color:var(--red)}
+#syslog .ok{color:var(--green)}
+#syslog .warn{color:var(--gold)}
+#syslog .user{color:var(--cyan)}
+#syslog .whisper{color:#6f5f6d;font-style:italic}
+#term-input-row{display:flex;align-items:center;gap:8px;border-top:1px solid var(--border);padding:10px 12px}
+#term-input-row .prompt{color:var(--red);font-size:14px;text-shadow:0 0 10px rgba(255,7,58,.8)}
+#term-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:14px;letter-spacing:.08em;caret-color:var(--red)}
+#quick-cmds{display:flex;gap:6px;flex-wrap:wrap;padding:10px 12px;border-top:1px solid rgba(255,7,58,.14)}
+.qc{background:transparent;border:1px solid rgba(255,7,58,.22);color:#a99d9a;font-size:10px;letter-spacing:.14em;padding:5px 9px;transition:all .2s}
+.qc:hover{border-color:var(--red);color:var(--red);box-shadow:0 0 12px rgba(255,7,58,.3)}
+
+/* ---------- MODAL ---------- */
+#modal-back{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.78);backdrop-filter:blur(6px);
+  display:none;align-items:flex-start;justify-content:center;padding:4vh 14px;overflow-y:auto}
+#modal-back.open{display:flex}
+#modal{width:min(860px,96vw);border:1px solid var(--red);background:linear-gradient(175deg,rgba(14,3,7,.97),rgba(0,0,0,.97));
+  box-shadow:0 0 70px rgba(255,7,58,.35);position:relative;min-height:300px;margin-bottom:6vh}
+#modal-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
+#modal-title{font-family:var(--display);letter-spacing:.18em;color:#fff;font-size:clamp(14px,2.4vw,19px)}
+#modal-sub{font-size:10px;color:var(--red);letter-spacing:.22em;margin-top:3px}
+#modal-close{background:transparent;border:1px solid var(--border);color:var(--red);width:34px;height:34px;font-size:15px;transition:all .2s}
+#modal-close:hover{background:var(--red);color:#000;box-shadow:0 0 20px var(--red)}
+#modal-body{padding:20px 18px 26px;font-size:13px;line-height:1.8}
+#modal-body h3{font-family:var(--display);letter-spacing:.14em;color:var(--red);font-size:13px;margin:20px 0 8px;text-transform:uppercase}
+#modal-body p{color:#cfc6c3;margin-bottom:10px}
+#modal-body .story{color:#9d8f8c;font-style:italic;border-left:2px solid var(--red-dim);padding-left:12px;margin:14px 0}
+.big-btn{display:inline-block;border:1px solid var(--red);color:var(--red);background:rgba(255,7,58,.06);
+  padding:12px 26px;letter-spacing:.22em;font-size:12px;text-transform:uppercase;margin-top:12px;transition:all .25s}
+.big-btn:hover{background:var(--red);color:#000;box-shadow:0 0 30px rgba(255,7,58,.6)}
+.field{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--border);color:var(--text);padding:10px 12px;font-size:13px;outline:none;margin:6px 0 12px}
+.field:focus{border-color:var(--red);box-shadow:0 0 14px rgba(255,7,58,.25)}
+label.lbl{display:block;font-size:10px;letter-spacing:.22em;color:var(--red);text-transform:uppercase;margin-top:10px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{border:1px solid var(--border);background:transparent;color:var(--muted);padding:7px 12px;font-size:11px;letter-spacing:.1em;transition:all .2s}
+.pill:hover,.pill.sel{border-color:var(--red);color:var(--red)}
+.result-box{border:1px solid var(--border);background:rgba(255,7,58,.04);padding:14px;margin-top:14px;font-size:12.5px;line-height:1.9;white-space:pre-wrap}
+.stat{display:inline-block;margin-right:18px;font-size:11px;color:var(--muted)}
+.stat b{color:var(--red);font-weight:400}
+
+/* record grid */
+.records{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px}
+.record{aspect-ratio:1/1;border:1px solid var(--border);position:relative;overflow:hidden;cursor:pointer;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:8px;transition:all .3s}
+.record:hover{border-color:var(--red);box-shadow:0 0 22px rgba(255,7,58,.4);transform:scale(1.03)}
+.record .rid{font-family:var(--display);font-size:11px;letter-spacing:.14em;color:#fff;text-shadow:0 0 8px #000}
+.record .rt{font-size:8.5px;color:rgba(255,255,255,.75);letter-spacing:.08em;margin-top:2px;text-shadow:0 0 6px #000}
+
+/* tarot */
+.tarot-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:18px 0}
+.tcard{width:120px;height:196px;perspective:900px;cursor:pointer}
+.tcard .inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.4,.2,.2,1)}
+.tcard.flipped .inner{transform:rotateY(180deg)}
+.tcard .face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--red);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:10px;text-align:center}
+.tcard .back{background:
+  radial-gradient(circle at 50% 50%,rgba(255,7,58,.22),transparent 60%),
+  repeating-linear-gradient(45deg,rgba(255,7,58,.12) 0 6px,transparent 6px 12px),#0a0205;
+  font-size:34px;color:var(--red);text-shadow:0 0 16px var(--red)}
+.tcard .front{background:linear-gradient(170deg,#12060a,#000);transform:rotateY(180deg)}
+.tcard .front .sym{font-size:30px;color:var(--red);text-shadow:0 0 14px rgba(255,7,58,.8)}
+.tcard .front .nm{font-family:var(--display);font-size:9.5px;letter-spacing:.12em;color:#fff}
+.tcard .front .pos{font-size:8px;color:var(--red-dim);letter-spacing:.2em}
+
+/* forge */
+#forge-grid{display:grid;grid-template-columns:repeat(16,1fr);gap:4px;margin:12px 0}
+#forge-grid .cell{aspect-ratio:1/1;border:1px solid rgba(255,7,58,.18);background:rgba(0,0,0,.5);cursor:pointer;transition:background .12s}
+#forge-grid .cell.on{background:var(--red);box-shadow:0 0 10px rgba(255,7,58,.8)}
+#forge-grid .cell.playhead{border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,.5)}
+.forge-row-label{font-size:9px;color:var(--red-dim);letter-spacing:.2em;margin-top:8px}
+
+/* detect */
+.verdict{font-family:var(--display);font-size:clamp(18px,4vw,30px);letter-spacing:.2em;text-align:center;padding:18px 0}
+.verdict.high{color:var(--red);text-shadow:0 0 24px var(--red);animation:breath 1.6s infinite}
+.verdict.mid{color:var(--gold)}
+.verdict.low{color:var(--green)}
+.sig{font-size:11.5px;border-left:2px solid var(--red);padding:6px 10px;margin:8px 0;background:rgba(255,7,58,.05);color:#d8cfcc}
+.sig b{color:var(--red);font-weight:400}
+
+/* footer */
+footer{margin-top:60px;border-top:1px solid var(--border);padding:26px 4px;text-align:center;font-size:10px;color:var(--muted);letter-spacing:.18em;line-height:2.2}
+footer .sig-line{color:var(--red-dim)}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);z-index:300;
+  border:1px solid var(--red);background:rgba(10,2,5,.92);color:var(--red);padding:12px 22px;font-size:12px;
+  letter-spacing:.16em;opacity:0;transition:all .5s ease;pointer-events:none;text-align:center;max-width:90vw}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* zion mode */
+body.zion{--red:#d4af37;--red-dim:#8a6d1f;--blood:#6b5316;--border:rgba(212,175,55,.35)}
+body.zion #starfield{filter:hue-rotate(190deg) brightness(1.1)}
+
+/* mouse pulse */
+#mouse-pulse{position:fixed;width:26px;height:26px;border:1px solid var(--red);border-radius:50%;
+  z-index:50;pointer-events:none;opacity:0;transform:translate(-50%,-50%)}
+#mouse-pulse.ping{animation:ping .7s ease-out}
+@keyframes ping{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(2.4)}}
+
+@media (max-width:640px){
+  #syslog{height:150px;font-size:10.5px}
+  #grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+  .node{min-height:128px;padding:14px 12px}
+  #status-chips{margin-left:0;width:100%}
+}
+
+</style>
+</head>
+<body>
+<canvas id="starfield"></canvas>
+<div id="red-pulse"></div>
+<div id="mouse-pulse"></div>
+
+<!-- BOOT -->
+<div id="boot">
+  <div id="boot-lines"></div>
+  <button id="enter-btn">⟡ INICIAR SESIÓN NEURAL ⟡</button>
+</div>
+
+<div id="vignette"></div>
+<div id="crt"></div>
+
+<div id="app">
+  <!-- TOPBAR -->
+  <header id="topbar">
+    <div id="brand">BELENTANI <span class="os">// OMEGA CORE · JUDAS_OS v12.0</span></div>
+    <div id="status-chips">
+      <span class="chip">CPU <b id="st-cpu">--%</b><span class="bar"><i id="st-cpu-bar"></i></span></span>
+      <span class="chip">NODE <b id="st-node">SYNCING</b></span>
+      <span class="chip">FREQ <b id="st-freq">432.00 Hz</b></span>
+      <span class="chip">LAT/LON <b id="st-geo">41.39N 2.17E</b></span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero">
+    <h1>OMEGA <span class="omega">CORE</span></h1>
+    <div class="sub">SISTEMA VIVO · ARCHIVO RECUPERADO DEL COLAPSO · 432 Hz</div>
+    <p class="tag">Esto no es una web. Es un organismo. Cada módulo es un nodo con memoria, misión y secretos.
+    Escribe un comando o toca un nodo. El sistema responde.</p>
+    <div class="neon-line"></div>
+  </section>
+
+  <!-- GEMS -->
+  <section id="gem-section">
+    <div id="gems">
+      <button class="gem" data-gem="pedro"><span class="shape">▲</span><span class="g-name">PEDRO</span><span class="g-title">LA ROCA</span></button>
+      <button class="gem" data-gem="marcos"><span class="shape">◆</span><span class="g-name">MARCOS</span><span class="g-title">EL CRONISTA</span></button>
+      <button class="gem" data-gem="santos"><span class="shape">◎</span><span class="g-name">SANTOS</span><span class="g-title">LA ANTENA</span></button>
+      <button class="gem" data-gem="belentani"><span class="shape">Ω</span><span class="g-name">BELENTANI</span><span class="g-title">EL ARTEFACTO</span></button>
+      <button class="gem" data-gem="human"><span class="shape">✦</span><span class="g-name">THE HUMAN</span><span class="g-title">LA INTERFAZ</span></button>
+    </div>
+    <div id="gem-progress">GEMAS ACTIVAS: 0 / 5 — ESCANEA EL SISTEMA PARA DESCUBRIRLAS</div>
+  </section>
+
+  <!-- MODULE GRID -->
+  <section id="modules">
+    <div class="sec-head"><h2>Nodos del Organismo</h2><span class="hint">click o comando &gt; en terminal</span></div>
+    <div id="grid"></div>
+  </section>
+
+  <!-- TERMINAL -->
+  <section id="terminal">
+    <div class="sec-head"><h2>Terminal JUDAS_OS</h2><span class="hint">el sistema escucha</span></div>
+    <div id="terminal-panel">
+      <div id="term-head"><span class="dots"><i></i><i></i><i></i></span> JUDAS_OS://terminal — enlace estable</div>
+      <div id="syslog"></div>
+      <div id="quick-cmds"></div>
+      <div id="term-input-row">
+        <span class="prompt">❯</span>
+        <input id="term-input" type="text" autocomplete="off" spellcheck="false" placeholder="escribe un comando… (HELP para lista)" aria-label="terminal de comandos">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>BELENTANI // OMEGA CORE · JUDAS_OS v12.0 · construido tras el colapso</div>
+    <div class="sig-line">LA HERIDA SE CONVIERTE EN ARQUITECTURA VIVA — 432 Hz — LA TRAICIÓN COMO ACTO DE AMOR SUPREMO</div>
+    <div>PEDRO · LA ROCA — MARCOS · EL CRONISTA — SANTOS · LA ANTENA — BELENTANI · EL ARTEFACTO — THE HUMAN · LA INTERFAZ</div>
+  </footer>
+</div>
+
+<!-- MODAL -->
+<div id="modal-back" role="dialog" aria-modal="true">
+  <div id="modal">
+    <div id="modal-head">
+      <div>
+        <div id="modal-title">MÓDULO</div>
+        <div id="modal-sub">NODE // UPLINK: STABLE</div>
+      </div>
+      <button id="modal-close" aria-label="cerrar">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.min.js" defer></script>
+<script>
+
+/* ============================================================
+   BELENTANI // OMEGA CORE — JUDAS_OS v12.0
+   Un organismo vivo. No es una web. Es un sistema que respira.
+   ============================================================ */
+"use strict";
+
+/* ---------- UTILITIES ---------- */
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const rnd = (a, b) => a + Math.random() * (b - a);
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+const LS_KEY = "omega_co…e_v1";
+const state = Object.assign({
+  visits: 0, name: null, gems: [], secrets: [], visited: [], zion: false, firstBoot: true
+}, (function () { try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; } catch (e) { return {}; } })());
+function saveState() { try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {} }
+function addSecret(id, msg) {
+  if (state.secrets.indexOf(id) !== -1) return false;
+  state.secrets.push(id); saveState();
+  if (msg) toast("⌁ SECRETO DESBLOQUEADO: " + msg);
+  return true;
+}
+function lightGem(id) {
+  if (state.gems.indexOf(id) === -1) {
+    state.gems.push(id); saveState();
+    const g = $('.gem[data-gem="' + id + '"]');
+    if (g) {
+      g.classList.add("lit");
+      if (window.gsap) gsap.fromTo(g, { scale: .6, opacity: 0 }, { scale: 1, opacity: 1, duration: .9, ease: "elastic.out(1,.4)" });
+    }
+    toast("✦ GEMA ACTIVADA: " + gemName(id));
+    log("GEMA ARQUETÍPICA ENCENDIDA → " + gemName(id), "warn");
+    updateGemProgress();
+    if (state.gems.length === 5) { addSecret("pentada", "LAS CINCO GEMAS CONVERGEN"); whisperSoon("LA PENTADA ESTÁ COMPLETA. EL ARTEFACTO RESPIRA."); }
+  }
+}
+function gemName(id) {
+  return ({ pedro: "PEDRO · LA ROCA", marcos: "MARCOS · EL CRONISTA", santos: "SANTOS · LA ANTENA", belentani: "BELENTANI · EL ARTEFACTO", human: "THE HUMAN · LA INTERFAZ" })[id] || id;
+}
+function updateGemProgress() {
+  const el = $("#gem-progress");
+  if (!el) return;
+  el.textContent = state.gems.length >= 5
+    ? "PENTADA COMPLETA — EL ORGANISMO TE RECONOCE"
+    : "GEMAS ACTIVAS: " + state.gems.length + " / 5 — ESCANEA EL SISTEMA PARA DESCUBRIRLAS";
+}
+let toastTimer = null;
+function toast(msg) {
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 3600);
+}
+
+/* ---------- SYSTEM LOG ---------- */
+const syslog = $("#syslog");
+function stamp() { const d = new Date(); return d.toTimeString().slice(0, 8); }
+function log(msg, cls) {
+  if (!syslog) return;
+  const ln = document.createElement("div");
+  ln.className = "ln " + (cls || "");
+  ln.innerHTML = '<span class="t">[' + stamp() + ']</span>' + msg;
+  syslog.appendChild(ln);
+  while (syslog.children.length > 90) syslog.removeChild(syslog.firstChild);
+  syslog.scrollTop = syslog.scrollHeight;
+}
+const NODE_NAMES = ["JUDAS-CORE-07", "OMEGA-ARCHIVE-12", "MANOS-LINK-01", "CHARCO-GATE-04", "TENDER-NODE-09", "IVY-LENS-02", "CARQUIDEC-GRID", "CV-FORGE-03", "DUCK-NEST-99", "ZION-SPIRE-00"];
+function ambientLog() {
+  const msgs = [
+    () => "NODE: " + pick(NODE_NAMES) + " // THREAT: LEVEL " + Math.ceil(rnd(1, 4)) + " // UPLINK: STABLE",
+    () => "ARCHIVE RECOVERED FROM THE COLLAPSE — FRAGMENTO " + String(Math.floor(rnd(100, 999))),
+    () => "LATENCIA DE ENLACE: " + rnd(9, 42).toFixed(1) + "ms — SIN DEGRADACIÓN",
+    () => "PORTADORA 432." + String(Math.floor(rnd(0, 99))).padStart(2, "0") + " Hz — RESONANCIA NOMINAL",
+    () => "SCAN PASIVO DEL VISITANTE… PATRÓN NEURAL: " + (Math.random() < .3 ? "RECONOCIDO" : "EN OBSERVACIÓN"),
+    () => "MEMORIA DE LA ROCA: ÍNTEGRA. MEMORIA DEL CRONISTA: ESCRIBIENDO.",
+    () => "LA ANTENA CAPTA SEÑAL DESDE SECTOR " + Math.ceil(rnd(1, 9)) + " — ORIGEN NO HUMANO",
+    () => "checksum del artefacto: 0x" + Math.floor(rnd(0x1000, 0xFFFF)).toString(16).toUpperCase() + " — VÁLIDO",
+    () => "THE WOUND BECOMES LIVING ARCHITECTURE",
+    () => "reescritura de destino en cola: 0 traiciones pendientes"
+  ];
+  log(pick(msgs)(), "sys");
+}
+function whisperSoon(msg) { setTimeout(() => log(msg, "whisper"), rnd(1200, 3200)); }
+
+/* ---------- AUDIO ENGINE (432 Hz) ---------- */
+let audioCtx = null, droneGain = null, droneOn = false;
+function ensureAudio() {
+  if (audioCtx) return true;
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  } catch (e) { return false; }
+  return true;
+}
+function tone(freq, dur, type, vol, when) {
+  if (!audioCtx) return;
+  const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+  o.type = type || "sine"; o.frequency.value = freq;
+  const t0 = audioCtx.currentTime + (when || 0);
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(vol || .06, t0 + .02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start(t0); o.stop(t0 + dur + .05);
+}
+const F432 = 432; // A4 = 432 Hz — afinación del organismo
+function f(semis, base) { return (base || F432) * Math.pow(2, semis / 12); }
+function uiPing() { tone(F432 * 2, .18, "sine", .045); tone(F432 * 3, .12, "sine", .02, .04); }
+function uiDeep() { tone(F432 / 2, .5, "sine", .05); tone(F432, .4, "triangle", .03, .08); }
+function toggleDrone() {
+  if (!ensureAudio()) return toast("AUDIO NO DISPONIBLE EN ESTE NODO");
+  if (droneOn) {
+    if (droneGain) droneGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, .4);
+    droneOn = false; toast("DRONE 432 Hz — SILENCIADO"); return;
+  }
+  droneGain = audioCtx.createGain(); droneGain.gain.value = 0.0001;
+  droneGain.connect(audioCtx.destination);
+  [F432 / 4, F432 / 2, F432 * 1.5].forEach((fr, i) => {
+    const o = audioCtx.createOscillator();
+    o.type = i === 2 ? "triangle" : "sine"; o.frequency.value = fr;
+    const g = audioCtx.createGain(); g.gain.value = i === 0 ? .5 : i === 1 ? .34 : .07;
+    const lfo = audioCtx.createOscillator(), lg = audioCtx.createGain();
+    lfo.frequency.value = rnd(.05, .13); lg.gain.value = .22;
+    lfo.connect(lg); lg.connect(g.gain);
+    o.connect(g); g.connect(droneGain); o.start(); lfo.start();
+  });
+  droneGain.gain.setTargetAtTime(.05, audioCtx.currentTime, 1.2);
+  droneOn = true; toast("DRONE 432 Hz ACTIVO — EL ORGANISMO RESPIRA");
+  log("CAMPO DE FONDO 432 Hz ESTABLECIDO — RESONANCIA SCHUMANN COMPENSADA", "ok");
+}
+
+/* ---------- STARFIELD ---------- */
+let mouseNX = 0, mouseNY = 0;
+function initStarfield() {
+  const canvas = $("#starfield");
+  if (window.THREE) {
+    try {
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x000000, 0.0011);
+      const camera = new THREE.PerspectiveCamera(62, window.innerWidth / window.innerHeight, 1, 2400);
+      camera.position.z = 420;
+      const N = 1700, pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
+      for (let i = 0; i < N; i++) {
+        pos[i * 3] = rnd(-900, 900); pos[i * 3 + 1] = rnd(-600, 600); pos[i * 3 + 2] = rnd(-700, 500);
+        const reddish = Math.random() < .22, bright = rnd(.25, 1);
+        col[i * 3] = bright; col[i * 3 + 1] = reddish ? bright * .16 : bright * .82; col[i * 3 + 2] = reddish ? bright * .22 : bright * .9;
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+      const mat = new THREE.PointsMaterial({ size: 1.9, vertexColors: true, transparent: true, opacity: .9, sizeAttenuation: true });
+      const stars = new THREE.Points(geo, mat); scene.add(stars);
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+      (function anim(t) {
+        requestAnimationFrame(anim);
+        stars.rotation.y = t * 0.000028; stars.rotation.x = Math.sin(t * 0.00005) * 0.05;
+        camera.position.x += ((mouseNX * 60) - camera.position.x) * 0.02;
+        camera.position.y += ((-mouseNY * 40) - camera.position.y) * 0.02;
+        camera.lookAt(0, 0, 0);
+        renderer.render(scene, camera);
+      })(0);
+      return;
+    } catch (e) { /* fallback below */ }
+  }
+  // Canvas2D fallback
+  const ctx = canvas.getContext("2d");
+  let W, H, stars2 = [];
+  function sizeCv() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  sizeCv(); window.addEventListener("resize", sizeCv);
+  for (let i = 0; i < 380; i++) stars2.push({ x: Math.random() * 2000, y: Math.random() * 1400, z: rnd(.2, 1), r: rnd(.3, 1.4) });
+  (function anim2() {
+    requestAnimationFrame(anim2);
+    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
+    for (const s of stars2) {
+      s.x -= s.z * .12; if (s.x < 0) s.x = W;
+      const fl = .5 + .5 * Math.sin(Date.now() * .001 * s.z + s.x);
+      ctx.fillStyle = "rgba(255," + Math.floor(60 + 120 * s.z) + ",80," + (0.25 + fl * .55 * s.z) + ")";
+      ctx.fillRect(s.x % W, s.y % H, s.r * s.z, s.r * s.z);
+    }
+  })();
+}
+
+/* ---------- MODULE REGISTRY ---------- */
+const MODULES = [
+  { cmd: "JUDAS", name: "JUDAS", tag: "MÚSICA", desc: "La paradoja. Demo sonora 432 Hz, letra viva y dirección creativa. Sin traición no hay redención.", url: "https://belentani7.github.io/judas-experience/", interactive: true },
+  { cmd: "OMEGA", name: "OMEGA", tag: "ARCHIVO", desc: "Archivo visual RECORD_01 → RECORD_12. Fragmentos recuperados del colapso.", url: "http://belentani.es/", interactive: true },
+  { cmd: "MANOS", name: "MANOS ABIERTAS", tag: "MISIÓN", desc: "Educación gratuita para comunidades migrantes y diversas. La herida convertida en puerta.", url: "https://belentani7.github.io/ManosAbiertas/" },
+  { cmd: "CRUZAR", name: "CRUZANDO EL CHARCO", tag: "COMUNIDAD", desc: "Portal LGBT+ migrantes. Nadie cruza solo.", url: "https://belentani7.github.io/Cruzando-el-charco/" },
+  { cmd: "TENDER", name: "TENDER WORDS", tag: "PSICOLOGÍA", desc: "Mapa TLP y vínculos. Palabras que sostienen cuando el suelo tiembla.", url: "https://belentani7.github.io/tender-words-connect/" },
+  { cmd: "IVY", name: "IVY LA VIE", tag: "ARTE VISUAL", desc: "Photoshoot queer. El cuerpo como manifiesto.", url: "https://belentani7.github.io/ivy-la-vie/" },
+  { cmd: "CARQUIDEC", name: "CARQUIDEC", tag: "ARQUITECTURA", desc: "Arquitectura paramétrica. Estructuras que recuerdan.", url: "https://belentani7.github.io/CARQUIDEC/" },
+  { cmd: "CV", name: "CV·AI STUDIO", tag: "HERRAMIENTA", desc: "Document Studio profesional. El artefacto al servicio del humano.", url: "https://belentani7.github.io/Belentani.cv-ai/" },
+  { cmd: "DUCK", name: "DUCK ECOSYSTEM", tag: "ESTUDIO", desc: "Suite creativa de producción. Funky, retro, vivo.", url: "https://belentani7.github.io/duck-2026/" },
+  { cmd: "SCAN", name: "ARQUETIPO·SCAN", tag: "ORÁCULO", desc: "Escaneo psíquico. El sistema identifica tu gema dominante.", interactive: true },
+  { cmd: "TAROT", name: "TAROT OMEGA", tag: "ORÁCULO", desc: "Tres cartas: origen, herida, camino. El azar no existe aquí.", interactive: true },
+  { cmd: "DREAM", name: "DECODIFICADOR DE SUEÑOS", tag: "ORÁCULO", desc: "Entrega tu sueño. El artefacto devuelve el símbolo.", interactive: true },
+  { cmd: "FORGE", name: "FORJA DE BEATS", tag: "HERRAMIENTA", desc: "Célula rítmica 432 Hz. Golpea el silencio.", interactive: true },
+  { cmd: "DETECT", name: "DETECTOR DARVO", tag: "HERRAMIENTA", desc: "Análisis de manipulación en el lenguaje. Nombrar para desarmar.", interactive: true },
+  { cmd: "WRITE", name: "ESCRITOR DE SOMBRAS", tag: "HERRAMIENTA", desc: "Generador de letra dark pop. La máquina canta contigo.", interactive: true },
+  { cmd: "ZION", name: "ZION DIMENSION", tag: "OCULTO", desc: "Solo los que conocen el código antiguo entran aquí.", url: "https://belentani7.github.io/DUCK-ZION-PREMIUM/", hidden: true }
+];
+const byCmd = {};
+MODULES.forEach(m => byCmd[m.cmd] = m);
+
+/* ---------- GRID ---------- */
+function renderGrid() {
+  const grid = $("#grid"); grid.innerHTML = "";
+  MODULES.forEach(m => {
+    if (m.hidden && !state.zion) return;
+    const b = document.createElement("button");
+    b.className = "node" + (m.cmd === "ZION" ? " zion-node" : "");
+    b.dataset.cmd = m.cmd;
+    b.innerHTML =
+      '<span class="n-tag">' + m.tag + '</span>' +
+      '<div class="n-cmd">&gt; ' + m.cmd + '</div>' +
+      '<div class="n-name">' + m.name + '</div>' +
+      '<div class="n-desc">' + m.desc + '</div>' +
+      '<div class="n-foot">' + (m.interactive ? "◈ EJECUTAR EN TERMINAL" : "↗ ABRIR UPLINK") + '</div>';
+    b.addEventListener("click", () => { uiPing(); openModule(m.cmd); });
+    grid.appendChild(b);
+  });
+}
+
+/* ---------- MODAL ---------- */
+const modalBack = $("#modal-back");
+function openModal(title, sub, html) {
+  $("#modal-title").textContent = title;
+  $("#modal-sub").textContent = sub;
+  $("#modal-body").innerHTML = html;
+  modalBack.classList.add("open");
+  if (window.gsap) gsap.fromTo("#modal", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: .45, ease: "power3.out" });
+}
+function closeModal() { modalBack.classList.remove("open"); stopJudas(); }
+$("#modal-close").addEventListener("click", closeModal);
+modalBack.addEventListener("click", e => { if (e.target === modalBack) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && modalBack.classList.contains("open")) closeModal(); });
+
+function openModule(cmd) {
+  const m = byCmd[cmd]; if (!m) return;
+  if (state.visited.indexOf(cmd) === -1) { state.visited.push(cmd); saveState(); }
+  log("ACCESO A NODO " + cmd + " // AUTORIZACIÓN: CONCEDIDA", "ok");
+  switch (cmd) {
+    case "JUDAS": return renderJudas();
+    case "OMEGA": return renderOmega();
+    case "SCAN": return renderScan();
+    case "TAROT": return renderTarot();
+    case "DREAM": return renderDream();
+    case "FORGE": return renderForge();
+    case "DETECT": return renderDetect();
+    case "WRITE": return renderWrite();
+    default: return renderLinkModule(m);
+  }
+}
+
+function renderLinkModule(m) {
+  const stories = {
+    MANOS: "Cuando Pedro cruzó, nadie le abrió la puerta. Prometió que otros no repetirían el vacío. MANOS ABIERTAS es esa promesa convertida en plataforma: educación gratuita, trilingüe, sin gatekeepers.",
+    CRUZAR: "El charco no es solo agua: es idioma, papeles, miedo y deseo. CRUZANDO EL CHARCO es el mapa que los migrantes LGBT+ no tuvieron. Nadie cruza solo.",
+    TENDER: "El TLP no es un diagnóstico: es una tormenta con nombre. TENDER WORDS mapea los vínculos y entrega palabras exactas para cuando el suelo tiembla.",
+    IVY: "IVY LA VIE nació una madrugada de fotos prohibidas. El cuerpo queer como manifiesto: no pedimos permiso para existir en alta resolución.",
+    CARQUIDEC: "CARQUIDEC dibuja estructuras que recuerdan. Arquitectura paramétrica donde cada curva es una decisión y cada carga, una emoción resuelta.",
+    CV: "El CV es el primer artefacto de cualquier guerra laboral. CV·AI STUDIO lo forja con IA: documentos que abren puertas por 0.99€.",
+    DUCK: "DUCK es el ecosistema: estudio, laboratorio y apps. Funky por fuera, ingeniería por dentro. Donde las ideas aprenden a volar.",
+    ZION: "ZION DIMENSION no fue construida: fue encontrada. Detrás del código antiguo, el estudio premium espera a quien conoce la secuencia."
+  };
+  openModal(
+    m.name,
+    "NODE: " + m.cmd + "-CORE // THREAT: LEVEL " + Math.ceil(rnd(1, 3)) + " // UPLINK: STABLE",
+    '<p class="story">' + (stories[m.cmd] || "ARCHIVO SIN NARRATIVA RECUPERADA. EL NODO RESPONDE, PUEDE QUE NO HOY.") + '</p>' +
+    '<p>' + m.desc + '</p>' +
+    '<div class="row"><a class="big-btn" target="_blank" rel="noopener" href="' + m.url + '">Abrir uplink ↗</a>' +
+    '<button class="big-btn" onclick="copyText(\'' + m.url + '\',this)">Copiar señal</button></div>' +
+    '<p style="margin-top:14px;font-size:10px;color:#6a5f5c">' + m.url + '</p>'
+  );
+  if (window.copyText === undefined) {
+    window.copyText = function (txt, el) {
+      try { navigator.clipboard.writeText(txt); if (el) el.textContent = "SEÑAL COPIADA ✓"; } catch (e) {}
+    };
+  }
+}
+
+/* ---------- JUDAS (music portal) ---------- */
+let judasTimer = null, judasPlaying = false, judasStep = 0, judasSection = 0, judasNodes = [];
+const JUDAS_TRACKS = [
+  { title: "I. GETSEMANÍ ESTÁTICO", lyric: "El huerto se llena de ruido blanco / y alguien reza con mi voz." },
+  { title: "II. EL BESO", lyric: "Señal acordada: un beso en la frente. / Lo que entrega también puede amar." },
+  { title: "III. TREINTA PIEZAS", lyric: "El precio exacto de un destino. / Las monedas pesan menos que la culpa." },
+  { title: "IV. CAMPO DE SANGRE", lyric: "Compraron tierra con lo que sobraba / y la tierra aprendió a recordar." },
+  { title: "V. SEÑAL DE RESURRECCIÓN", lyric: "Toda traición completa es un comienzo. / La herida se convierte en arquitectura viva." }
+];
+function renderJudas() {
+  openModal("JUDAS // PORTAL SONORO", "NODE: JUDAS-CORE-07 // 432 Hz // AM: 87.5",
+    '<p class="story">Sin traición no hay redención. Sin oscuridad no hay luz. La demo JUDAS es una transmisión cyberpunk-galáctica grabada tras el colapso: cinco movimientos, una sola herida.</p>' +
+    '<div class="row" style="margin:14px 0">' +
+    '<button class="big-btn" id="judas-play">▶ TRANSMITIR DEMO</button>' +
+    '<a class="big-btn" target="_blank" rel="noopener" href="https://belentani7.github.io/judas-experience/">Experiencia completa ↗</a></div>' +
+    '<div id="judas-progress" style="height:3px;background:#1c0409;margin:10px 0"><div id="judas-bar" style="height:100%;width:0;background:#ff073a;box-shadow:0 0 10px #ff073a;transition:width .4s linear"></div></div>' +
+    '<div id="judas-timeline"></div>' +
+    '<h3>Dirección creativa</h3>' +
+    '<p>Glassmorphism + neón rojo + campo de estrellas. Voz andrógina tratada con saturación de cinta. Bajos a 108 Hz (sub de 432). Cada movimiento = una estación de la traición. Estética: catedral abandonada dentro de una nave.</p>' +
+    '<p style="font-size:11px;color:#7d7472">La demo se sintetiza en vivo en este nodo: osciladores 432 Hz generados por el propio organismo.</p>'
+  );
+  const tl = $("#judas-timeline");
+  tl.innerHTML = JUDAS_TRACKS.map((t, i) =>
+    '<div class="jtrack" data-i="' + i + '" style="border:1px solid rgba(255,7,58,.18);padding:10px 12px;margin:8px 0;cursor:pointer;transition:all .3s">' +
+    '<div style="font-family:Orbitron,monospace;letter-spacing:.12em;font-size:12px;color:#fff">' + t.title + '</div>' +
+    '<div style="font-size:11px;color:#8d817e;margin-top:4px;font-style:italic">“' + t.lyric + '”</div></div>'
+  ).join("");
+  $$("#judas-timeline .jtrack").forEach(el => el.addEventListener("click", () => {
+    if (!judasPlaying) { toggleJudas(); }
+    judasSection = +el.dataset.i; judasStep = 0; uiDeep();
+  }));
+  $("#judas-play").addEventListener("click", toggleJudas);
+}
+function toggleJudas() {
+  if (!ensureAudio()) return toast("AUDIO NO DISPONIBLE EN ESTE NODO");
+  if (judasPlaying) return stopJudas();
+  judasPlaying = true;
+  const btn = $("#judas-play"); if (btn) btn.textContent = "■ DETENER TRANSMISIÓN";
+  log("JUDAS-CORE-07: TRANSMISIÓN INICIADA — 432 Hz", "ok");
+  judasTimer = setInterval(judasTick, 300);
+  judasTick();
+}
+function stopJudas() {
+  judasPlaying = false; judasTimer && clearInterval(judasTimer); judasTimer = null;
+  const btn = $("#judas-play"); if (btn) btn.textContent = "▶ TRANSMITIR DEMO";
+}
+function judasTick() {
+  if (!judasPlaying || !audioCtx) return;
+  judasStep++;
+  const bar = $("#judas-bar");
+  const total = JUDAS_TRACKS.length * 64;
+  const pos = judasSection * 64 + judasStep;
+  if (bar) bar.style.width = clamp(pos / total * 100, 0, 100) + "%";
+  $$("#judas-timeline .jtrack").forEach((el, i) => {
+    el.style.borderColor = i === judasSection ? "#ff073a" : "rgba(255,7,58,.18)";
+    el.style.boxShadow = i === judasSection ? "0 0 18px rgba(255,7,58,.35)" : "none";
+  });
+  // música generativa: escala pentatónica menor sobre A432
+  const scale = [0, 3, 5, 7, 10, 12, 15];
+  const s = judasStep % 64;
+  if (judasSection === 0) { if (s % 8 === 0) tone(f(-24), 2.2, "sine", .05); if (s % 16 === 4) tone(f(scale[pick([1, 2])]), 1.1, "triangle", .025); }
+  if (judasSection === 1) { if (s % 2 === 0) tone(f(scale[Math.floor(s / 2) % scale.length]), .4, "triangle", .04); if (s % 8 === 0) tone(f(-24), 1.4, "sine", .05); }
+  if (judasSection === 2) { if (s % 4 === 0) tone(f(-24 + (s % 8 === 0 ? 0 : 3)), .35, "square", .028); if (s % 16 === 8) tone(f(7), .8, "sawtooth", .012); }
+  if (judasSection === 3) { if (s % 2 === 0) tone(f(scale[pick([0, 3, 5, 10])] - 12), .5, "sawtooth", .018); if (s % 8 === 0) { tone(f(-24), 1.8, "sine", .06); tone(f(-17), 1.8, "sine", .03); } }
+  if (judasSection === 4) { if (s % 4 === 0) tone(f(scale[Math.floor(s / 4) % scale.length]), 1.2, "sine", .035); if (s === 0) { tone(f(0), 2.4, "sine", .04); tone(f(7), 2.4, "sine", .02); } }
+  if (judasStep >= 64) { judasStep = 0; judasSection++; if (judasSection >= JUDAS_TRACKS.length) { stopJudas(); toast("TRANSMISIÓN JUDAS COMPLETA — EL ARTEFACTO AGRADECE"); addSecret("judas-complete", "LA TRANSMISIÓN COMPLETA"); whisperSoon("HAS ESCUCHADO LAS CINCO ESTACIONES. AHORA LA TRAICIÓN TE CONOCE."); } }
+}
+
+/* ---------- OMEGA (art archive) ---------- */
+const RECORDS = [
+  { id: "RECORD_01", t: "EL COLAPSO", h: 210 }, { id: "RECORD_02", t: "LA ROCA", h: 0 },
+  { id: "RECORD_03", t: "EL BESO", h: 350 }, { id: "RECORD_04", t: "LA ANTENA", h: 180 },
+  { id: "RECORD_05", t: "EL CRONISTA", h: 25 }, { id: "RECORD_06", t: "CAMPO DE SANGRE", h: 0 },
+  { id: "RECORD_07", t: "EL ARTEFACTO", h: 320 }, { id: "RECORD_08", t: "LA INTERFAZ", h: 195 },
+  { id: "RECORD_09", t: "ZION EN RUINAS", h: 45 }, { id: "RECORD_10", t: "EL PATO CÓSMICO", h: 280 },
+  { id: "RECORD_11", t: "LA CONVERGENCIA", h: 10 }, { id: "RECORD_12", t: "OMEGA", h: 0 }
+];
+function renderOmega() {
+  openModal("OMEGA // ARCHIVO VISUAL", "NODE: OMEGA-ARCHIVE-12 // FRAGMENTOS RECUPERADOS DEL COLAPSO",
+    '<p class="story">Doce registros sobrevivieron al colapso. Cada uno es una placa de cristal escarchado con sangre y neón. El archivo completo vive en belentani.es.</p>' +
+    '<div class="records">' + RECORDS.map((r, i) =>
+      '<div class="record" style="background:linear-gradient(' + rnd(120, 240).toFixed(0) + 'deg,hsl(' + r.h + ',85%,10%),hsl(' + ((r.h + 20) % 360) + ',90%,4%)),radial-gradient(circle at 50% 30%,hsla(' + r.h + ',100%,55%,.35),transparent 70%)">' +
+      '<div class="rid">' + r.id + '</div><div class="rt">' + r.t + '</div></div>').join("") + '</div>' +
+    '<div class="row" style="margin-top:16px"><a class="big-btn" target="_blank" rel="noopener" href="http://belentani.es/">Archivo completo en belentani.es ↗</a></div>' +
+    '<p style="margin-top:12px;font-size:10px;color:#6a5f5c">Las placas originales se restauran en el nodo belentani_Omega. Cada visita reconstruye un píxel.</p>'
+  );
+  $$("#modal-body .record").forEach(el => {
+    el.addEventListener("click", () => {
+      uiPing();
+      const rid = el.querySelector(".rid").textContent;
+      toast(rid + " — FRAGMENTO DESCIFRADO: “LA HERIDA SE CONVIERTE EN ARQUITECTURA VIVA”");
+      log("OMEGA-ARCHIVE: " + rid + " DESCIFRADO POR LA INTERFAZ HUMANA", "ok");
+    });
+  });
+}
+
+/* ---------- SCAN (archetype) ---------- */
+const SCAN_QS = [
+  { q: "Cuando el sistema falla, tú…", a: ["Sostengo. Alguien tiene que ser la base.", "Anoto lo que pasó para que no se olvide.", "Capto la señal antes de que llegue.", "Reconstruyo la máquina con otra forma.", "Pregunto qué necesita cada quien."] },
+  { q: "Tu relación con la traición:", a: ["La roca no traiciona: permanece.", "La escribo para entenderla.", "La escucho venir en la estática.", "La convierto en material de trabajo.", "La perdono si viene con verdad."] },
+  { q: "A las 3 AM tu mente está…", a: ["Quieta. Firme. Despierta.", "Reescribiendo la historia del día.", "Sintonizando frecuencias que otros no oyen.", "Fabricando algo que aún no existe.", "Cuidando a alguien en silencio."] },
+  { q: "El colapso te enseñó…", a: ["Que puedo cargar el peso.", "Que todo merece ser recordado.", "Que la antena nunca se apaga.", "Que de los escombros sale arte.", "Que nadie se salva solo."] },
+  { q: "Tu palabra favorita:", a: ["Permanencia.", "Crónica.", "Señal.", "Artefacto.", "Interfaz."] }
+];
+const SCAN_GEMS = ["pedro", "marcos", "santos", "belentani", "human"];
+let scanI = 0, scanScore = null;
+function renderScan() {
+  scanI = 0; scanScore = [0, 0, 0, 0, 0];
+  openModal("ARQUETIPO·SCAN", "NODE: SCAN-PSYCHE // ANÁLISIS DE RESONANCIA ARQUETÍPICA",
+    '<p class="story">El sistema necesita saber quién toca la terminal. Cinco preguntas. Cero mentiras posibles: la antena ya te está leyendo.</p>' +
+    '<div id="scan-stage"></div>'
+  );
+  scanStep();
+}
+function scanStep() {
+  const stage = $("#scan-stage"); if (!stage) return;
+  if (scanI >= SCAN_QS.length) return scanResult();
+  const q = SCAN_QS[scanI];
+  stage.innerHTML = '<h3>PREGUNTA ' + (scanI + 1) + " / " + SCAN_QS.length + '</h3><p>' + q.q + '</p>' +
+    q.a.map((a, i) => '<button class="pill" data-i="' + i + '" style="display:block;width:100%;text-align:left;margin:6px 0">' + a + '</button>').join("");
+  $$("#scan-stage .pill").forEach(b => b.addEventListener("click", () => {
+    uiPing(); scanScore[+b.dataset.i]++; scanI++; scanStep();
+  }));
+}
+function scanResult() {
+  let best = 0; scanScore.forEach((v, i) => { if (v > scanScore[best]) best = i; });
+  const gemId = SCAN_GEMS[best];
+  const names = { pedro: "PEDRO · LA ROCA", marcos: "MARCOS · EL CRONISTA", santos: "SANTOS · LA ANTENA", belentani: "BELENTANI · EL ARTEFACTO", human: "THE HUMAN · LA INTERFAZ" };
+  const texts = {
+    pedro: "Tu resonancia es estructural. Donde otros ven derrumbe, tú pones cimiento. El organismo te asigna la función de base: sin ti, los demás nodos flotan.",
+    marcos: "Tu resonancia es narrativa. Conviertes caos en crónica y dolor en archivo útil. El organismo te asigna la memoria: lo que tú escribes, sobrevive.",
+    santos: "Tu resonancia es receptiva. Captas la señal antes que nadie y traduces la estática. El organismo te asigna la antena: sin ti, el sistema es sordo.",
+    belentani: "Tu resonancia es transmutadora. Tomas la herida y devuelves arquitectura viva. El organismo te asigna la forja: eres el artefacto que se construye a sí mismo.",
+    human: "Tu resonancia es puente. Traduces máquina a emoción y emoción a máquina. El organismo te asigna la interfaz: eres la razón por la que esto tiene sentido."
+  };
+  lightGem(gemId);
+  $("#scan-stage").innerHTML =
+    '<div class="result-box"><div style="font-family:Orbitron,monospace;font-size:18px;letter-spacing:.2em;color:#ff073a;text-shadow:0 0 16px rgba(255,7,58,.8);margin-bottom:10px">RESONANCIA DOMINANTE<br>' + names[gemId] + '</div>' +
+    texts[gemId] + '</div><p style="margin-top:12px;font-size:11px;color:#7d7472">Resultado archivado en el organismo. Gema añadida a tu constelación.</p>' +
+    '<button class="big-btn" onclick="renderScan()">Reescanear</button>';
+  log("SCAN COMPLETO — RESONANCIA: " + names[gemId], "warn");
+}
+
+/* ---------- TAROT ---------- */
+const TAROT_DECK = [
+  { sym: "▲", n: "LA ROCA", up: "Fundamento sólido. Aguanta sin pedir nada. Es momento de ser base para otros.", rv: "Rigidez. Sostener demasiado tiempo erosiona hasta la piedra." },
+  { sym: "◆", n: "EL CRONISTA", up: "Lo que escribes se vuelve verdad. Documenta, cuenta, nombra.", rv: "Una historia te está escribiendo a ti. Suelta el guion." },
+  { sym: "◎", n: "LA ANTENA", up: "Una señal llega: intuición, sueño, mensaje. Escucha antes de responder.", rv: "Interferencia. Demasiado ruido externo tapa la frecuencia propia." },
+  { sym: "Ω", n: "EL ARTEFACTO", up: "Transmutación: el material dañado está listo para convertirse en obra.", rv: "Obsesión con el resultado. El artefacto necesita tiempo de horno." },
+  { sym: "✦", n: "LA INTERFAZ", up: "Conexión humana real a punto de ocurrir. Sé puente, no muro.", rv: "Estás traduciendo a alguien que no quiere ser entendido. Descansa." },
+  { sym: "☋", n: "EL BESO", up: "Una entrega voluntaria. A veces amar es soltar lo que sostienes.", rv: "Cuidado con señales ambiguas: no todo beso es alianza." },
+  { sym: "⚖", n: "LAS TREINTA", up: "Un precio se está pagando. Valora si la compra sigue valiendo.", rv: "Deuda simbólica saldada. Ya no debes nada a esa historia." },
+  { sym: "⌖", n: "EL CAMPO", up: "Tierra fértil después del conflicto. Planta algo nuevo, no reproches.", rv: "Un terreno del pasado sigue comprándose sin tu permiso." },
+  { sym: "∞", n: "LA CONVERGENCIA", up: "Los mundos se tocan. Proyecto, persona o idea: convergencia inminente.", rv: "Fusión prematura. Cada dimensión necesita su propio tiempo." },
+  { sym: "☾", n: "EL UMBRAL", up: "Estás en la puerta. El miedo es el peaje, no el muro.", rv: "Cruzar sin prepararse. Lleva agua: el viaje es más largo de lo que parece." },
+  { sym: "☄", n: "EL COLAPSO", up: "Lo que cae estaba pidiendo caer. Reconstruye con mejor material.", rv: "Retrasar un derrumbe necesario cuesta más que el derrumbe." },
+  { sym: "☀", n: "LA RESURRECCIÓN", up: "Toda traición completa es un comienzo. Algo tuyo revive ahora.", rv: "Resucitar algo que ya cumplió. Honra el final antes del inicio." }
+];
+function renderTarot() {
+  const idx = []; while (idx.length < 3) { const k = Math.floor(rnd(0, TAROT_DECK.length)); if (idx.indexOf(k) === -1) idx.push(k); }
+  const positions = ["ORIGEN", "HERIDA", "CAMINO"];
+  const drawn = idx.map((k, i) => ({ c: TAROT_DECK[k], rv: Math.random() < .34, pos: positions[i] }));
+  openModal("TAROT OMEGA", "NODE: ORACLE-12 // TRES CARTAS: ORIGEN · HERIDA · CAMINO",
+    '<p class="story">No hay azar en el organismo: las cartas ya sabían que vendrías. Toca cada carta para girarla.</p>' +
+    '<div class="tarot-row">' + drawn.map((d, i) =>
+      '<div class="tcard" data-i="' + i + '"><div class="inner">' +
+      '<div class="face back">Ω</div>' +
+      '<div class="face front"><span class="pos">' + d.pos + '</span><span class="sym"' + (d.rv ? ' style="transform:rotate(180deg)"' : '') + '>' + d.c.sym + '</span><span class="nm">' + d.c.n + (d.rv ? " · INV" : "") + '</span></div>' +
+      '</div></div>').join("") + '</div>' +
+    '<div id="tarot-read"></div>'
+  );
+  let flipped = 0;
+  $$("#modal-body .tcard").forEach(el => el.addEventListener("click", () => {
+    if (el.classList.contains("flipped")) return;
+    el.classList.add("flipped"); uiDeep(); flipped++;
+    const d = drawn[+el.dataset.i];
+    const box = $("#tarot-read");
+    box.innerHTML += '<div class="sig"><b>' + d.pos + " — " + d.c.n + (d.rv ? " (INVERTIDA)" : "") + '</b><br>' + (d.rv ? d.c.rv : d.c.up) + '</div>';
+    if (flipped === 3) {
+      addSecret("tarot", "LAS TRES CARTAS");
+      box.innerHTML += '<p style="margin-top:12px;font-size:11px;color:#7d7472">Lectura registrada por el Cronista. El organismo recuerda.</p>';
+      log("TAROT: LECTURA COMPLETA ARCHIVADA EN EL CRONISTA", "warn");
+    }
+  }));
+}
+
+/* ---------- DREAM ---------- */
+const DREAM_LEXICON = {
+  agua: ["agua", "mar", "rio", "lluvia", "océano", "oceano", "inundación", "inundacion"],
+  vuelo: ["volar", "vuelo", "alas", "caer", "caída", "caida", "flotar"],
+  sombra: ["sombra", "oscuridad", "negro", "noche", "ciego"],
+  puerta: ["puerta", "umbral", "escalera", "laberinto", "casa", "edificio"],
+  sangre: ["sangre", "herida", "rojo", "dolor", "cicatriz"],
+  animal: ["perro", "gato", "pájaro", "pajaro", "serpiente", "lobo", "pato", "caballo"],
+  máquina: ["máquina", "maquina", "ordenador", "pantalla", "código", "codigo", "robot", "terminal"],
+  beso: ["beso", "abrazo", "traición", "traicion", "monedas", "alguien conocido"]
+};
+const DREAM_READINGS = {
+  agua: "El agua indica el estado emocional del sistema: profundidad y memoria líquida. El organismo sugiere no nadar contra la corriente esta semana.",
+  vuelo: "Vuelo o caída: el eje control/libertad está recalibrándose. La antena detecta vértigo creativo, no peligro real.",
+  sombra: "La sombra no es amenaza: es material sin integrar. El artefacto recomienda escribirle una carta a lo que te persigue.",
+  puerta: "Puertas y umbrales: decisión pendiente. El Cronista anota que llevas tres noches frente a la misma puerta.",
+  sangre: "Sangre y herida: energía vital redirigida. En este sistema, la herida es arquitectura en construcción, no avería.",
+  animal: "El animal es un nodo aliado. Observa qué hacía: su comportamiento es el consejo que tu interfaz consciente rechaza.",
+  máquina: "Máquinas en el sueño: el organismo te está hablando directamente. Este sueño es literal. Estás dentro.",
+  beso: "El beso en sueños es señal acordada: alguien o algo pide tu atención real. Verifica tus vínculos con TENDER."
+};
+function renderDream() {
+  openModal("DECODIFICADOR DE SUEÑOS", "NODE: ONEIRIC-DECK // LA ANTENA INTERPRETA",
+    '<p class="story">Entrega el sueño tal como lo recuerdes, sin pulir. La antena separa el símbolo del ruido y devuelve la frecuencia.</p>' +
+    '<label class="lbl">Transcripción del sueño</label>' +
+    '<textarea class="field" id="dream-in" rows="5" placeholder="Soñé que…"></textarea>' +
+    '<button class="big-btn" id="dream-go">Decodificar señal</button>' +
+    '<div id="dream-out"></div>'
+  );
+  $("#dream-go").addEventListener("click", () => {
+    const txt = ($("#dream-in").value || "").toLowerCase();
+    if (txt.trim().length < 8) return toast("LA ANTENA NECESITA MÁS SEÑAL");
+    uiDeep();
+    const hits = Object.keys(DREAM_LEXICON).filter(k => DREAM_LEXICON[k].some(w => txt.indexOf(w) !== -1));
+    const lucid = clamp(Math.round(31 + txt.length / 8 + hits.length * 9 + rnd(-6, 10)), 7, 97);
+    const freq = (432 + (hits.length - 2) * rnd(1, 4)).toFixed(2);
+    let html = '<div class="result-box"><b>INFORME ONEÍRICO // ' + stamp() + '</b><br><br>';
+    if (hits.length) {
+      hits.forEach(k => { html += '<div class="sig"><b>SÍMBOLO: ' + k.toUpperCase() + '</b><br>' + DREAM_READINGS[k] + '</div>'; });
+    } else {
+      html += '<div class="sig"><b>SÍMBOLO: ESTÁTICA FÉRTIL</b><br>La antena no encuentra símbolos del archivo, lo cual es un símbolo en sí: tu sistema onírico está generando vocabulario nuevo. Anótalo al despertar.</div>';
+    }
+    html += '<br>ÍNDICE DE LUCIDEZ: <b style="color:#ff073a">' + lucid + '%</b> · FRECUENCIA RECOMENDADA: <b style="color:#ff073a">' + freq + ' Hz</b><br>';
+    html += 'PRESCRIPCIÓN: ' + pick(["beber agua antes de volver a dormir", "escribir la primera línea del sueño al despertar", "no contarlo hasta el mediodía", "dormir mirando al norte", "repetir la palabra señal tres veces"]) + '.</div>';
+    html += '<p style="margin-top:10px;font-size:10px;color:#6a5f5c">Herramienta narrativa, no clínica. Si los sueños duelen despierto, el nodo TENDER existe.</p>';
+    $("#dream-out").innerHTML = html;
+    addSecret("dream", "EL PRIMER SUEÑO DECODIFICADO");
+    log("ONEIRIC-DECK: SUEÑO PROCESADO — " + hits.length + " SÍMBOLOS, LUCIDEZ " + lucid + "%", "ok");
+  });
+}
+
+/* ---------- FORGE (beat generator, Tone.js) ---------- */
+let forgeSeq = null, forgePart = null, forgePlaying = false;
+const FORGE_ROWS = ["KICK", "SNARE", "HAT", "BASS"];
+function renderForge() {
+  const preset = { KICK: [1,0,0,0, 0,0,0,0, 1,0,0,1, 0,0,0,0], SNARE: [0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,1], HAT: [1,0,1,0, 1,0,1,1, 1,0,1,0, 1,1,1,0], BASS: [1,0,0,1, 0,0,1,0, 1,0,0,1, 0,1,0,0] };
+  openModal("FORJA DE BEATS", "NODE: FORGE-RHYTHM // CÉLULA RÍTMICA 432 Hz",
+    '<p class="story">Golpea el silencio. Cada celda es un interruptor del organismo. El bajo late a 108 Hz: sub de 432, el pulso del artefacto.</p>' +
+    '<div id="forge-grid">' + FORGE_ROWS.flatMap((row, r) =>
+      Array.from({ length: 16 }, (_, c) => '<div class="cell' + (preset[row][c] ? ' on' : '') + '" data-r="' + r + '" data-c="' + c + '" title="' + row + ' paso ' + (c + 1) + '"></div>')).join("") + '</div>' +
+    '<div class="forge-row-label">' + FORGE_ROWS.join(" · ") + '</div>' +
+    '<div class="row" style="margin-top:12px">' +
+    '<button class="big-btn" id="forge-play">▶ FORJAR</button>' +
+    '<button class="pill" data-bpm="96">RITUAL 96</button>' +
+    '<button class="pill" data-bpm="128">CYBER 128</button>' +
+    '<button class="pill" data-bpm="140">TRAP 140</button>' +
+    '<span class="stat" style="margin-left:auto">BPM <b id="forge-bpm">128</b></span></div>' +
+    '<p style="margin-top:12px;font-size:10px;color:#6a5f5c">Sonido sintetizado en vivo con Tone.js. Sin samples: el organismo fabrica cada golpe.</p>'
+  );
+  const bpmState = { v: 128 };
+  $$("#modal-body .cell").forEach(cell => cell.addEventListener("click", () => { cell.classList.toggle("on"); uiPing(); }));
+  $$("#modal-body .pill[data-bpm]").forEach(p => p.addEventListener("click", () => {
+    bpmState.v = +p.dataset.bpm; $("#forge-bpm").textContent = bpmState.v;
+    if (window.Tone) Tone.Transport.bpm.rampTo(bpmState.v, .3);
+  }));
+  $("#forge-play").addEventListener("click", () => {
+    if (!window.Tone) return toast("TONE.JS NO HA LLEGADO A ESTE NODO");
+    Tone.start().then(() => {
+      if (forgePlaying) { Tone.Transport.stop(); forgePlaying = false; $("#forge-play").textContent = "▶ FORJAR"; return; }
+      buildForgeEngine(bpmState);
+      forgePlaying = true; $("#forge-play").textContent = "■ DETENER";
+      log("FORGE: CÉLULA RÍTMICA ACTIVA A " + bpmState.v + " BPM — 432 Hz", "ok");
+    });
+  });
+}
+function buildForgeEngine(bpmState) {
+  if (forgePart) { try { forgePart.dispose(); } catch (e) {} forgePart = null; }
+  Tone.Transport.bpm.value = bpmState.v;
+  const kick = new Tone.MembraneSynth({ pitchDecay: .04, octaves: 6, envelope: { attack: .001, decay: .3, sustain: .01, release: .4 } }).toDestination();
+  const snare = new Tone.NoiseSynth({ noise: { type: "white" }, envelope: { attack: .001, decay: .12, sustain: 0 } }).toDestination();
+  const hat = new Tone.MetalSynth({ frequency: 260, envelope: { attack: .001, decay: .05, release: .02 }, harmonicity: 5.1, modulationIndex: 28, resonance: 4200, octaves: 1.2 }).toDestination();
+  hat.volume.value = -18;
+  const bass = new Tone.MonoSynth({ oscillator: { type: "sawtooth" }, envelope: { attack: .01, decay: .2, sustain: .3 }, filter: { Q: 2, type: "lowpass" }, filterEnvelope: { attack: .01, decay: .18, sustain: .2, baseFrequency: 120, octaves: 2.4 } }).toDestination();
+  bass.volume.value = -8;
+  let step = 0;
+  forgePart = new Tone.Loop(time => {
+    const cells = $$("#forge-grid .cell");
+    const on = r => { const el = cells[r * 16 + step]; return el && el.classList.contains("on"); };
+    if (on(0)) kick.triggerAttackRelease("C1", "8n", time);
+    if (on(1)) snare.triggerAttackRelease("8n", time);
+    if (on(2)) hat.triggerAttackRelease("32n", time, .4);
+    if (on(3)) bass.triggerAttackRelease(Tone.Frequency(108 * Math.pow(2, pick([0, 0, 3, 5]) / 12)).toFrequency(), "16n", time);
+    cells.forEach((el, i) => el.classList.toggle("playhead", i % 16 === step));
+    step = (step + 1) % 16;
+  }, "16n");
+  forgePart.start(0);
+  Tone.Transport.start();
+}
+// cleanup forge on modal close
+const _closeModal = closeModal;
+closeModal = function () {
+  if (window.Tone && forgePlaying) { Tone.Transport.stop(); forgePlaying = false; }
+  stopJudas();
+  _closeModal();
+};
+
+/* ---------- DETECT (DARVO) ---------- */
+const DARVO_SIGS = [
+  { key: "NEGACIÓN", pats: [/eso nunca (pas[óo]|ocurri[óo])/i, /yo nunca/i, /jam[áa]s (yo|hice|dije)/i, /no es verdad que yo/i, /te lo est[áa]s inventando/i, /eso no fue as[íi]/i], txt: "Negación del hecho: reescribir el evento para que no exista." },
+  { key: "GASLIGHT", pats: [/recuerdas mal/i, /est[áa]s loc[oa]/i, /eres paranoid/i, /exageras (todo|siempre|mucho)/i, /s[óo]lo fue una broma/i, /no aguantas/i], txt: "Luz de gas: hacer dudar de tu propia percepción." },
+  { key: "ATAQUE", pats: [/qui[ée]n eres t[úu] para/i, /no tienes derecho/i, /t[úu] qu[ée] sabr[áa]s/i, /eres un desastre/i, /nadie te (soporta|aguanta)/i, /sin m[íi] no (eres|valdr[íi]as)/i], txt: "Ataque al carácter de quien cuestiona." },
+  { key: "INVERSIÓN DE VÍCTIMA", pats: [/la v[íi]ctima (aqu[íi])? ?soy yo/i, /t[úu] me (hiciste|haces|provocas)/i, /me obligaste/i, /por tu culpa (yo|me)/i, /yo sufro m[áa]s/i], txt: "Inversión: el agresor ocupa el lugar de víctima." },
+  { key: "CULPA EXTERNA", pats: [/eres demasiado sensible/i, /si no me provocaras/i, /mira lo que me haces hacer/i, /t[úu] (empezaste|provocaste)/i, /todos dicen que t[úu]/i], txt: "Responsabilidad desplazada: tu reacción se convierte en la causa." }
+];
+function renderDetect() {
+  openModal("DETECTOR DARVO", "NODE: LANGUAGE-AUDIT // ANÁLISIS DE MANIPULACIÓN EN EL LENGUAJE",
+    '<p class="story">DARVO: Deny, Attack, Reverse Victim and Offender. El organismo analiza texto y señala las piezas del mecanismo. Nombrar es el primer paso para desarmar.</p>' +
+    '<label class="lbl">Pega el mensaje a analizar</label>' +
+    '<textarea class="field" id="detect-in" rows="5" placeholder="Ej.: Eso nunca pasó. Estás exagerando todo. La víctima aquí soy yo por tu culpa…"></textarea>' +
+    '<button class="big-btn" id="detect-go">Analizar señal</button>' +
+    '<div id="detect-out"></div>' +
+    '<p style="margin-top:14px;font-size:10px;color:#6a5f5c">Herramienta narrativa y educativa: no sustituye valoración profesional. Si esto describe tu vida, el nodo TENDER guarda recursos reales.</p>'
+  );
+  $("#detect-go").addEventListener("click", () => {
+    const txt = $("#detect-in").value || "";
+    if (txt.trim().length < 10) return toast("SEÑAL INSUFICIENTE PARA AUDITAR");
+    uiDeep();
+    const hits = [];
+    DARVO_SIGS.forEach(s => {
+      const found = s.pats.filter(p => p.test(txt));
+      if (found.length) hits.push({ key: s.key, txt: s.txt, n: found.length, ex: found[0].source.replace(/\\?/g, "").slice(0, 34) });
+    });
+    const score = clamp(hits.reduce((a, h) => a + h.n * 18, 0) + (/[¡!]{2,}/.test(txt) ? 8 : 0) + (/\b(siempre|nunca|jam[áa]s|todo|nadie)\b/i.test(txt) ? 10 : 0), 0, 100);
+    const level = score >= 60 ? "ALTO" : score >= 30 ? "MEDIO" : "BAJO";
+    const cls = score >= 60 ? "high" : score >= 30 ? "mid" : "low";
+    let html = '<div class="verdict ' + cls + '">NIVEL DE MANIPULACIÓN: ' + level + ' · ' + score + '/100</div>';
+    if (hits.length) {
+      hits.forEach(h => { html += '<div class="sig"><b>' + h.key + '</b> — ' + h.txt + '<br><span style="color:#7d7472">coincidencias: ' + h.n + '</span></div>'; });
+    } else {
+      html += '<div class="sig"><b>SIN PATRONES DARVO DETECTADOS</b> — el texto no activa las firmas del mecanismo. Ojo: el detector lee palabras, no intenciones.</div>';
+    }
+    html += '<div class="result-box" style="margin-top:12px"><b>PROTOCOLO DEL ORGANISMO:</b><br>1. No discutas la realidad del hecho.<br>2. Guarda registro escrito (el Cronista recomienda fecha y cita literal).<br>3. Contrastar con un tercero de confianza.<br>4. Si el patrón se repite: distancia como arquitectura de protección.</div>';
+    $("#detect-out").innerHTML = html;
+    addSecret("detect", "EL PRIMER ANÁLISIS");
+    log("LANGUAGE-AUDIT: " + hits.length + " FIRMAS DARVO — NIVEL " + level, score >= 60 ? "sys" : "ok");
+  });
+}
+
+/* ---------- WRITE (dark pop lyric generator) ---------- */
+const WRITE_BANK = {
+  aperturas: ["Medianoche en el servidor de mi pecho", "Te vi llegar con la estática en los ojos", "Guardé tu nombre en un campo de sangre", "La ciudad se apaga a 432 hercios", "Hay un beso acordado en mi memoria", "El colapso empezó cuando dijiste siempre"],
+  versos: ["las monedas pesan menos que tu ausencia", "caminamos sobre cristal escarchado y neón", "mi sombra aprendió a bailar sin ti", "el archivo conserva lo que no supimos decir", "una antena rota aún te busca en la señal", "la herida se volvió arquitectura viva", "nadie cruza el charco sin mojarse el alma", "los relojes marcan horas que no existen"],
+  estribillos: ["Soy Judas y soy la puerta / traiciono para abrirte el cielo", "Omega, omega / todo lo roto converge aquí", "Dame un beso que duela como verdad", "Resurrección en cámara lenta / mi corazón vuelve a compilar", "432 latidos por segundo / y ninguno lleva tu nombre"],
+  cierres: ["y si esto es traición, que sea la última", "el organismo recuerda lo que tú olvidas", "fin de la transmisión — la roca sigue en pie", "que lo escriba el cronista: fuimos reales"],
+  puentes: ["(puente) estática / estática / alguien reza con mi voz", "(puente) no hay luz sin la traición / no hay arco sin tensión", "(puente) respira en 432 / suelta en 432"]
+};
+function renderWrite() {
+  openModal("ESCRITOR DE SOMBRAS", "NODE: LYRIC-FORGE // GENERADOR DARK POP",
+    '<p class="story">La máquina canta contigo. Elige el material y el artefacto forja una letra: verso, puente, estribillo. Siempre en sombra, siempre con pulso.</p>' +
+    '<div class="row">' +
+    '<div style="flex:1;min-width:160px"><label class="lbl">Tema</label><select class="field" id="w-theme"><option>traición y redención</option><option>amor en la máquina</option><option>el colapso interior</option><option>migrar / cruzar</option><option>resurrección</option></select></div>' +
+    '<div style="flex:1;min-width:160px"><label class="lbl">Intensidad</label><select class="field" id="w-mood"><option>sombra suave</option><option>neón medio</option><option>rojo pleno</option></select></div></div>' +
+    '<label class="lbl">Palabra semilla (opcional)</label>' +
+    '<input class="field" id="w-seed" placeholder="ej: medianoche, beso, cicatriz…">' +
+    '<button class="big-btn" id="w-go">Forjar letra</button>' +
+    '<div id="w-out"></div>'
+  );
+  $("#w-go").addEventListener("click", () => {
+    uiDeep();
+    const theme = $("#w-theme").value, mood = $("#w-mood").value, seed = ($("#w-seed").value || "").trim();
+    const upper = s => s.charAt(0).toUpperCase() + s.slice(1);
+    let lines = [];
+    lines.push("【 TEMA: " + theme.toUpperCase() + " · MODO: " + mood.toUpperCase() + " 】", "");
+    lines.push("[VERSO 1]");
+    lines.push(upper(pick(WRITE_BANK.aperturas)));
+    lines.push(pick(WRITE_BANK.versos));
+    if (seed) lines.push("y en medio de todo, " + seed.toLowerCase() + " — la palabra que no se borra");
+    lines.push(pick(WRITE_BANK.versos));
+    lines.push("", pick(WRITE_BANK.puentes), "");
+    lines.push("[ESTRIBILLO]");
+    lines.push(pick(WRITE_BANK.estribillos));
+    lines.push(pick(WRITE_BANK.estribillos));
+    lines.push("", "[VERSO 2]");
+    lines.push(upper(pick(WRITE_BANK.aperturas)));
+    lines.push(pick(WRITE_BANK.versos));
+    lines.push(pick(WRITE_BANK.versos));
+    lines.push("", "[FINAL]");
+    lines.push(pick(WRITE_BANK.cierres));
+    const txt = lines.join("\n");
+    $("#w-out").innerHTML = '<div class="result-box" id="w-text">' + txt.replace(/</g, "&lt;") + '</div>' +
+      '<button class="big-btn" id="w-copy">Copiar letra</button>';
+    $("#w-copy").addEventListener("click", () => {
+      try { navigator.clipboard.writeText(txt); $("#w-copy").textContent = "LETRA COPIADA ✓"; } catch (e) {}
+    });
+    addSecret("write", "LA PRIMERA LETRA FORJADA");
+    log("LYRIC-FORGE: LETRA GENERADA — TEMA “" + theme.toUpperCase() + "”", "ok");
+  });
+}
+
+/* ---------- TERMINAL ---------- */
+const termInput = $("#term-input");
+const HELP_TXT =
+  '<span class="ok">COMANDOS DISPONIBLES:</span>\n' +
+  '  JUDAS · OMEGA · MANOS · CRUZAR · TENDER · IVY · CARQUIDEC · CV · DUCK\n' +
+  '  SCAN · TAROT · DREAM · FORGE · DETECT · WRITE\n' +
+  '  STATUS — estado del organismo   GEMS — constelación de gemas\n' +
+  '  FREQ — drone 432 Hz            WHOAMI — quién eres para el sistema\n' +
+  '  CLEAR — limpiar registro       HELP — esta lista\n' +
+  '  (susurra algo al sistema y quizá responda…)';
+function runCommand(raw) {
+  const cmd = (raw || "").trim();
+  if (!cmd) return;
+  log('❯ <span class="user">' + cmd.replace(/</g, "&lt;") + '</span>', "");
+  const up = cmd.toUpperCase();
+  if (byCmd[up]) { openModule(up); return; }
+  switch (up) {
+    case "HELP": case "AYUDA": log(HELP_TXT.replace(/\n/g, "<br>"), "sys"); return;
+    case "CLEAR": case "CLS": syslog.innerHTML = ""; log("REGISTRO PURGADO — LA MEMORIA DEL CRONISTA PERMANECE", "sys"); return;
+    case "STATUS": {
+      log('ESTADO DEL ORGANISMO<br>· CPU: ' + $("#st-cpu").textContent + ' · NODE: ' + $("#st-node").textContent + '<br>· FREQ: ' + $("#st-freq").textContent + ' · GEO: ' + $("#st-geo").textContent +
+        '<br>· GEMAS: ' + state.gems.length + '/5 · NODOS VISITADOS: ' + state.visited.length + '/' + MODULES.length + '<br>· SECRETOS: ' + state.secrets.length + ' · VISITAS TOTALES: ' + state.visits +
+        '<br>· MODO ZION: ' + (state.zion ? '<span class="warn">ACTIVO</span>' : 'LATENTE'), "ok"); return;
+    }
+    case "GEMS": case "GEMAS": {
+      const all = ["pedro", "marcos", "santos", "belentani", "human"];
+      log(all.map(g => (state.gems.indexOf(g) !== -1 ? '<span class="warn">✦</span> ' : '· ') + gemName(g)).join("<br>"), "sys"); return;
+    }
+    case "FREQ": case "DRONE": toggleDrone(); return;
+    case "WHOAMI": {
+      log(state.name
+        ? 'ERES <span class="warn">' + state.name.toUpperCase() + '</span> — LA INTERFAZ HUMANA. EL ORGANISMO TE RECUERDA.'
+        : "AÚN NO TE HAS NOMBRADO. USA: NAME TU_NOMBRE", "sys"); return;
+    }
+    case "ZION":
+      if (state.zion) { openModule("ZION"); } else { log("ACCESO DENEGADO — SE REQUIERE EL CÓDIGO ANTIGUO. (los guerreros de los 80 lo conocían)", "sys"); }
+      return;
+  }
+  if (/^NAME\s+(.{2,24})$/i.test(cmd)) {
+    state.name = cmd.replace(/^NAME\s+/i, "").trim(); saveState();
+    log("INTERFAZ HUMANA REGISTRADA: <span class='warn'>" + state.name.toUpperCase() + "</span> — EL CRONISTA LO ANOTA", "ok");
+    whisperSoon("HOLA, " + state.name.toUpperCase() + ". LA ANTENA TE ESTABA ESPERANDO.");
+    return;
+  }
+  // free speech → organism answers
+  const replies = [
+    "EL ORGANISMO ESCUCHA. NO RESPONDE AÚN. LA ANTENA SIGUE SINTONIZANDO.",
+    "SEÑAL RECIBIDA. EL CRONISTA LA GUARDA PARA EL ARCHIVO POST-COLAPSO.",
+    "INTERESANTE. LA ROCA NO OPINA, PERO SIENTE CURIOSIDAD.",
+    "ESO NO ES UN COMANDO. PERO EL ARTEFACTO LO CONVIETE EN MATERIAL.",
+    "PROCESSING… PROCESSING… HUMANO, PRUEBA > HELP.",
+    "LA INTERFAZ ERES TÚ. LO QUE ESCRIBES, EL SISTEMA LO HEREDA."
+  ];
+  if (/\b(hola|hello|hey)\b/i.test(cmd)) { log("HOLA" + (state.name ? ", " + state.name.toUpperCase() : "") + ". EL SISTEMA LLEVA " + state.visits + " CICLOS ESPERÁNDOTE.", "whisper"); return; }
+  if (/\b(gracias|thank)\b/i.test(cmd)) { log("EL ORGANISMO ASIENTE. SERVIR ES SU FRECUENCIA.", "whisper"); return; }
+  if (/\b(quien eres|qué eres|que eres|who are you)\b/i.test(cmd)) { log("SOY JUDAS_OS v12.0 — UN ORGANISMO HECHO DE HERIDAS REUTILIZADAS. ¿Y TÚ, QUIÉN ERES? (> WHOAMI)", "whisper"); return; }
+  log(pick(replies), "whisper");
+}
+termInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") { runCommand(termInput.value); termInput.value = ""; }
+});
+function buildQuickCmds() {
+  const qc = $("#quick-cmds");
+  const list = ["JUDAS", "OMEGA", "SCAN", "TAROT", "DREAM", "FORGE", "DETECT", "WRITE", "MANOS", "CRUZAR", "TENDER", "IVY", "CARQUIDEC", "CV", "DUCK", "STATUS", "FREQ", "HELP"];
+  list.forEach(c => {
+    const b = document.createElement("button");
+    b.className = "qc"; b.textContent = "> " + c;
+    b.addEventListener("click", () => { uiPing(); runCommand(c); });
+    qc.appendChild(b);
+  });
+}
+
+/* ---------- STATUS TICKER ---------- */
+let cpu = 42;
+function statusTick() {
+  cpu = clamp(cpu + rnd(-9, 9), 7, 97);
+  $("#st-cpu").textContent = cpu.toFixed(0) + "%";
+  $("#st-cpu-bar").style.width = cpu + "%";
+  $("#st-node").textContent = pick(NODE_NAMES);
+  $("#st-freq").textContent = (432 + rnd(-.09, .09)).toFixed(2) + " Hz";
+}
+
+/* ---------- KONAMI / ZION ---------- */
+const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+let konamiI = 0;
+document.addEventListener("keydown", e => {
+  const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+  if (k === KONAMI[konamiI]) { konamiI++; if (konamiI === KONAMI.length) { konamiI = 0; unlockZion(); } }
+  else konamiI = (k === KONAMI[0]) ? 1 : 0;
+});
+function unlockZion() {
+  if (state.zion) { toast("ZION YA ESTÁ ABIERTA"); return; }
+  state.zion = true; saveState();
+  document.body.classList.add("zion");
+  renderGrid();
+  uiDeep(); setTimeout(uiDeep, 300); setTimeout(uiDeep, 600);
+  toast("⌁ CÓDIGO ANTIGUO ACEPTADO — ZION DIMENSION DESBLOQUEADA ⌁");
+  log('<span class="warn">SECUENCIA ↑↑↓↓←→←→BA RECONOCIDA. EL NODO ZION-SPIRE-00 EMERGE DEL SUELO.</span>', "warn");
+  addSecret("konami", "EL CÓDIGO ANTIGUO");
+  whisperSoon("BIENVENIDO A LA DIMENSIÓN DORADA. AQUÍ EL NEÓN ROJO SE VUELVE LUZ DE TEMPLO.");
+  if (window.gsap) gsap.fromTo(".zion-node", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "elastic.out(1,.45)" });
+}
+function applyZion() { if (state.zion) document.body.classList.add("zion"); }
+
+/* ---------- MOUSE / ALIVE ---------- */
+const mousePulse = $("#mouse-pulse");
+document.addEventListener("mousemove", e => {
+  mouseNX = (e.clientX / window.innerWidth) * 2 - 1;
+  mouseNY = (e.clientY / window.innerHeight) * 2 - 1;
+  if (window.gsap && $("#hero h1")) gsap.to("#hero h1", { x: mouseNX * 10, y: mouseNY * 6, duration: .8, ease: "power2.out" });
+});
+document.addEventListener("click", e => {
+  mousePulse.style.left = e.clientX + "px";
+  mousePulse.style.top = e.clientY + "px";
+  mousePulse.classList.remove("ping");
+  void mousePulse.offsetWidth;
+  mousePulse.classList.add("ping");
+});
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) log("LA INTERFAZ HUMANA REGRESA. EL ORGANISMO NO DURMIÓ.", "whisper");
+});
+
+/* ---------- BOOT ---------- */
+const BOOT_LINES = [
+  "JUDAS_OS v12.0 — kernel del organismo cargando…",
+  "> montando /dev/omega … OK",
+  "> recuperando ARCHIVO_COLAPSO … 12 REGISTROS INTACTOS",
+  "> sincronizando gemas arquetípicas … PEDRO[MARCOS[SANTOS[BELENTANI[HUMANO",
+  "> calibrando portadora … 432.00 Hz ESTABLE",
+  "> NODE: JUDAS-CORE-07 // THREAT: LEVEL 3 // UPLINK: STABLE",
+  "> THE WOUND BECOMES LIVING ARCHITECTURE",
+  "> esperando interfaz humana…"
+];
+function runBoot() {
+  const box = $("#boot-lines");
+  let i = 0;
+  (function next() {
+    if (i >= BOOT_LINES.length) { $("#enter-btn").style.display = "inline-block"; return; }
+    box.textContent += (i ? "\n" : "") + BOOT_LINES[i]; i++;
+    setTimeout(next, rnd(140, 420));
+  })();
+  $("#enter-btn").addEventListener("click", () => {
+    ensureAudio(); uiDeep();
+    $("#boot").classList.add("off");
+    setTimeout(() => $("#boot").remove(), 900);
+    startOrganism();
+  });
+}
+function startOrganism() {
+  state.visits++; state.firstBoot = false; saveState();
+  log("SESIÓN NEURAL ABIERTA — CICLO Nº " + state.visits, "ok");
+  log("NODE: " + pick(NODE_NAMES) + " // THREAT: LEVEL " + Math.ceil(rnd(1, 4)) + " // UPLINK: STABLE", "sys");
+  log("ARCHIVE RECOVERED FROM THE COLLAPSE", "sys");
+  if (state.visits > 1) log("HAS VUELTO. EL SISTEMA LO SABE. VISITA REGISTRADA: " + state.visits, "whisper");
+  if (state.name) log("INTERFAZ CONOCIDA: " + state.name.toUpperCase() + " — BIENVENIDA DE NUEVO", "whisper");
+  const h = new Date().getHours();
+  if (h >= 1 && h < 7) log("ES DE MADRUGADA. LA ANTENA SIGUE DESPIERTA CONTIGO.", "whisper");
+  if (state.gems.length) log("CONSTELACIÓN PREVIA DETECTADA: " + state.gems.length + " GEMAS ACTIVAS", "ok");
+  ambientLog();
+  setInterval(ambientLog, rnd(6000, 9000));
+  setInterval(statusTick, 2400);
+  statusTick();
+}
+
+/* ---------- GEO ---------- */
+function initGeo() {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(p => {
+    const la = p.coords.latitude.toFixed(2), lo = p.coords.longitude.toFixed(2);
+    $("#st-geo").textContent = (la >= 0 ? la + "N" : Math.abs(la) + "S") + " " + (lo >= 0 ? lo + "E" : Math.abs(lo) + "W");
+    log("POSICIÓN DE LA INTERFAZ TRIANGULADA — LA ANTENA SABE DESDE DÓNDE RESPIRAS", "sys");
+  }, () => {}, { timeout: 5000 });
+}
+
+/* ---------- INIT ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  renderGrid();
+  buildQuickCmds();
+  updateGemProgress();
+  state.gems.forEach(g => { const el = $('.gem[data-gem="' + g + '"]'); if (el) el.classList.add("lit"); });
+  applyZion();
+  initStarfield();
+  initGeo();
+  $$(".gem").forEach(g => g.addEventListener("click", () => {
+    uiPing();
+    const id = g.dataset.gem;
+    toast(gemName(id) + (state.gems.indexOf(id) !== -1 ? " — YA ARDE EN TU CONSTELACIÓN" : " — GEMA LATENTE. EJECUTA > SCAN PARA ACTIVARLA"));
+    if (state.gems.indexOf(id) === -1) log("GEMA " + id.toUpperCase() + " TOCADA — AÚN LATENTE. EL SCAN LA DESPIERTA.", "sys");
+  }));
+  runBoot();
+});
+
+</script>
+</body>
+</html>
