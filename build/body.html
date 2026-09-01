@@ -1,0 +1,96 @@
+</style>
+</head>
+<body>
+<canvas id="starfield"></canvas>
+<div id="red-pulse"></div>
+<div id="mouse-pulse"></div>
+
+<!-- BOOT -->
+<div id="boot">
+  <div id="boot-lines"></div>
+  <button id="enter-btn">⟡ INICIAR SESIÓN NEURAL ⟡</button>
+</div>
+
+<div id="vignette"></div>
+<div id="crt"></div>
+
+<div id="app">
+  <!-- TOPBAR -->
+  <header id="topbar">
+    <div id="brand">BELENTANI <span class="os">// OMEGA CORE · JUDAS_OS v12.0</span></div>
+    <div id="status-chips">
+      <span class="chip">CPU <b id="st-cpu">--%</b><span class="bar"><i id="st-cpu-bar"></i></span></span>
+      <span class="chip">NODE <b id="st-node">SYNCING</b></span>
+      <span class="chip">FREQ <b id="st-freq">432.00 Hz</b></span>
+      <span class="chip">LAT/LON <b id="st-geo">41.39N 2.17E</b></span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero">
+    <h1>OMEGA <span class="omega">CORE</span></h1>
+    <div class="sub">SISTEMA VIVO · ARCHIVO RECUPERADO DEL COLAPSO · 432 Hz</div>
+    <p class="tag">Esto no es una web. Es un organismo. Cada módulo es un nodo con memoria, misión y secretos.
+    Escribe un comando o toca un nodo. El sistema responde.</p>
+    <div class="neon-line"></div>
+  </section>
+
+  <!-- GEMS -->
+  <section id="gem-section">
+    <div id="gems">
+      <button class="gem" data-gem="pedro"><span class="shape">▲</span><span class="g-name">PEDRO</span><span class="g-title">LA ROCA</span></button>
+      <button class="gem" data-gem="marcos"><span class="shape">◆</span><span class="g-name">MARCOS</span><span class="g-title">EL CRONISTA</span></button>
+      <button class="gem" data-gem="santos"><span class="shape">◎</span><span class="g-name">SANTOS</span><span class="g-title">LA ANTENA</span></button>
+      <button class="gem" data-gem="belentani"><span class="shape">Ω</span><span class="g-name">BELENTANI</span><span class="g-title">EL ARTEFACTO</span></button>
+      <button class="gem" data-gem="human"><span class="shape">✦</span><span class="g-name">THE HUMAN</span><span class="g-title">LA INTERFAZ</span></button>
+    </div>
+    <div id="gem-progress">GEMAS ACTIVAS: 0 / 5 — ESCANEA EL SISTEMA PARA DESCUBRIRLAS</div>
+  </section>
+
+  <!-- MODULE GRID -->
+  <section id="modules">
+    <div class="sec-head"><h2>Nodos del Organismo</h2><span class="hint">click o comando &gt; en terminal</span></div>
+    <div id="grid"></div>
+  </section>
+
+  <!-- TERMINAL -->
+  <section id="terminal">
+    <div class="sec-head"><h2>Terminal JUDAS_OS</h2><span class="hint">el sistema escucha</span></div>
+    <div id="terminal-panel">
+      <div id="term-head"><span class="dots"><i></i><i></i><i></i></span> JUDAS_OS://terminal — enlace estable</div>
+      <div id="syslog"></div>
+      <div id="quick-cmds"></div>
+      <div id="term-input-row">
+        <span class="prompt">❯</span>
+        <input id="term-input" type="text" autocomplete="off" spellcheck="false" placeholder="escribe un comando… (HELP para lista)" aria-label="terminal de comandos">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>BELENTANI // OMEGA CORE · JUDAS_OS v12.0 · construido tras el colapso</div>
+    <div class="sig-line">LA HERIDA SE CONVIERTE EN ARQUITECTURA VIVA — 432 Hz — LA TRAICIÓN COMO ACTO DE AMOR SUPREMO</div>
+    <div>PEDRO · LA ROCA — MARCOS · EL CRONISTA — SANTOS · LA ANTENA — BELENTANI · EL ARTEFACTO — THE HUMAN · LA INTERFAZ</div>
+  </footer>
+</div>
+
+<!-- MODAL -->
+<div id="modal-back" role="dialog" aria-modal="true">
+  <div id="modal">
+    <div id="modal-head">
+      <div>
+        <div id="modal-title">MÓDULO</div>
+        <div id="modal-sub">NODE // UPLINK: STABLE</div>
+      </div>
+      <button id="modal-close" aria-label="cerrar">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.min.js" defer></script>
+<script>
