@@ -853,6 +853,75 @@ function initGeo() {
   }, () => {}, { timeout: 5000 });
 }
 
+/* ---------- AMBIENT PLAYER (persistent widget) ---------- */
+const apToggle = $("#ap-toggle");
+const apTrack = $("#ap-track");
+const apVol = $("#ap-vol");
+let ambientDroneActive = false;
+
+function syncApUI() {
+  if (!apToggle) return;
+  apToggle.textContent = droneOn ? "■" : "▶";
+  if (apTrack) apTrack.textContent = droneOn ? "DRONE 432 Hz · LIVE" : "DRONE 432 Hz";
+}
+
+// Wrap the original toggleDrone to sync UI
+const _origToggleDrone = toggleDrone;
+toggleDrone = function () {
+  _origToggleDrone();
+  ambientDroneActive = droneOn;
+  syncApUI();
+};
+
+// Apply volume from slider to drone gain
+function applyApVolume() {
+  if (droneGain && audioCtx) {
+    const v = (apVol ? +apVol.value : 30) / 100;
+    droneGain.gain.setTargetAtTime(v * 0.12, audioCtx.currentTime, 0.3);
+  }
+}
+
+if (apToggle) {
+  apToggle.addEventListener("click", () => {
+    ensureAudio();
+    toggleDrone();
+    if (droneOn) applyApVolume();
+  });
+}
+if (apVol) {
+  apVol.addEventListener("input", () => { applyApVolume(); });
+}
+
+// Pause ambient drone when JUDAS or Forge starts playing
+const _origToggleJudas = toggleJudas;
+toggleJudas = function () {
+  if (!judasPlaying && droneOn) {
+    if (droneGain) droneGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.4);
+    droneOn = false;
+    syncApUI();
+  }
+  _origToggleJudas();
+};
+
+const _origStopJudas = stopJudas;
+stopJudas = function () {
+  _origStopJudas();
+  syncApUI();
+};
+
+// Pause drone when Beat Forge starts
+const _origBuildForgeEngine = typeof buildForgeEngine === "function" ? buildForgeEngine : null;
+if (_origBuildForgeEngine) {
+  buildForgeEngine = function (bpmState) {
+    if (droneOn && audioCtx) {
+      droneGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.4);
+      droneOn = false;
+      syncApUI();
+    }
+    _origBuildForgeEngine(bpmState);
+  };
+}
+
 /* ---------- INIT ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderGrid();

@@ -236,4 +236,34 @@ body.zion #starfield{filter:hue-rotate(190deg) brightness(1.1)}
   #grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
   .node{min-height:128px;padding:14px 12px}
   #status-chips{margin-left:0;width:100%}
+  #ambient-player{right:8px;bottom:8px;max-width:220px}
+  #ambient-player .ap-track{display:none}
 }
+
+/* ---------- AMBIENT PLAYER ---------- */
+#ambient-player{
+  position:fixed;bottom:14px;right:14px;z-index:110;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(5,2,4,.92);border:1px solid rgba(255,7,58,.35);
+  backdrop-filter:blur(10px);padding:8px 14px;
+  box-shadow:0 0 24px rgba(255,7,58,.12);
+  font-size:11px;letter-spacing:.1em;color:#a99d9a;
+  transition:opacity .4s ease;max-width:280px}
+#ambient-player:hover{border-color:var(--red);box-shadow:0 0 30px rgba(255,7,58,.25)}
+#ambient-player .ap-btn{
+  background:transparent;border:1px solid rgba(255,7,58,.4);color:var(--red);
+  width:28px;height:28px;font-size:13px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .2s;flex-shrink:0}
+#ambient-player .ap-btn:hover{background:var(--red);color:#000;box-shadow:0 0 14px rgba(255,7,58,.5)}
+#ambient-player .ap-track{color:#6a5f5c;font-size:9px;letter-spacing:.14em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+#ambient-player .ap-vol{
+  width:50px;height:3px;-webkit-appearance:none;appearance:none;
+  background:#20040a;outline:none;cursor:pointer;flex-shrink:0}
+#ambient-player .ap-vol::-webkit-slider-thumb{
+  -webkit-appearance:none;width:10px;height:10px;background:var(--red);border:none;cursor:pointer}
+
+/* ---------- FOOTER ENHANCED ---------- */
+footer .footer-links{margin-top:10px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+footer .footer-links a{color:var(--muted);font-size:10px;letter-spacing:.16em;transition:color .2s}
+footer .footer-links a:hover{color:var(--red)}
+footer .footer-copy{color:var(--red-dim);font-size:9px;letter-spacing:.2em;margin-top:8px}
