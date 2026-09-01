@@ -63,6 +63,7 @@
 :root{
   --bg:#000000;
   --bg2:#050208;
+  --primary:#ff2d2d;
   --red:#ff073a;
   --red-dim:#7a0e1e;
   --blood:#8a0303;
@@ -330,6 +331,38 @@ footer .footer-links a{color:var(--muted);font-size:10px;letter-spacing:.16em;tr
 footer .footer-links a:hover{color:var(--red)}
 footer .footer-copy{color:var(--red-dim);font-size:9px;letter-spacing:.2em;margin-top:8px}
 
+/* ---------- 3D LOGO ---------- */
+#hero-logo{width:100%;height:clamp(200px,35vw,340px);margin:0 auto 18px;position:relative;overflow:hidden;pointer-events:none}
+#hero-logo canvas{display:block;width:100%!important;height:100%!important}
+
+/* ---------- GALLERY ---------- */
+#gallery-scroll{display:flex;gap:22px;overflow-x:auto;padding:18px 4px 28px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--red-dim) #0a0205}
+#gallery-scroll::-webkit-scrollbar{height:6px}
+#gallery-scroll::-webkit-scrollbar-thumb{background:var(--red-dim)}
+.gallery-card{flex:0 0 clamp(240px,30vw,320px);aspect-ratio:3/4;perspective:800px;scroll-snap-align:center;position:relative}
+.gallery-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .4s ease,box-shadow .4s ease;border:1px solid var(--border);background:var(--glass2);backdrop-filter:blur(8px);overflow:hidden}
+.gallery-card:hover .gallery-inner{border-color:var(--red);box-shadow:0 0 30px rgba(255,7,58,.35),inset 0 0 20px rgba(255,7,58,.06)}
+.gallery-inner img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.85) contrast(1.1);transition:transform .5s ease}
+.gallery-card:hover .gallery-inner img{transform:scale(1.05)}
+.gallery-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(0,0,0,.7) 100%);pointer-events:none}
+.gallery-caption{position:absolute;bottom:0;left:0;right:0;padding:14px;font-family:var(--display);font-size:11px;letter-spacing:.3em;color:var(--red);text-shadow:0 0 12px rgba(255,7,58,.8);background:linear-gradient(transparent,rgba(0,0,0,.85));transform:translateY(6px);transition:transform .4s ease,opacity .4s ease;opacity:.7}
+.gallery-card:hover .gallery-caption{transform:translateY(0);opacity:1}
+
+/* ---------- NEURAL MIRROR ---------- */
+#neural-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;min-height:420px}
+#nm-video-box{position:relative;border:1px solid var(--border);background:#000;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#nm-video-box video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+#nm-canvas-box{position:relative;border:1px solid var(--border);background:#000;overflow:hidden}
+#nm-canvas-box canvas{width:100%;height:100%;display:block}
+#nm-status{font-size:10px;letter-spacing:.2em;color:var(--red-dim);margin-top:10px;text-align:center}
+@media(max-width:640px){#neural-wrap{grid-template-columns:1fr}}
+
+/* ---------- REDUCED MOTION ---------- */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  #hero-logo,.gallery-inner,.gallery-inner img,.gallery-caption{transition:none!important;animation:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -360,6 +393,7 @@ footer .footer-copy{color:var(--red-dim);font-size:9px;letter-spacing:.2em;margi
 
   <!-- HERO -->
   <section id="hero">
+    <div id="hero-logo"></div>
     <h1>OMEGA <span class="omega">CORE</span></h1>
     <div class="sub">SISTEMA VIVO · ARCHIVO RECUPERADO DEL COLAPSO · 432 Hz</div>
     <p class="tag">Esto no es una web. Es un organismo. Cada módulo es un nodo con memoria, misión y secretos.
@@ -397,6 +431,22 @@ footer .footer-copy{color:var(--red-dim);font-size:9px;letter-spacing:.2em;margi
         <input id="term-input" type="text" autocomplete="off" spellcheck="false" placeholder="escribe un comando… (HELP para lista)" aria-label="terminal de comandos">
       </div>
     </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="sec-head"><h2>Gallery</h2><span class="hint">archivo visual · profundidad parallax</span></div>
+    <div id="gallery-scroll"></div>
+  </section>
+
+  <!-- NEURAL MIRROR -->
+  <section id="neural-mirror">
+    <div class="sec-head"><h2>Neural Mirror</h2><span class="hint">body as input, skeleton as output</span></div>
+    <div id="neural-wrap">
+      <div id="nm-video-box"><video id="nm-video" autoplay playsinline muted></video></div>
+      <div id="nm-canvas-box"><canvas id="nm-canvas"></canvas></div>
+    </div>
+    <div id="nm-status">INICIALIZANDO ESPEJO NEURAL…</div>
   </section>
 
   <footer>
@@ -438,7 +488,10 @@ footer .footer-copy{color:var(--red-dim);font-size:9px;letter-spacing:.2em;margi
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous" defer></script>
 <script>
 
 /* ============================================================
@@ -1367,6 +1420,357 @@ if (_origBuildForgeEngine) {
   };
 }
 
+/* ---------- 3D LOGO ---------- */
+let logoScene = null, logoCamera = null, logoRenderer = null, logoGroup = null, logoVisible = true;
+function initLogo3D() {
+  var container = document.getElementById("hero-logo");
+  if (!container || !window.THREE) return;
+  var W = container.clientWidth, H = container.clientHeight;
+  if (W < 10 || H < 10) return;
+  try {
+    logoRenderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    logoRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    logoRenderer.setSize(W, H);
+    logoRenderer.setClearColor(0x000000, 0);
+    container.appendChild(logoRenderer.domElement);
+    logoScene = new THREE.Scene();
+    logoCamera = new THREE.PerspectiveCamera(40, W / H, 0.1, 100);
+    logoCamera.position.set(0, 0, 6);
+    logoScene.add(new THREE.AmbientLight(0xffffff, 0.25));
+    var dLight = new THREE.DirectionalLight(0xffffff, 0.7);
+    dLight.position.set(3, 4, 5);
+    logoScene.add(dLight);
+    var pLight = new THREE.PointLight(0xff2d2d, 1.2, 12);
+    pLight.position.set(-2, 1, 4);
+    logoScene.add(pLight);
+    var baseMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.92, roughness: 0.18 });
+    var edgeMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.9, roughness: 0.2, emissive: 0xff2d2d, emissiveIntensity: 0.7 });
+    logoGroup = new THREE.Group();
+    // Vertical spine
+    var spine = new THREE.Mesh(new THREE.BoxGeometry(0.4, 3.2, 0.4), baseMat);
+    spine.position.set(-0.7, 0, 0);
+    logoGroup.add(spine);
+    // Top horizontal
+    var topBar = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.35, 0.4), baseMat);
+    topBar.position.set(-0.1, 1.42, 0);
+    logoGroup.add(topBar);
+    // Middle horizontal
+    var midBar = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.3, 0.4), baseMat);
+    midBar.position.set(0, 0, 0);
+    logoGroup.add(midBar);
+    // Bottom horizontal
+    var botBar = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.35, 0.4), baseMat);
+    botBar.position.set(-0.1, -1.42, 0);
+    logoGroup.add(botBar);
+    // Top bump (torus)
+    var topTorus = new THREE.Mesh(new THREE.TorusGeometry(0.58, 0.18, 10, 20, Math.PI), edgeMat);
+    topTorus.position.set(0.5, 0.72, 0);
+    topTorus.rotation.z = -Math.PI / 2;
+    logoGroup.add(topTorus);
+    // Bottom bump (torus)
+    var botTorus = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.18, 10, 20, Math.PI), edgeMat);
+    botTorus.position.set(0.55, -0.72, 0);
+    botTorus.rotation.z = -Math.PI / 2;
+    logoGroup.add(botTorus);
+    // Edge glow wireframe
+    var meshChildren = logoGroup.children.slice();
+    meshChildren.forEach(function(child) {
+      var edges = new THREE.EdgesGeometry(child.geometry);
+      var line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xff2d2d, transparent: true, opacity: 0.4 }));
+      line.position.copy(child.position);
+      line.rotation.copy(child.rotation);
+      line.scale.copy(child.scale);
+      logoGroup.add(line);
+    });
+    logoGroup.position.y = 0.1;
+    logoScene.add(logoGroup);
+    // Intersection observer for perf
+    var obs = new IntersectionObserver(function(entries) {
+      logoVisible = entries[0].isIntersecting;
+    }, { threshold: 0.1 });
+    obs.observe(container);
+    (function animLogo(t) {
+      requestAnimationFrame(animLogo);
+      if (!logoVisible || !logoGroup) return;
+      logoGroup.rotation.y = t * 0.0004;
+      logoGroup.position.y = 0.1 + Math.sin(t * 0.001) * 0.12;
+      if (typeof mouseNX !== "undefined") {
+        logoGroup.rotation.x += ((-mouseNY * 0.3) - logoGroup.rotation.x) * 0.04;
+        var targetRY = t * 0.0004 + mouseNX * 0.25;
+        logoGroup.rotation.y += (targetRY - logoGroup.rotation.y) * 0.03;
+      }
+      logoRenderer.render(logoScene, logoCamera);
+    })(0);
+    window.addEventListener("resize", function() {
+      var w2 = container.clientWidth, h2 = container.clientHeight;
+      if (w2 < 10 || h2 < 10) return;
+      logoCamera.aspect = w2 / h2;
+      logoCamera.updateProjectionMatrix();
+      logoRenderer.setSize(w2, h2);
+    });
+  } catch (e) { /* graceful fail */ }
+}
+
+/* ---------- GALLERY ---------- */
+var GALLERY_ITEMS = [
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/BL_01_brutalist_low.png", cap: "BRUTALIST" },
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/BL_09_rain_street.png", cap: "RAIN STREET" },
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/BL_27_surreal_red.png", cap: "SURREAL RED" },
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/BL_35_cyberpunk_neon.png", cap: "CYBERPUNK NEON" },
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/BL_41_futur_city_night.png", cap: "CITY NIGHT" },
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/belentani_fullbody_hologram_concert.png", cap: "HOLOGRAM" }
+];
+function initGallery() {
+  var scroll = document.getElementById("gallery-scroll");
+  if (!scroll) return;
+  GALLERY_ITEMS.forEach(function(item, idx) {
+    var card = document.createElement("div");
+    card.className = "gallery-card";
+    card.dataset.depth = String(1 - idx * 0.08);
+    card.innerHTML =
+      '<div class="gallery-inner">' +
+      '<img src="' + item.url + '" alt="' + item.cap + '" loading="lazy">' +
+      '<div class="gallery-vignette"></div>' +
+      '<div class="gallery-caption">' + item.cap + '</div>' +
+      '</div>';
+    scroll.appendChild(card);
+  });
+  // Mouse tilt
+  scroll.querySelectorAll(".gallery-card").forEach(function(card) {
+    var inner = card.querySelector(".gallery-inner");
+    card.addEventListener("mousemove", function(e) {
+      var rect = card.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+      var dx = (e.clientX - cx) / (rect.width / 2);
+      var dy = (e.clientY - cy) / (rect.height / 2);
+      inner.style.transform = "rotateY(" + (dx * 14).toFixed(1) + "deg) rotateX(" + (-dy * 10).toFixed(1) + "deg) translateZ(12px)";
+    });
+    card.addEventListener("mouseleave", function() {
+      inner.style.transform = "";
+    });
+  });
+  // Scroll parallax
+  function onGalleryScroll() {
+    var sLeft = scroll.scrollLeft;
+    scroll.querySelectorAll(".gallery-card").forEach(function(card) {
+      var depth = parseFloat(card.dataset.depth) || 1;
+      var offset = sLeft * (1 - depth) * 0.25;
+      card.style.transform = "translateX(" + (-offset).toFixed(1) + "px)";
+    });
+  }
+  scroll.addEventListener("scroll", onGalleryScroll, { passive: true });
+  // GSAP entrance
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from("#gallery .gallery-card", {
+      scrollTrigger: { trigger: "#gallery", start: "top 80%" },
+      y: 50, opacity: 0, stagger: 0.12, duration: 0.9, ease: "power3.out"
+    });
+  }
+}
+
+/* ---------- NEURAL MIRROR ---------- */
+var nmPose = null, nmCamera = null, nmRenderer = null, nmScene = null, nmVisible = true;
+var nmJoints = {}, nmLines = [], nmDemoMode = false, nmAnimId = null;
+var NM_CONNECTIONS = [
+  [11,12],[11,13],[13,15],[12,14],[14,16],
+  [11,23],[12,24],[23,24],[23,25],[24,26],[25,27],[26,28]
+];
+function initNeuralMirror() {
+  var canvasBox = document.getElementById("nm-canvas-box");
+  var video = document.getElementById("nm-video");
+  var status = document.getElementById("nm-status");
+  if (!canvasBox || !video || !window.THREE) {
+    if (status) status.textContent = "THREE.JS NO DISPONIBLE";
+    startNMDemo(); return;
+  }
+  var W = canvasBox.clientWidth, H = canvasBox.clientHeight;
+  if (W < 10) W = 400; if (H < 10) H = 400;
+  try {
+    nmRenderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    nmRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    nmRenderer.setSize(W, H);
+    nmRenderer.setClearColor(0x000000, 1);
+    canvasBox.appendChild(nmRenderer.domElement);
+    nmScene = new THREE.Scene();
+    nmCamera = new THREE.PerspectiveCamera(50, W / H, 0.1, 100);
+    nmCamera.position.set(0, 0, 4);
+    nmScene.add(new THREE.AmbientLight(0xffffff, 0.4));
+    var pL = new THREE.PointLight(0xff2d2d, 1.5, 10);
+    pL.position.set(0, 1, 3);
+    nmScene.add(pL);
+    // Create joint spheres
+    var jointGeo = new THREE.SphereGeometry(0.06, 8, 8);
+    var jointMat = new THREE.MeshStandardMaterial({ color: 0xff2d2d, emissive: 0xff2d2d, emissiveIntensity: 0.9, metalness: 0.7, roughness: 0.3 });
+    var jointIds = [11,12,13,14,15,16,23,24,25,26,27,28];
+    jointIds.forEach(function(id) {
+      var sphere = new THREE.Mesh(jointGeo, jointMat.clone());
+      sphere.visible = false;
+      nmScene.add(sphere);
+      nmJoints[id] = sphere;
+    });
+    // Create connection lines
+    var lineMat = new THREE.LineBasicMaterial({ color: 0xff2d2d, transparent: true, opacity: 0.6 });
+    NM_CONNECTIONS.forEach(function(conn) {
+      var geo = new THREE.BufferGeometry();
+      var positions = new Float32Array(6);
+      geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      var line = new THREE.Line(geo, lineMat);
+      line.visible = false;
+      nmScene.add(line);
+      nmLines.push({ line: line, a: conn[0], b: conn[1] });
+    });
+    // Intersection observer
+    var obs = new IntersectionObserver(function(entries) {
+      nmVisible = entries[0].isIntersecting;
+    }, { threshold: 0.05 });
+    obs.observe(canvasBox);
+    // Resize
+    window.addEventListener("resize", function() {
+      var w2 = canvasBox.clientWidth, h2 = canvasBox.clientHeight;
+      if (w2 < 10 || h2 < 10) return;
+      nmCamera.aspect = w2 / h2;
+      nmCamera.updateProjectionMatrix();
+      nmRenderer.setSize(w2, h2);
+    });
+    // Try MediaPipe
+    if (window.Pose) {
+      try {
+        var pose = new Pose({
+          locateFile: function(file) { return "https://cdn.jsdelivr.net/npm/@mediapipe/pose/" + file; }
+        });
+        pose.setOptions({ modelComplexity: 0, smoothLandmarks: true, enableSegmentation: false, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
+        pose.onResults(function(results) {
+          if (results.poseLandmarks) {
+            nmDemoMode = false;
+            if (status) status.textContent = "ESPEJO NEURAL ACTIVO — RASTREANDO " + results.poseLandmarks.length + " PUNTOS";
+            var lm = results.poseLandmarks;
+            jointIds.forEach(function(id) {
+              if (lm[id] && nmJoints[id]) {
+                var p = lm[id];
+                var x = (p.x - 0.5) * 4;
+                var y = -(p.y - 0.5) * 4;
+                var z = -(p.z || 0) * 4;
+                nmJoints[id].position.set(x, y, z);
+                nmJoints[id].visible = p.visibility > 0.3;
+                nmJoints[id].material.emissiveIntensity = 0.5 + (p.visibility || 0) * 0.8;
+              }
+            });
+            nmLines.forEach(function(ln) {
+              var ja = nmJoints[ln.a], jb = nmJoints[ln.b];
+              if (ja && jb && ja.visible && jb.visible) {
+                ln.line.visible = true;
+                var pos = ln.line.geometry.attributes.position;
+                pos.setXYZ(0, ja.position.x, ja.position.y, ja.position.z);
+                pos.setXYZ(1, jb.position.x, jb.position.y, jb.position.z);
+                pos.needsUpdate = true;
+              } else {
+                ln.line.visible = false;
+              }
+            });
+          }
+        });
+        if (window.Camera) {
+          var cam = new Camera(video, {
+            onFrame: function() { return pose.send({ image: video }); },
+            width: 640, height: 480
+          });
+          cam.start().then(function() {
+            if (status) status.textContent = "CÁMARA ACTIVA — ESPERANDO POSE…";
+          }).catch(function() {
+            if (status) status.textContent = "CÁMARA DENEGADA — MODO DEMO";
+            startNMDemo();
+          });
+        } else {
+          // Manual webcam setup
+          navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } }).then(function(stream) {
+            video.srcObject = stream;
+            video.play();
+            if (status) status.textContent = "CÁMARA ACTIVA — ESPERANDO POSE…";
+            (function detectLoop() {
+              if (video.readyState >= 2) { pose.send({ image: video }); }
+              if (!nmDemoMode) requestAnimationFrame(detectLoop);
+            })();
+          }).catch(function() {
+            if (status) status.textContent = "CÁMARA DENEGADA — MODO DEMO";
+            startNMDemo();
+          });
+        }
+      } catch (e) {
+        if (status) status.textContent = "MEDIAPIPE ERROR — MODO DEMO";
+        startNMDemo();
+      }
+    } else {
+      if (status) status.textContent = "MEDIAPIPE NO CARGADO — MODO DEMO";
+      startNMDemo();
+    }
+    // Render loop
+    (function animNM(t) {
+      nmAnimId = requestAnimationFrame(animNM);
+      if (!nmVisible || !nmRenderer) return;
+      if (nmDemoMode) {
+        // Auto-rotate demo skeleton
+        var s = t * 0.001;
+        var demoPose = {
+          11: [-0.5, 0.6, 0], 12: [0.5, 0.6, 0],
+          13: [-0.8, 0.1, Math.sin(s) * 0.3], 14: [0.8, 0.1, Math.sin(s + 1) * 0.3],
+          15: [-0.9, -0.4, Math.sin(s) * 0.4], 16: [0.9, -0.4, Math.sin(s + 1) * 0.4],
+          23: [-0.4, -0.5, 0], 24: [0.4, -0.5, 0],
+          25: [-0.5, -1.1, Math.sin(s * 0.7) * 0.15], 26: [0.5, -1.1, Math.sin(s * 0.7 + 1) * 0.15],
+          27: [-0.5, -1.6, 0], 28: [0.5, -1.6, 0]
+        };
+        jointIds.forEach(function(id) {
+          if (demoPose[id] && nmJoints[id]) {
+            nmJoints[id].position.set(demoPose[id][0], demoPose[id][1], demoPose[id][2]);
+            nmJoints[id].visible = true;
+            nmJoints[id].material.emissiveIntensity = 0.7 + Math.sin(s * 2 + id) * 0.3;
+          }
+        });
+        nmLines.forEach(function(ln) {
+          var ja = nmJoints[ln.a], jb = nmJoints[ln.b];
+          if (ja && jb) {
+            ln.line.visible = true;
+            var pos = ln.line.geometry.attributes.position;
+            pos.setXYZ(0, ja.position.x, ja.position.y, ja.position.z);
+            pos.setXYZ(1, jb.position.x, jb.position.y, jb.position.z);
+            pos.needsUpdate = true;
+          }
+        });
+        nmScene.rotation.y = Math.sin(s * 0.3) * 0.4;
+      } else {
+        nmScene.rotation.y = 0;
+      }
+      nmRenderer.render(nmScene, nmCamera);
+    })(0);
+  } catch (e) {
+    if (status) status.textContent = "ERROR INICIALIZANDO — MODO DEMO";
+    startNMDemo();
+  }
+}
+function startNMDemo() {
+  nmDemoMode = true;
+  var status = document.getElementById("nm-status");
+  if (status) status.textContent = "MODO DEMO — ESQUELETO AUTO-ROTATIVO";
+  // Hide video, show only canvas
+  var videoBox = document.getElementById("nm-video-box");
+  if (videoBox) videoBox.innerHTML = '<div style="color:var(--red-dim);font-size:11px;letter-spacing:.2em;text-align:center;padding:20px">CÁMARA NO DISPONIBLE<br><span style="font-size:9px;color:#5a4f4c">PERMISO DENEGADO O NO SOPORTADO</span></div>';
+}
+
+/* ---------- GSAP SCROLL ENTRANCE ---------- */
+function initScrollAnimations() {
+  if (!window.gsap) return;
+  if (window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  // Hero entrance
+  gsap.from("#hero-logo", { y: -30, opacity: 0, duration: 1.2, delay: 0.3, ease: "power3.out" });
+  // Neural mirror entrance
+  if (window.ScrollTrigger) {
+    gsap.from("#neural-mirror", {
+      scrollTrigger: { trigger: "#neural-mirror", start: "top 85%" },
+      y: 40, opacity: 0, duration: 0.9, ease: "power3.out"
+    });
+  }
+}
+
 /* ---------- INIT ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderGrid();
@@ -1375,7 +1779,12 @@ document.addEventListener("DOMContentLoaded", () => {
   state.gems.forEach(g => { const el = $('.gem[data-gem="' + g + '"]'); if (el) el.classList.add("lit"); });
   applyZion();
   initStarfield();
+  initLogo3D();
+  initGallery();
+  initScrollAnimations();
   initGeo();
+  // Delay neural mirror init slightly for perf
+  setTimeout(initNeuralMirror, 1500);
   $$(".gem").forEach(g => g.addEventListener("click", () => {
     uiPing();
     const id = g.dataset.gem;

@@ -922,6 +922,240 @@ if (_origBuildForgeEngine) {
   };
 }
 
+/* ---------- 3D LOGO ---------- */
+let logoScene = null, logoCamera = null, logoRenderer = null, logoGroup = null, logoVisible = true;
+function initLogo3D() {
+  var container = document.getElementById("hero-logo");
+  if (!container || !window.THREE) return;
+  var W = container.clientWidth, H = container.clientHeight;
+  if (W < 10 || H < 10) return;
+  try {
+    logoRenderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    logoRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    logoRenderer.setSize(W, H);
+    logoRenderer.setClearColor(0x000000, 0);
+    container.appendChild(logoRenderer.domElement);
+    logoScene = new THREE.Scene();
+    logoCamera = new THREE.PerspectiveCamera(40, W / H, 0.1, 100);
+    logoCamera.position.set(0, 0, 6);
+    logoScene.add(new THREE.AmbientLight(0xffffff, 0.25));
+    var dLight = new THREE.DirectionalLight(0xffffff, 0.7);
+    dLight.position.set(3, 4, 5);
+    logoScene.add(dLight);
+    var pLight = new THREE.PointLight(0xff2d2d, 1.2, 12);
+    pLight.position.set(-2, 1, 4);
+    logoScene.add(pLight);
+    var baseMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.92, roughness: 0.18 });
+    var edgeMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.9, roughness: 0.2, emissive: 0xff2d2d, emissiveIntensity: 0.7 });
+    logoGroup = new THREE.Group();
+    var spine = new THREE.Mesh(new THREE.BoxGeometry(0.4, 3.2, 0.4), baseMat);
+    spine.position.set(-0.7, 0, 0);
+    logoGroup.add(spine);
+    var topBar = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.35, 0.4), baseMat);
+    topBar.position.set(-0.1, 1.42, 0);
+    logoGroup.add(topBar);
+    var midBar = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.3, 0.4), baseMat);
+    midBar.position.set(0, 0, 0);
+    logoGroup.add(midBar);
+    var botBar = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.35, 0.4), baseMat);
+    botBar.position.set(-0.1, -1.42, 0);
+    logoGroup.add(botBar);
+    var topTorus = new THREE.Mesh(new THREE.TorusGeometry(0.58, 0.18, 10, 20, Math.PI), edgeMat);
+    topTorus.position.set(0.5, 0.72, 0);
+    topTorus.rotation.z = -Math.PI / 2;
+    logoGroup.add(topTorus);
+    var botTorus = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.18, 10, 20, Math.PI), edgeMat);
+    botTorus.position.set(0.55, -0.72, 0);
+    botTorus.rotation.z = -Math.PI / 2;
+    logoGroup.add(botTorus);
+    var meshChildren = logoGroup.children.slice();
+    meshChildren.forEach(function(child) {
+      var edges = new THREE.EdgesGeometry(child.geometry);
+      var line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xff2d2d, transparent: true, opacity: 0.4 }));
+      line.position.copy(child.position);
+      line.rotation.copy(child.rotation);
+      line.scale.copy(child.scale);
+      logoGroup.add(line);
+    });
+    logoGroup.position.y = 0.1;
+    logoScene.add(logoGroup);
+    var obs = new IntersectionObserver(function(entries) { logoVisible = entries[0].isIntersecting; }, { threshold: 0.1 });
+    obs.observe(container);
+    (function animLogo(t) {
+      requestAnimationFrame(animLogo);
+      if (!logoVisible || !logoGroup) return;
+      logoGroup.rotation.y = t * 0.0004;
+      logoGroup.position.y = 0.1 + Math.sin(t * 0.001) * 0.12;
+      if (typeof mouseNX !== "undefined") {
+        logoGroup.rotation.x += ((-mouseNY * 0.3) - logoGroup.rotation.x) * 0.04;
+        var targetRY = t * 0.0004 + mouseNX * 0.25;
+        logoGroup.rotation.y += (targetRY - logoGroup.rotation.y) * 0.03;
+      }
+      logoRenderer.render(logoScene, logoCamera);
+    })(0);
+    window.addEventListener("resize", function() {
+      var w2 = container.clientWidth, h2 = container.clientHeight;
+      if (w2 < 10 || h2 < 10) return;
+      logoCamera.aspect = w2 / h2; logoCamera.updateProjectionMatrix();
+      logoRenderer.setSize(w2, h2);
+    });
+  } catch (e) {}
+}
+
+/* ---------- GALLERY ---------- */
+var GALLERY_ITEMS = [
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/BL_01_brutalist_low.png", cap: "BRUTALIST" },
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/BL_09_rain_street.png", cap: "RAIN STREET" },
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/BL_27_surreal_red.png", cap: "SURREAL RED" },
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/BL_35_cyberpunk_neon.png", cap: "CYBERPUNK NEON" },
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/BL_41_futur_city_night.png", cap: "CITY NIGHT" },
+  { url: "https://raw.githubusercontent.com/belentani7/belentaniobjetos/main/images/belentani_fullbody_hologram_concert.png", cap: "HOLOGRAM" }
+];
+function initGallery() {
+  var scroll = document.getElementById("gallery-scroll");
+  if (!scroll) return;
+  GALLERY_ITEMS.forEach(function(item, idx) {
+    var card = document.createElement("div");
+    card.className = "gallery-card";
+    card.dataset.depth = String(1 - idx * 0.08);
+    card.innerHTML = '<div class="gallery-inner"><img src="' + item.url + '" alt="' + item.cap + '" loading="lazy"><div class="gallery-vignette"></div><div class="gallery-caption">' + item.cap + '</div></div>';
+    scroll.appendChild(card);
+  });
+  scroll.querySelectorAll(".gallery-card").forEach(function(card) {
+    var inner = card.querySelector(".gallery-inner");
+    card.addEventListener("mousemove", function(e) {
+      var rect = card.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+      var dx = (e.clientX - cx) / (rect.width / 2), dy = (e.clientY - cy) / (rect.height / 2);
+      inner.style.transform = "rotateY(" + (dx * 14).toFixed(1) + "deg) rotateX(" + (-dy * 10).toFixed(1) + "deg) translateZ(12px)";
+    });
+    card.addEventListener("mouseleave", function() { inner.style.transform = ""; });
+  });
+  function onGalleryScroll() {
+    var sLeft = scroll.scrollLeft;
+    scroll.querySelectorAll(".gallery-card").forEach(function(card) {
+      var depth = parseFloat(card.dataset.depth) || 1;
+      var offset = sLeft * (1 - depth) * 0.25;
+      card.style.transform = "translateX(" + (-offset).toFixed(1) + "px)";
+    });
+  }
+  scroll.addEventListener("scroll", onGalleryScroll, { passive: true });
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from("#gallery .gallery-card", { scrollTrigger: { trigger: "#gallery", start: "top 80%" }, y: 50, opacity: 0, stagger: 0.12, duration: 0.9, ease: "power3.out" });
+  }
+}
+
+/* ---------- NEURAL MIRROR ---------- */
+var nmPose = null, nmCamera = null, nmRenderer = null, nmScene = null, nmVisible = true;
+var nmJoints = {}, nmLines = [], nmDemoMode = false, nmAnimId = null;
+var NM_CONNECTIONS = [[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[24,26],[25,27],[26,28]];
+function initNeuralMirror() {
+  var canvasBox = document.getElementById("nm-canvas-box");
+  var video = document.getElementById("nm-video");
+  var status = document.getElementById("nm-status");
+  if (!canvasBox || !video || !window.THREE) { if (status) status.textContent = "THREE.JS NO DISPONIBLE"; startNMDemo(); return; }
+  var W = canvasBox.clientWidth, H = canvasBox.clientHeight;
+  if (W < 10) W = 400; if (H < 10) H = 400;
+  try {
+    nmRenderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    nmRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    nmRenderer.setSize(W, H); nmRenderer.setClearColor(0x000000, 1);
+    canvasBox.appendChild(nmRenderer.domElement);
+    nmScene = new THREE.Scene();
+    nmCamera = new THREE.PerspectiveCamera(50, W / H, 0.1, 100);
+    nmCamera.position.set(0, 0, 4);
+    nmScene.add(new THREE.AmbientLight(0xffffff, 0.4));
+    var pL = new THREE.PointLight(0xff2d2d, 1.5, 10); pL.position.set(0, 1, 3); nmScene.add(pL);
+    var jointGeo = new THREE.SphereGeometry(0.06, 8, 8);
+    var jointMat = new THREE.MeshStandardMaterial({ color: 0xff2d2d, emissive: 0xff2d2d, emissiveIntensity: 0.9, metalness: 0.7, roughness: 0.3 });
+    var jointIds = [11,12,13,14,15,16,23,24,25,26,27,28];
+    jointIds.forEach(function(id) { var s = new THREE.Mesh(jointGeo, jointMat.clone()); s.visible = false; nmScene.add(s); nmJoints[id] = s; });
+    var lineMat = new THREE.LineBasicMaterial({ color: 0xff2d2d, transparent: true, opacity: 0.6 });
+    NM_CONNECTIONS.forEach(function(conn) {
+      var geo = new THREE.BufferGeometry(); var pos = new Float32Array(6);
+      geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      var line = new THREE.Line(geo, lineMat); line.visible = false; nmScene.add(line);
+      nmLines.push({ line: line, a: conn[0], b: conn[1] });
+    });
+    var obs = new IntersectionObserver(function(entries) { nmVisible = entries[0].isIntersecting; }, { threshold: 0.05 });
+    obs.observe(canvasBox);
+    window.addEventListener("resize", function() {
+      var w2 = canvasBox.clientWidth, h2 = canvasBox.clientHeight;
+      if (w2 < 10 || h2 < 10) return;
+      nmCamera.aspect = w2 / h2; nmCamera.updateProjectionMatrix(); nmRenderer.setSize(w2, h2);
+    });
+    if (window.Pose) {
+      try {
+        var pose = new Pose({ locateFile: function(file) { return "https://cdn.jsdelivr.net/npm/@mediapipe/pose/" + file; } });
+        pose.setOptions({ modelComplexity: 0, smoothLandmarks: true, enableSegmentation: false, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
+        pose.onResults(function(results) {
+          if (results.poseLandmarks) {
+            nmDemoMode = false;
+            if (status) status.textContent = "ESPEJO NEURAL ACTIVO — RASTREANDO " + results.poseLandmarks.length + " PUNTOS";
+            var lm = results.poseLandmarks;
+            jointIds.forEach(function(id) {
+              if (lm[id] && nmJoints[id]) {
+                var p = lm[id]; nmJoints[id].position.set((p.x - 0.5) * 4, -(p.y - 0.5) * 4, -(p.z || 0) * 4);
+                nmJoints[id].visible = p.visibility > 0.3;
+                nmJoints[id].material.emissiveIntensity = 0.5 + (p.visibility || 0) * 0.8;
+              }
+            });
+            nmLines.forEach(function(ln) {
+              var ja = nmJoints[ln.a], jb = nmJoints[ln.b];
+              if (ja && jb && ja.visible && jb.visible) {
+                ln.line.visible = true; var pos = ln.line.geometry.attributes.position;
+                pos.setXYZ(0, ja.position.x, ja.position.y, ja.position.z);
+                pos.setXYZ(1, jb.position.x, jb.position.y, jb.position.z);
+                pos.needsUpdate = true;
+              } else { ln.line.visible = false; }
+            });
+          }
+        });
+        if (window.Camera) {
+          var cam = new Camera(video, { onFrame: function() { return pose.send({ image: video }); }, width: 640, height: 480 });
+          cam.start().then(function() { if (status) status.textContent = "CÁMARA ACTIVA — ESPERANDO POSE…"; }).catch(function() { if (status) status.textContent = "CÁMARA DENEGADA — MODO DEMO"; startNMDemo(); });
+        } else {
+          navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } }).then(function(stream) {
+            video.srcObject = stream; video.play();
+            if (status) status.textContent = "CÁMARA ACTIVA — ESPERANDO POSE…";
+            (function detectLoop() { if (video.readyState >= 2) pose.send({ image: video }); if (!nmDemoMode) requestAnimationFrame(detectLoop); })();
+          }).catch(function() { if (status) status.textContent = "CÁMARA DENEGADA — MODO DEMO"; startNMDemo(); });
+        }
+      } catch (e) { if (status) status.textContent = "MEDIAPIPE ERROR — MODO DEMO"; startNMDemo(); }
+    } else { if (status) status.textContent = "MEDIAPIPE NO CARGADO — MODO DEMO"; startNMDemo(); }
+    (function animNM(t) {
+      nmAnimId = requestAnimationFrame(animNM);
+      if (!nmVisible || !nmRenderer) return;
+      if (nmDemoMode) {
+        var s = t * 0.001;
+        var demoPose = { 11:[-0.5,0.6,0],12:[0.5,0.6,0],13:[-0.8,0.1,Math.sin(s)*0.3],14:[0.8,0.1,Math.sin(s+1)*0.3],15:[-0.9,-0.4,Math.sin(s)*0.4],16:[0.9,-0.4,Math.sin(s+1)*0.4],23:[-0.4,-0.5,0],24:[0.4,-0.5,0],25:[-0.5,-1.1,Math.sin(s*0.7)*0.15],26:[0.5,-1.1,Math.sin(s*0.7+1)*0.15],27:[-0.5,-1.6,0],28:[0.5,-1.6,0] };
+        jointIds.forEach(function(id) { if (demoPose[id] && nmJoints[id]) { nmJoints[id].position.set(demoPose[id][0], demoPose[id][1], demoPose[id][2]); nmJoints[id].visible = true; nmJoints[id].material.emissiveIntensity = 0.7 + Math.sin(s * 2 + id) * 0.3; } });
+        nmLines.forEach(function(ln) { var ja = nmJoints[ln.a], jb = nmJoints[ln.b]; if (ja && jb) { ln.line.visible = true; var pos = ln.line.geometry.attributes.position; pos.setXYZ(0, ja.position.x, ja.position.y, ja.position.z); pos.setXYZ(1, jb.position.x, jb.position.y, jb.position.z); pos.needsUpdate = true; } });
+        nmScene.rotation.y = Math.sin(s * 0.3) * 0.4;
+      } else { nmScene.rotation.y = 0; }
+      nmRenderer.render(nmScene, nmCamera);
+    })(0);
+  } catch (e) { if (status) status.textContent = "ERROR INICIALIZANDO — MODO DEMO"; startNMDemo(); }
+}
+function startNMDemo() {
+  nmDemoMode = true;
+  var status = document.getElementById("nm-status");
+  if (status) status.textContent = "MODO DEMO — ESQUELETO AUTO-ROTATIVO";
+  var videoBox = document.getElementById("nm-video-box");
+  if (videoBox) videoBox.innerHTML = '<div style="color:var(--red-dim);font-size:11px;letter-spacing:.2em;text-align:center;padding:20px">CÁMARA NO DISPONIBLE<br><span style="font-size:9px;color:#5a4f4c">PERMISO DENEGADO O NO SOPORTADO</span></div>';
+}
+
+/* ---------- GSAP SCROLL ENTRANCE ---------- */
+function initScrollAnimations() {
+  if (!window.gsap) return;
+  if (window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  gsap.from("#hero-logo", { y: -30, opacity: 0, duration: 1.2, delay: 0.3, ease: "power3.out" });
+  if (window.ScrollTrigger) {
+    gsap.from("#neural-mirror", { scrollTrigger: { trigger: "#neural-mirror", start: "top 85%" }, y: 40, opacity: 0, duration: 0.9, ease: "power3.out" });
+  }
+}
+
 /* ---------- INIT ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderGrid();
@@ -930,7 +1164,11 @@ document.addEventListener("DOMContentLoaded", () => {
   state.gems.forEach(g => { const el = $('.gem[data-gem="' + g + '"]'); if (el) el.classList.add("lit"); });
   applyZion();
   initStarfield();
+  initLogo3D();
+  initGallery();
+  initScrollAnimations();
   initGeo();
+  setTimeout(initNeuralMirror, 1500);
   $$(".gem").forEach(g => g.addEventListener("click", () => {
     uiPing();
     const id = g.dataset.gem;
