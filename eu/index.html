@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belentani — Perfil profesional</title>
+<meta name="description" content="Belentani: artista y creative technologist. São Paulo → Barcelona. Propuestas, colaboraciones y trabajo con Noiacore.">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="canonical" href="https://belentani.eu/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a; --paper:#111111; --ink:#f5f2eb; --mute:#9c968c;
+  --line:rgba(245,242,235,.12); --gold:#c6a35a; --red:#e11d48;
+  --display:"Fraunces",Georgia,serif; --sans:"DM Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+.wrap{width:min(1080px,92vw);margin:0 auto}
+.nav{
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:1.2rem 0;border-bottom:1px solid var(--line);margin-bottom:2.5rem
+}
+.nav .mark{font-family:var(--display);font-weight:600;font-size:1.15rem;letter-spacing:-.02em}
+.nav .mark span{color:var(--gold)}
+.nav-links{display:flex;flex-wrap:wrap;gap:.9rem;font-size:.78rem;font-weight:600;color:var(--mute)}
+.nav-links a:hover{color:var(--ink)}
+
+.hero{padding:1rem 0 3.5rem;display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:end}
+@media(max-width:800px){.hero{grid-template-columns:1fr}}
+.eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:.9rem}
+.hero h1{font-family:var(--display);font-size:clamp(2.6rem,6vw,4.4rem);letter-spacing:-.035em;line-height:1.05;font-weight:600;margin-bottom:1rem}
+.hero p{color:var(--mute);max-width:36ch;font-size:1.05rem;margin-bottom:1.6rem}
+.cta{display:flex;flex-wrap:wrap;gap:.7rem}
+.btn{
+  display:inline-flex;align-items:center;padding:.9rem 1.15rem;font-size:.78rem;font-weight:700;
+  letter-spacing:.04em;border:1px solid transparent;transition:transform .2s,background .2s,border-color .2s
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--gold);color:#1a1408}
+.btn-ghost{border-color:var(--line)}
+.btn-ghost:hover{border-color:rgba(245,242,235,.3)}
+.side-card{
+  background:var(--paper);border:1px solid var(--line);padding:1.3rem 1.25rem;
+}
+.side-card h2{font-family:var(--display);font-size:1.2rem;margin-bottom:.6rem}
+.side-card dl{display:grid;gap:.55rem;font-size:.9rem}
+.side-card dt{color:var(--mute);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+.side-card dd{margin:0}
+
+.domains{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;margin:0 0 3rem
+}
+@media(max-width:800px){.domains{grid-template-columns:1fr}}
+.domain{
+  border:1px solid var(--line);padding:1.15rem 1.1rem;background:linear-gradient(160deg,rgba(198,163,90,.07),transparent 50%),var(--paper);
+  min-height:100%;transition:border-color .2s
+}
+.domain:hover{border-color:rgba(198,163,90,.4)}
+.domain .dk{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:.4rem}
+.domain h3{font-family:var(--display);font-size:1.35rem;margin-bottom:.35rem}
+.domain p{color:var(--mute);font-size:.9rem;margin-bottom:.8rem}
+.domain .go{font-size:.78rem;font-weight:700;color:var(--gold)}
+
+.section{padding:0 0 3.2rem;border-top:1px solid var(--line);padding-top:2.5rem}
+.section h2{font-family:var(--display);font-size:clamp(1.8rem,3vw,2.4rem);letter-spacing:-.02em;margin-bottom:.5rem}
+.section .sub{color:var(--mute);max-width:42ch;margin-bottom:1.5rem}
+
+.offers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+@media(max-width:700px){.offers{grid-template-columns:1fr}}
+.offer{border:1px solid var(--line);padding:1.1rem 1rem}
+.offer h3{font-size:1rem;margin-bottom:.35rem}
+.offer p{color:var(--mute);font-size:.9rem}
+
+.evidence{list-style:none;display:grid;gap:.45rem}
+.evidence a{
+  display:flex;justify-content:space-between;gap:1rem;padding:.85rem 0;
+  border-bottom:1px solid var(--line);color:var(--mute);font-size:.92rem
+}
+.evidence a:hover{color:var(--ink)}
+.evidence a span{color:var(--gold);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase}
+
+.contact{
+  background:var(--paper);border:1px solid var(--line);padding:1.6rem 1.4rem;margin-top:.5rem
+}
+.contact p{color:var(--mute);margin-bottom:1rem;max-width:48ch}
+.fine{font-size:.78rem;color:var(--mute);margin-top:1rem}
+
+footer{
+  padding:2rem 0 3rem;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;
+  justify-content:space-between;gap:1rem;color:var(--mute);font-size:.78rem
+}
+footer a:hover{color:var(--gold)}
+
+@media(prefers-reduced-motion:reduce){.btn:hover{transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="nav">
+    <a class="mark" href="#top">Belentani <span>· eu</span></a>
+    <nav class="nav-links" aria-label="Dominios">
+      <a href="../galaxia/">belentani.es</a>
+      <a href="../noiacore/">noiacore.com</a>
+      <a href="./">belentani.eu</a>
+      <a href="https://belentani.eu/" target="_blank" rel="noopener noreferrer">Live ↗</a>
+    </nav>
+  </header>
+
+  <header class="hero" id="top">
+    <div>
+      <div class="eyebrow">São Paulo → Barcelona · Perfil profesional</div>
+      <h1>Artista. Technologist. Una propuesta clara.</h1>
+      <p>Belentani entrega obra musical con universo narrativo, experiencias web inmersivas y portales educativos a través de Noiacore. Sin inventar clientes ni premios.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="../profesion/?lane=hibrido">Generar one-pager</a>
+        <a class="btn btn-ghost" href="https://www.instagram.com/belentani_/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a class="btn btn-ghost" href="mailto:?subject=Propuesta%20Belentani&body=Hola%20Belentani%2C%0A%0A">Borrador email</a>
+      </div>
+    </div>
+    <aside class="side-card" aria-label="Ficha rápida">
+      <h2>Ficha</h2>
+      <dl>
+        <div><dt>Nombre</dt><dd>Belentani</dd></div>
+        <div><dt>Base</dt><dd>Barcelona</dd></div>
+        <div><dt>Origen</dt><dd>São Paulo</dd></div>
+        <div><dt>Company</dt><dd>Noiacore</dd></div>
+        <div><dt>Géneros</dt><dd>Pop alternativo · R&amp;B · electrónica</dd></div>
+        <div><dt>GitHub</dt><dd><a href="https://github.com/belentani7" target="_blank" rel="noopener noreferrer">belentani7</a></dd></div>
+      </dl>
+    </aside>
+  </header>
+
+  <section class="domains" aria-label="Tres dominios">
+    <a class="domain" href="../galaxia/">
+      <div class="dk">Artista</div>
+      <h3>belentani.es</h3>
+      <p>Galaxia viajable, lore JUDAS, master y mundos. La obra primero.</p>
+      <span class="go">Entrar →</span>
+    </a>
+    <a class="domain" href="../noiacore/">
+      <div class="dk">Lab SaaS</div>
+      <h3>noiacore.com</h3>
+      <p>Líneas de producto: inmersivo, educación, atelier. Método sin humo.</p>
+      <span class="go">Ver lab →</span>
+    </a>
+    <a class="domain" href="./">
+      <div class="dk">Profesional</div>
+      <h3>belentani.eu</h3>
+      <p>Esta página: bio, oferta, evidencia y contacto para propuestas.</p>
+      <span class="go">Estás aquí</span>
+    </a>
+  </section>
+
+  <section class="section" id="oferta">
+    <h2>Qué ofrezco</h2>
+    <p class="sub">Cuatro paquetes reales. Alcance y precio se confirman por escrito — no hay rate card inventado en esta página.</p>
+    <div class="offers">
+      <article class="offer">
+        <h3>A · Obra musical</h3>
+        <p>Sencillos, demos masterizados, colaboraciones vocales, universo JUDAS/OMEGA como contexto.</p>
+      </article>
+      <article class="offer">
+        <h3>B · Web inmersiva</h3>
+        <p>Landing / portal narrativo / galaxia viajable para artistas e instituciones.</p>
+      </article>
+      <article class="offer">
+        <h3>C · Educación &amp; legado</h3>
+        <p>Diseño de portales educativos y comunitarios (estilo Manos Abiertas / Cruzando el Charco).</p>
+      </article>
+      <article class="offer">
+        <h3>D · Consultoría creativa-tech</h3>
+        <p>Sesión acotada: auditoría de repos web, curación de universo, brief de producto.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="evidencia">
+    <h2>Evidencia pública</h2>
+    <p class="sub">Solo enlaces verificables. Nada de “premios mundiales” autoasignados.</p>
+    <ul class="evidence">
+      <li><a href="https://open.spotify.com/artist/2bU5Ir70YHHuUnq2f3WCYl" target="_blank" rel="noopener noreferrer">Spotify artista<span>Música</span></a></li>
+      <li><a href="https://music.apple.com/artist/belentani/1522171354" target="_blank" rel="noopener noreferrer">Apple Music<span>Música</span></a></li>
+      <li><a href="../galaxia/" >Galaxia Belentani local<span>Web</span></a></li>
+      <li><a href="https://belentani7.github.io/judas-experience-web/" target="_blank" rel="noopener noreferrer">JUDAS Experience 3D<span>Web</span></a></li>
+      <li><a href="https://belentani7.github.io/ManosAbiertas/" target="_blank" rel="noopener noreferrer">Manos Abiertas<span>Educación</span></a></li>
+      <li><a href="https://github.com/belentani7" target="_blank" rel="noopener noreferrer">GitHub belentani7<span>Código</span></a></li>
+      <li><a href="https://noiacore.com/" target="_blank" rel="noopener noreferrer">noiacore.com<span>Lab</span></a></li>
+    </ul>
+  </section>
+
+  <section class="section" id="contacto">
+    <h2>Contacto</h2>
+    <div class="contact">
+      <p>Para propuestas artísticas, web o educación: escribe por Instagram o usa la Máquina Profesión para generar bio + pitch + email listos para pegar. El dominio live de este perfil es belentani.eu.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://www.instagram.com/belentani_/" target="_blank" rel="noopener noreferrer">Contactar por Instagram</a>
+        <a class="btn btn-ghost" href="../profesion/?lane=hibrido">Máquina Profesión</a>
+        <a class="btn btn-ghost" href="https://belentani.eu/" target="_blank" rel="noopener noreferrer">belentani.eu live ↗</a>
+      </div>
+      <p class="fine">No se publica un correo no verificado. Disponibilidad y formatos se acuerdan caso por caso.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div>© 2026 Belentani · Noiacore</div>
+    <div>
+      <a href="../galaxia/">es</a> ·
+      <a href="../noiacore/">noiacore</a> ·
+      <a href="./">eu</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblia de términos · Belentani</title>
+<meta name="description" content="Glosario técnico de software, producto, arquitectura, datos, seguridad e inteligencia artificial. Definiciones contextuales, búsqueda y referencias cruzadas.">
+<meta name="theme-color" content="#0a0408">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0408'/%3E%3Ctext x='16' y='23' font-size='19' font-family='Georgia,serif' fill='%23e8c46a' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#0a0408; --panel:#120a12; --panel2:#1a0e18; --ink:#f4ecf0; --mute:#a8929e;
+  --red:#ff2f5e; --gold:#e8c46a; --line:rgba(255,47,94,.20); --line2:rgba(232,196,106,.22);
+  --serif:"Fraunces",Georgia,serif; --sans:"Inter",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--void);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--gold)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+
+/* ---------- cabecera fija ---------- */
+header{position:sticky;top:0;z-index:20;background:rgba(10,4,8,.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.bar{max-width:1400px;margin:0 auto;padding:14px 22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{font-family:var(--serif);font-weight:900;font-size:1.05rem;letter-spacing:.01em}
+.brand em{font-style:normal;color:var(--red)}
+.counts{display:flex;gap:8px;flex-wrap:wrap;font-size:.72rem;color:var(--mute)}
+.pill{border:1px solid var(--line);border-radius:99px;padding:3px 10px;white-space:nowrap}
+.pill b{color:var(--gold);font-weight:600}
+.volver{margin-left:auto;font-size:.74rem;color:var(--mute);text-decoration:none;border-bottom:1px solid var(--line2);padding-bottom:1px}
+.volver:hover{color:var(--ink)}
+.search{flex:1 1 240px;min-width:200px;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 12px}
+.search input{width:100%;background:none;border:0;color:var(--ink);font:inherit;font-size:.88rem}
+.search input::placeholder{color:var(--mute)}
+.search svg{flex:none;opacity:.5}
+
+/* ---------- estructura ---------- */
+.wrap{max-width:1400px;margin:0 auto;padding:0 22px;display:grid;grid-template-columns:270px minmax(0,1fr);gap:44px}
+@media(max-width:940px){.wrap{grid-template-columns:1fr;gap:0}}
+
+/* ---------- indice lateral ---------- */
+nav.indice{position:sticky;top:88px;align-self:start;max-height:calc(100vh - 108px);overflow:auto;padding:28px 0 60px;border-right:1px solid var(--line);padding-right:18px}
+@media(max-width:940px){nav.indice{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line);padding-right:0}}
+.indice h2{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-bottom:14px}
+.indice ol{list-style:none;counter-reset:c}
+.indice li{counter-increment:c}
+.indice a{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:.83rem;color:var(--mute);text-decoration:none;border-bottom:1px solid transparent}
+.indice a::before{content:counter(c,decimal-leading-zero);color:var(--line2);font-size:.7rem;margin-right:8px;flex:none}
+.indice a span{flex:none;font-size:.72rem;color:var(--line2)}
+.indice a:hover,.indice a.on{color:var(--ink);border-bottom-color:var(--line2)}
+
+/* ---------- cuerpo continuo ---------- */
+main{padding:44px 0 120px;min-width:0}
+.intro{max-width:62ch;margin-bottom:54px}
+.intro .eyebrow{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
+.intro h1{font-family:var(--serif);font-weight:900;font-size:clamp(2rem,4.6vw,3.1rem);line-height:1.08;letter-spacing:-.02em;margin-bottom:18px}
+.intro h1 em{font-style:italic;color:var(--gold)}
+.intro p{color:var(--mute);font-size:1rem}
+.intro p+p{margin-top:14px}
+
+section.cat{padding-top:14px;margin-bottom:8px}
+section.cat>header{padding:30px 0 18px;background:none;border:0;border-bottom:1px solid var(--line2);position:static;backdrop-filter:none;margin-bottom:8px}
+section.cat h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.4rem,2.6vw,1.85rem);letter-spacing:-.01em;display:flex;align-items:baseline;gap:12px}
+section.cat h2 .num{font-family:var(--sans);font-size:.68rem;letter-spacing:.2em;color:var(--red);font-weight:500}
+section.cat h2 .n{font-family:var(--sans);font-size:.76rem;color:var(--mute);font-weight:400;letter-spacing:.06em;margin-left:auto}
+.cat>p{margin:16px 0 30px}
+
+/* ---------- entrada de termino ---------- */
+ul.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:2px 34px;margin:0;list-style:none}
+.term{padding:17px 0;border-bottom:1px solid rgba(255,255,255,.055);scroll-margin-top:96px}
+.term[hidden]{display:none}
+.term h3{display:flex;align-items:baseline;gap:9px;margin-bottom:5px}
+.term .id{font-size:.68rem;letter-spacing:.13em;color:var(--red);font-weight:600;flex:none;
+  border:1px solid var(--line);border-radius:4px;padding:1px 6px}
+.term .nm{font-family:var(--serif);font-weight:600;font-size:1.02rem;letter-spacing:-.005em}
+.term>p{color:var(--mute);font-size:.875rem;margin:0}
+.term .flag{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line2);border-radius:4px;padding:0 5px;margin-left:auto;flex:none}
+
+/* ---------- definicion ampliada ---------- */
+.deep{margin-top:11px;padding:13px 15px;background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--gold);border-radius:0 6px 6px 0}
+.deep dl{display:grid;gap:9px;margin:0}
+.deep div{display:grid;grid-template-columns:88px minmax(0,1fr);gap:12px}
+@media(max-width:560px){.deep div{grid-template-columns:1fr;gap:2px}}
+.deep dt{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;padding-top:2px}
+.deep dd{color:#d9cbd2;font-size:.87rem;margin:0}
+.deep dd.ej{font-style:italic;color:var(--mute)}
+mark{background:rgba(255,47,94,.24);color:#fff;border-radius:2px;padding:0 2px}
+
+.vacio{padding:60px 0;color:var(--mute);text-align:center;font-size:.95rem}
+.vacio strong{display:block;font-family:var(--serif);font-size:1.3rem;color:var(--ink);margin-bottom:8px;font-weight:600}
+footer{border-top:1px solid var(--line);padding:30px 22px 60px;text-align:center;color:var(--mute);font-size:.78rem}
+footer b{color:var(--gold);font-weight:600}
+@media print{header,nav.indice,.search{display:none}.wrap{grid-template-columns:1fr}.term,.deep{break-inside:avoid}section.cat{break-before:page}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="brand">Biblia de <em>términos</em></div>
+    <div class="counts">
+      <span class="pill"><b id="cTerms">0</b> entradas contextuales</span>
+      <span class="pill"><b id="cUnique">0</b> siglas distintas</span>
+      <span class="pill"><b id="cCats">0</b> categorías</span>
+      <span class="pill"><b id="cDeep">0</b> definiciones ampliadas</span>
+    </div>
+    <label class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Buscar un término…" autocomplete="off" aria-label="Buscar un término">
+    </label>
+    <a class="volver" href="../">← Volver</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="indice" aria-label="Categorías">
+    <h2>Índice</h2>
+    <ol id="indice"></ol>
+  </nav>
+
+  <main>
+    <div class="intro">
+      <div class="eyebrow">Glosario técnico · edición <span id="edition">4.0</span></div>
+      <h1>El vocabulario con el que<br>se construye <em>software</em>.</h1>
+      <p>Una referencia de trabajo en español que reúne términos de producto, ingeniería, datos, seguridad y operaciones. Las definiciones son descriptivas, no sustituyen la documentación de un estándar ni el contexto de cada equipo.</p>
+      <p id="notaDedup"><b style="color:var(--gold)">Cómo leer el recuento.</b> Hay <b id="nDup">0</b> entradas adicionales para siglas que aparecen en varios contextos. No se eliminan: así, MVP de producto no oculta MVP de arquitectura.</p>
+      <p>Busca también por palabras de las definiciones ampliadas. Las siglas pueden tener varios significados: confirma siempre el dominio y el estándar aplicables.</p>
+    </div>
+
+    <div id="doc"></div>
+    <div class="vacio" id="vacio" hidden>
+      <strong>Nada coincide</strong>
+      Ningún término contiene ese texto.
+    </div>
+  </main>
+</div>
+
+<footer>
+  <b id="fTerms">0</b> términos · <b id="fDeep">0</b> definiciones ampliadas · <span id="fPal">0</span> palabras
+</footer>
+
+<script src="../biblia.js"></script>
+<script src="../biblia.deep.js"></script>
+<script>
+(function(){
+  "use strict";
+  var B = window.BIBLIA, DEEP = window.BIBLIA_DEEP || {};
+  if(!B){ document.getElementById("doc").innerHTML = '<p class="vacio"><strong>No se pudo cargar la Biblia</strong>Falta biblia.js junto a esta página.</p>'; return; }
+
+  var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); };
+  function normalizarBusqueda(valor){
+    return String(valor == null ? "" : valor).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("es");
+  }
+  var terms=[], deepCount=0, words=0;
+  var doc=document.getElementById("doc"), indice=document.getElementById("indice");
+
+  B.categorias.forEach(function(cat,ci){
+    var sec=document.createElement("section");
+    sec.className="cat"; sec.id="cat-"+cat.id; sec.dataset.cat=cat.nombre;
+
+    var hd=document.createElement("header");
+    hd.innerHTML='<h2><span class="num">'+String(ci+1).padStart(2,"0")+'</span>'
+      +esc(cat.nombre)+'<span class="n">'+cat.terminos.length+' términos</span></h2>';
+    sec.appendChild(hd);
+
+    if(cat.descripcion) { var p=document.createElement("p"); p.textContent=cat.descripcion; sec.appendChild(p); }
+
+    var dl=document.createElement("ul"); dl.className="terms";
+    cat.terminos.forEach(function(t){
+      var id=t[0], nom=t[1], desc=t[2]||"";
+      var d=DEEP[id];
+      // MVP has two unrelated expansions; its product definition must not appear under the architecture pattern.
+      if(id==="MVP" && nom==="Model-View-Presenter") d=null;
+      var dt=document.createElement("li"); dt.className="term"; dt.id="t-"+cat.id+"-"+id.replace(/[^a-zA-Z0-9_-]/g,"-");
+      var deepText=d ? Object.keys(d).map(function(k){return d[k];}).join(" ") : "";
+      dt.dataset.txt=normalizarBusqueda([id,nom,desc,deepText,cat.nombre].join(" "));
+      var h=document.createElement("h3");
+      h.innerHTML='<span class="id">'+esc(id)+'</span><span class="nm">'+esc(nom)+'</span>'
+        +(d?'<span class="flag">ampliado</span>':'');
+      var body='<p>'+esc(desc)+'</p>';
+      if(d){
+        deepCount++;
+        body+='<div class="deep"><dl>'
+          +(d.es?'<div><dt>Qué es</dt><dd>'+esc(d.es)+'</dd></div>':'')
+          +(d.porque?'<div><dt>Por qué</dt><dd>'+esc(d.porque)+'</dd></div>':'')
+          +(d.matiz?'<div><dt>Matiz</dt><dd>'+esc(d.matiz)+'</dd></div>':'')
+          +(d.ejemplo?'<div><dt>Ejemplo</dt><dd class="ej">'+esc(d.ejemplo)+'</dd></div>':'')
+          +'</dl></div>';
+      }
+      dt.innerHTML=h.innerHTML+body;
+      dl.appendChild(dt);
+      terms.push(dt);
+      words += (id+" "+nom+" "+desc).split(/\s+/).length;
+      if(d) words += Object.keys(d).map(function(k){return String(d[k]).split(/\s+/).length;}).reduce(function(a,b){return a+b;},0);
+    });
+    hd.querySelector(".n").textContent = cat.terminos.length+" entradas";
+    dl._catId = cat.id;
+    sec.appendChild(dl);
+
+    var li=document.createElement("li");
+    li.innerHTML='<a href="#cat-'+esc(cat.id)+'">'+esc(cat.nombre)+'<span>'+cat.terminos.length+'</span></a>';
+    indice.appendChild(li);
+    doc.appendChild(sec);
+  });
+
+  function setNum(id,v){var e=document.getElementById(id); if(e) e.textContent=v.toLocaleString("es-ES");}
+  setNum("cTerms",terms.length); setNum("cUnique",B.meta.unicos || terms.length); setNum("cCats",B.categorias.length); setNum("cDeep",deepCount);
+  document.getElementById("edition").textContent=B.meta.version;
+  setNum("fTerms",terms.length); setNum("fDeep",deepCount); setNum("fPal",terms.reduce(function(total,term){return total+term.dataset.txt.split(/\\s+/).length;},0));
+  setNum("nDup",B.meta.contextos || 0);
+
+  /* --- busqueda: filtra dentro del mismo documento, sin salir de la pagina --- */
+  var q=document.getElementById("q"), vacio=document.getElementById("vacio");
+  function filtrar(){
+    var t=normalizarBusqueda(q.value.trim()), n=0;
+    var matchedSections=Object.create(null);
+    terms.forEach(function(el){
+      var hit = !t || el.dataset.txt.indexOf(t)!==-1;
+      el.hidden = !hit;
+      if(hit){
+        n++;
+        var section=el.parentNode.parentNode;
+        matchedSections[section.id]=true;
+      }
+    });
+    var secs=document.querySelectorAll("section.cat");
+    secs.forEach(function(s){ s.hidden=!matchedSections[s.id]; });
+    actualizarIndice();
+    vacio.hidden = n>0;
+    setNum("fTerms",n);
+  }
+  var t0;
+  q.addEventListener("input",function(){clearTimeout(t0);t0=setTimeout(filtrar,120);});
+
+  /* Mantener sincronizado el índice incluso después de ocultar categorías en una búsqueda. */
+  function actualizarIndice(){
+    var secs=document.querySelectorAll("section.cat"), links=indice.querySelectorAll("a");
+    links.forEach(function(a,i){ a.parentNode.hidden=secs[i].hidden; });
+  }
+  actualizarIndice();
+  if("IntersectionObserver" in window){
+    var obs=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){
+        var secs=document.querySelectorAll("section.cat");
+        var idx=Array.prototype.indexOf.call(secs,e.target);
+        indice.querySelectorAll("a").forEach(function(a,j){ a.classList.toggle("on", j===idx); });
+      }});
+    },{rootMargin:"-96px 0px -70% 0px"});
+    document.querySelectorAll("section.cat").forEach(function(s){obs.observe(s);});
+  }
+
+  document.documentElement.dataset.bibliaListo = terms.length + ":" + deepCount;
+})();
+</script>
+</body>
+</html>
