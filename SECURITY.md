@@ -1,13 +1,26 @@
-# Security
+# Security Policy
 
-## Reportar una vulnerabilidad
+## Supported Versions
 
-No abras un issue publico para reportar una vulnerabilidad. Usa el canal privado
-de seguridad de GitHub en la pestana Security de este repositorio, o escribe al
-contacto indicado abajo.
+| Version | Supported          |
+| ------- | ------------------ |
+| Latest  | :white_check_mark: |
+| Older   | :x:                |
 
-## Buenas practicas
+## Reporting a Vulnerability
 
-- Nunca commitees claves, tokens ni ficheros `.env`.
-- Usa variables de entorno y ejemplos en `.env.example`.
-- Manten las dependencias actualizadas.
+Please report security vulnerabilities by emailing security@belentani.com or by opening a private security advisory on GitHub.
+
+We will acknowledge receipt within 48 hours and provide a timeline for resolution within 5 business days.
+
+## Security Measures
+
+- All dependencies are scanned weekly via Dependabot
+- CodeQL analysis runs on every push and pull request
+- Gitleaks secret scanning runs on every push
+- Branch protection requires passing CI and code review
+- All secrets are managed via environment variables, never committed
+
+## Disclosure Policy
+
+We follow responsible disclosure. Please give us time to address the issue before making it public.
