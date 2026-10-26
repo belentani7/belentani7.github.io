@@ -43,14 +43,19 @@ afinado a **432 Hz**.
 - El sistema recuerda: nombre (`WHOAMI` / `NAME …`), visitas, gemas, secretos (localStorage)
 - **Secreto:** código Konami `↑↑↓↓←→←→BA` desbloquea ZION DIMENSION (modo dorado)
 
+## ✦ Estructura
+
+```
+index.html        → la experiencia completa (HTML + CSS + JS embebido)
+ecosistema.html   → mapa visual del ecosistema
+noiacore/         → página mínima de NOIACORE (index.html de marcador)
+CNAME             → dominio personalizado de GitHub Pages: www.belentani.es
+```
+
 ## ✦ Desarrollo
 
-```
-build/          → piezas fuente (head, css, body, app.js)
-assemble.ps1    → ensambla todo en index.html
-```
-
-Para regenerar: `powershell -File assemble.ps1`
+Sin build step: se edita `index.html` directamente y GitHub Pages publica la rama.
+El repo no incluye sistema de ensamblado.
 
 ---
 
