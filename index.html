@@ -551,11 +551,21 @@ function toast(msg) {
 /* ---------- SYSTEM LOG ---------- */
 const syslog = $("#syslog");
 function stamp() { const d = new Date(); return d.toTimeString().slice(0, 8); }
-function log(msg, cls) {
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, ch => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[ch]);
+}
+function log(msg, cls, trustedMarkup = false) {
   if (!syslog) return;
   const ln = document.createElement("div");
   ln.className = "ln " + (cls || "");
-  ln.innerHTML = '<span class="t">[' + stamp() + ']</span>' + msg;
+  const time = document.createElement("span");
+  time.className = "t";
+  time.textContent = "[" + stamp() + "]";
+  ln.appendChild(time);
+  if (trustedMarkup) ln.insertAdjacentHTML("beforeend", String(msg));
+  else ln.appendChild(document.createTextNode(String(msg)));
   syslog.appendChild(ln);
   while (syslog.children.length > 90) syslog.removeChild(syslog.firstChild);
   syslog.scrollTop = syslog.scrollHeight;
@@ -1188,26 +1198,26 @@ const HELP_TXT =
 function runCommand(raw) {
   const cmd = (raw || "").trim();
   if (!cmd) return;
-  log('❯ <span class="user">' + cmd.replace(/</g, "&lt;") + '</span>', "");
+  log('❯ <span class="user">' + escapeHtml(cmd) + '</span>', "", true);
   const up = cmd.toUpperCase();
   if (byCmd[up]) { openModule(up); return; }
   switch (up) {
-    case "HELP": case "AYUDA": log(HELP_TXT.replace(/\n/g, "<br>"), "sys"); return;
+    case "HELP": case "AYUDA": log(HELP_TXT.replace(/\n/g, "<br>"), "sys", true); return;
     case "CLEAR": case "CLS": syslog.innerHTML = ""; log("REGISTRO PURGADO — LA MEMORIA DEL CRONISTA PERMANECE", "sys"); return;
     case "STATUS": {
       log('ESTADO DEL ORGANISMO<br>· CPU: ' + $("#st-cpu").textContent + ' · NODE: ' + $("#st-node").textContent + '<br>· FREQ: ' + $("#st-freq").textContent + ' · GEO: ' + $("#st-geo").textContent +
-        '<br>· GEMAS: ' + state.gems.length + '/5 · NODOS VISITADOS: ' + state.visited.length + '/' + MODULES.length + '<br>· SECRETOS: ' + state.secrets.length + ' · VISITAS TOTALES: ' + state.visits +
-        '<br>· MODO ZION: ' + (state.zion ? '<span class="warn">ACTIVO</span>' : 'LATENTE'), "ok"); return;
+        '<br>· GEMAS: ' + state.gems.length + '/5 · NODOS VISITADOS: ' + state.visited.length + '/' + MODULES.length + '<br>· SECRETOS: ' + state.secrets.length + ' · VISITAS TOTALES: ' + escapeHtml(state.visits) +
+        '<br>· MODO ZION: ' + (state.zion ? '<span class="warn">ACTIVO</span>' : 'LATENTE'), "ok", true); return;
     }
     case "GEMS": case "GEMAS": {
       const all = ["pedro", "marcos", "santos", "belentani", "human"];
-      log(all.map(g => (state.gems.indexOf(g) !== -1 ? '<span class="warn">✦</span> ' : '· ') + gemName(g)).join("<br>"), "sys"); return;
+      log(all.map(g => (state.gems.indexOf(g) !== -1 ? '<span class="warn">✦</span> ' : '· ') + gemName(g)).join("<br>"), "sys", true); return;
     }
     case "FREQ": case "DRONE": toggleDrone(); return;
     case "WHOAMI": {
       log(state.name
-        ? 'ERES <span class="warn">' + state.name.toUpperCase() + '</span> — LA INTERFAZ HUMANA. EL ORGANISMO TE RECUERDA.'
-        : "AÚN NO TE HAS NOMBRADO. USA: NAME TU_NOMBRE", "sys"); return;
+        ? 'ERES <span class="warn">' + escapeHtml(state.name.toUpperCase()) + '</span> — LA INTERFAZ HUMANA. EL ORGANISMO TE RECUERDA.'
+        : "AÚN NO TE HAS NOMBRADO. USA: NAME TU_NOMBRE", "sys", true); return;
     }
     case "ZION":
       if (state.zion) { openModule("ZION"); } else { log("ACCESO DENEGADO — SE REQUIERE EL CÓDIGO ANTIGUO. (los guerreros de los 80 lo conocían)", "sys"); }
@@ -1215,7 +1225,7 @@ function runCommand(raw) {
   }
   if (/^NAME\s+(.{2,24})$/i.test(cmd)) {
     state.name = cmd.replace(/^NAME\s+/i, "").trim(); saveState();
-    log("INTERFAZ HUMANA REGISTRADA: <span class='warn'>" + state.name.toUpperCase() + "</span> — EL CRONISTA LO ANOTA", "ok");
+    log("INTERFAZ HUMANA REGISTRADA: <span class='warn'>" + escapeHtml(state.name.toUpperCase()) + "</span> — EL CRONISTA LO ANOTA", "ok", true);
     whisperSoon("HOLA, " + state.name.toUpperCase() + ". LA ANTENA TE ESTABA ESPERANDO.");
     return;
   }
@@ -1272,7 +1282,7 @@ function unlockZion() {
   renderGrid();
   uiDeep(); setTimeout(uiDeep, 300); setTimeout(uiDeep, 600);
   toast("⌁ CÓDIGO ANTIGUO ACEPTADO — ZION DIMENSION DESBLOQUEADA ⌁");
-  log('<span class="warn">SECUENCIA ↑↑↓↓←→←→BA RECONOCIDA. EL NODO ZION-SPIRE-00 EMERGE DEL SUELO.</span>', "warn");
+  log('<span class="warn">SECUENCIA ↑↑↓↓←→←→BA RECONOCIDA. EL NODO ZION-SPIRE-00 EMERGE DEL SUELO.</span>', "warn", true);
   addSecret("konami", "EL CÓDIGO ANTIGUO");
   whisperSoon("BIENVENIDO A LA DIMENSIÓN DORADA. AQUÍ EL NEÓN ROJO SE VUELVE LUZ DE TEMPLO.");
   if (window.gsap) gsap.fromTo(".zion-node", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "elastic.out(1,.45)" });

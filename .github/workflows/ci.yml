@@ -19,6 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Terminal XSS regression tests (Node built-in)
+        run: node --test tests/terminal-security.test.mjs
+
       - name: Sin ficheros de credenciales trackeados
         run: |
           fail=0
