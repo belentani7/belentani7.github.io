@@ -27,10 +27,13 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
+      - name: Build public-only artifact
+        run: node scripts/build-pages.mjs
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
