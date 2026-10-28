@@ -86,3 +86,51 @@ test('HELP preserves line breaks in trusted markup', () => {
   runCommand('HELP');
   assert.ok(htmlWrites.at(-1).includes('HELP'));
 });
+
+const copySource = html.slice(
+  html.indexOf('/* ---------- LYRIC COPY ---------- */'),
+  html.indexOf('/* ---------- TERMINAL ---------- */')
+);
+const copyLyricText = new Function(copySource + ';return copyLyricText;')();
+
+test('clipboard success is announced only after resolved write', async () => {
+  let resolve;
+  const clipboard = { writeText: () => new Promise(done => { resolve = done; }) };
+  const button = { disabled: false, textContent: 'Copiar letra' };
+  const result = copyLyricText('Letra de prueba', button, clipboard);
+  assert.equal(button.disabled, true);
+  assert.equal(button.textContent, 'Copiar letra');
+  resolve();
+  assert.equal(await result, true);
+  assert.equal(button.textContent, 'LETRA COPIADA ✓');
+  assert.equal(button.disabled, false);
+});
+
+test('rejected clipboard promise never claims success', async () => {
+  const button = { disabled: false, textContent: 'Copiar letra' };
+  const ok = await copyLyricText('texto', button, {
+    writeText: async () => { throw new Error('permission denied'); }
+  });
+  assert.equal(ok, false);
+  assert.match(button.textContent, /NO DISPONIBLE/);
+  assert.equal(button.disabled, false);
+});
+
+test('unavailable clipboard API provides actionable feedback', async () => {
+  const button = { disabled: false, textContent: 'Copiar letra' };
+  assert.equal(await copyLyricText('texto', button, undefined), false);
+  assert.match(button.textContent, /SELECCIONA LA LETRA/);
+  assert.equal(button.disabled, false);
+});
+
+test('synchronous clipboard failure restores button state', async () => {
+  const button = { disabled: false, textContent: 'Copiar letra' };
+  assert.equal(await copyLyricText('texto', button, {
+    writeText: () => { throw new Error('blocked'); }
+  }), false);
+  assert.equal(button.disabled, false);
+});
+
+test('lyric copy button announces feedback to assistive technology', () => {
+  assert.match(html, /id="w-copy" aria-live="polite"/);
+});
