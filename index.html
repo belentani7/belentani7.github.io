@@ -187,6 +187,22 @@ section{margin-top:44px}
 .node.zion-node{border-color:var(--gold);display:none}
 .node.zion-node .n-cmd,.node.zion-node .n-name{color:var(--gold);text-shadow:0 0 14px rgba(212,175,55,.6)}
 
+/* ---------- LYRIC COPY ---------- */
+async function copyLyricText(text, button, clipboard) {
+  button.disabled = true;
+  try {
+    if (!clipboard || typeof clipboard.writeText !== "function") throw new Error("Clipboard unavailable");
+    await clipboard.writeText(text);
+    button.textContent = "LETRA COPIADA ✓";
+    return true;
+  } catch {
+    button.textContent = "COPIA NO DISPONIBLE — SELECCIONA LA LETRA";
+    return false;
+  } finally {
+    button.disabled = false;
+  }
+}
+
 /* ---------- TERMINAL ---------- */
 #terminal-panel{border:1px solid var(--border);background:rgba(3,1,4,.82);backdrop-filter:blur(12px);
   box-shadow:0 0 40px rgba(255,7,58,.12)}
@@ -1176,9 +1192,10 @@ function renderWrite() {
     lines.push(pick(WRITE_BANK.cierres));
     const txt = lines.join("\n");
     $("#w-out").innerHTML = '<div class="result-box" id="w-text">' + txt.replace(/</g, "&lt;") + '</div>' +
-      '<button class="big-btn" id="w-copy">Copiar letra</button>';
-    $("#w-copy").addEventListener("click", () => {
-      try { navigator.clipboard.writeText(txt); $("#w-copy").textContent = "LETRA COPIADA ✓"; } catch (e) {}
+      '<button class="big-btn" id="w-copy" aria-live="polite">Copiar letra</button>';
+    const copyButton = $("#w-copy");
+    copyButton.addEventListener("click", () => {
+      void copyLyricText(txt, copyButton, navigator.clipboard);
     });
     addSecret("write", "LA PRIMERA LETRA FORJADA");
     log("LYRIC-FORGE: LETRA GENERADA — TEMA “" + theme.toUpperCase() + "”", "ok");
