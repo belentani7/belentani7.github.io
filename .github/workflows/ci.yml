@@ -19,8 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Terminal XSS regression tests (Node built-in)
-        run: node --test tests/terminal-security.test.mjs
+      - name: Terminal and publishing security regression tests
+        run: node --test tests/*.test.mjs
+
+      - name: Assert public-only Pages artifact builds
+        run: node scripts/build-pages.mjs
 
       - name: Sin ficheros de credenciales trackeados
         run: |
