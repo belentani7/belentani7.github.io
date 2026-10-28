@@ -863,7 +863,7 @@ function renderOmega() {
     '<div class="records">' + RECORDS.map((r, i) =>
       '<div class="record" style="background:linear-gradient(' + rnd(120, 240).toFixed(0) + 'deg,hsl(' + r.h + ',85%,10%),hsl(' + ((r.h + 20) % 360) + ',90%,4%)),radial-gradient(circle at 50% 30%,hsla(' + r.h + ',100%,55%,.35),transparent 70%)">' +
       '<div class="rid">' + r.id + '</div><div class="rt">' + r.t + '</div></div>').join("") + '</div>' +
-    '<div class="row" style="margin-top:16px"><a class="big-btn" target="_blank" rel="noopener" href="http://belentani.es/">Archivo completo en belentani.es ↗</a></div>' +
+    '<div class="row" style="margin-top:16px"><a class="big-btn" target="_blank" rel="noopener" href="https://belentani.es/">Archivo completo en belentani.es ↗</a></div>' +
     '<p style="margin-top:12px;font-size:10px;color:#6a5f5c">Las placas originales se restauran en el nodo belentani_Omega. Cada visita reconstruye un píxel.</p>'
   );
   $$("#modal-body .record").forEach(el => {
