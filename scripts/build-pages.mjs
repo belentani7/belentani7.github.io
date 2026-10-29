@@ -10,6 +10,9 @@ export const PUBLIC_FILES = Object.freeze([
   'index.html',
   'ecosistema.html',
   'noiacore/index.html',
+  'artista/index.html',
+  'prensa/index.html',
+  'editorial.css',
   'CNAME',
 ]);
 
