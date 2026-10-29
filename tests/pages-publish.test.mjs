@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, symlink, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { buildPublicSite, PUBLIC_FILES } from '../scripts/build-pages.mjs';
 
 async function fixture(run) {
@@ -10,6 +10,7 @@ async function fixture(run) {
   try {
     await mkdir(join(dir, 'noiacore'));
     for (const file of PUBLIC_FILES) {
+      await mkdir(dirname(join(dir, file)), { recursive: true });
       await writeFile(join(dir, file), file === 'CNAME' ? 'www.belentani.es' : '<!doctype html><title>Public</title>');
     }
     await writeFile(join(dir, '.env'), 'PRIVATE_TEST_FIXTURE');
@@ -28,7 +29,9 @@ test('public bundle includes exactly the whitelisted static pages and CNAME', as
     const published = await buildPublicSite(dir);
     assert.deepEqual(published, PUBLIC_FILES);
     const top = (await readdir(join(dir, '_site'))).sort();
-    assert.deepEqual(top, ['CNAME', 'ecosistema.html', 'index.html', 'noiacore']);
+    assert.deepEqual(top, ['CNAME', 'artista', 'ecosistema.html', 'editorial.css', 'index.html', 'noiacore', 'prensa']);
+    assert.deepEqual(await readdir(join(dir, '_site', 'artista')), ['index.html']);
+    assert.deepEqual(await readdir(join(dir, '_site', 'prensa')), ['index.html']);
     assert.deepEqual(await readdir(join(dir, '_site', 'noiacore')), ['index.html']);
     assert.equal(await readFile(join(dir, '_site', 'CNAME'), 'utf8'), 'www.belentani.es');
   });
