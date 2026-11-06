@@ -1,48 +1,245 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Belentani — Artista y compositor · São Paulo / Barcelona</title>
-<meta name="description" content="Conoce la música y la obra de Belentani: artista y compositor nacido en São Paulo, establecido en Barcelona. Pop alternativo, R&B y JUDAS EXPERIENCE.">
-<link rel="canonical" href="https://www.belentani.es/artista/">
-<meta property="og:type" content="profile"><meta property="og:title" content="Belentani — La música primero">
-<meta property="og:description" content="Una voz, canciones originales y el universo narrativo JUDAS EXPERIENCE.">
-<meta property="og:url" content="https://www.belentani.es/artista/">
-<meta property="og:image" content="https://belentanies.vercel.app/media/artist/pedro-2024-portrait.jpg">
-<meta name="theme-color" content="#12100f">
-<link rel="stylesheet" href="/editorial.css">
-<link rel="preconnect" href="https://belentanies.vercel.app">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="belentani7.github.io - Producto completo con hero shader y animaciones">
+  <title>Belentani7.Github.Io</title>
+  <link rel="theme-color" content="#6366f1">
+  <style>/* Hero Shader */
+:root {
+  --primary: #6366f1;
+  --secondary: #818cf8;
+  --bg: #f8fafc;
+  --accent: #4f46e5;
+  --glow: 0 0 15px rgba(99, 102, 241, 0.3);
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+  overflow: hidden;
+}
+.hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.hero-overlay {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 2rem;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.3));
+  animation: pulse 3s ease-in-out infinite;
+}
+.hero p {
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+  filter: brightness(1.1);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  border: 2px solid var(--primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-secondary { width: 100%; max-width: 250px; text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero { animation: none; }
+  .hero h1 { animation: none; }
+}
+section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+  text-align: center;
+}
+section p {
+  font-size: 1.1rem;
+  color: #64748b;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+.stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+.stack-list li {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+footer {
+  padding: 3rem 2rem;
+  border-top: 1px solid rgba(128, 128, 128, 0.2);
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+@media (max-width: 768px) {
+  .hero { min-height: 80vh; }
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-secondary { width: 100%; max-width: 250px; text-align: center; }
+  section { padding: 2rem 1rem; }
+}
+</style>
 </head>
 <body>
-<a class="skip" href="#contenido">Saltar al contenido</a>
-<header class="header"><div class="container header-inner">
-<a class="brand" href="/">BELENTANI<small>THE EXPERIENCE</small></a>
-<nav class="nav" aria-label="Principal"><a href="/artista/" aria-current="page">Artista</a><a href="/prensa/">Prensa</a><a href="https://belentanies.vercel.app/musica">Música</a><a href="https://belentanies.vercel.app/galaxia">Universo</a></nav>
-</div></header>
-<main id="contenido">
-<section class="hero" aria-labelledby="nombre"><div class="container hero-grid">
-<div class="hero-copy"><p class="eyebrow">Música independiente / São Paulo — Barcelona</p>
-<h1 id="nombre">Belentani<span>.</span></h1>
-<p class="lede">La voz como origen.<br>La música como lugar donde quedarse.</p>
-<p class="body-copy">Artista y compositor nacido en São Paulo y establecido en Barcelona. Pop alternativo, R&amp;B y electrónica experimental: cada canción abre una historia propia.</p>
-<div class="buttons"><a class="button button-primary" href="https://belentanies.vercel.app/musica">Escuchar la música</a><a class="button" href="https://belentanies.vercel.app/judas-era">Descubrir JUDAS</a></div>
-</div>
-<figure class="hero-image"><img src="https://belentanies.vercel.app/media/artist/pedro-2024-portrait.jpg" alt="Retrato artístico de Belentani" width="900" height="1100" loading="eager" fetchpriority="high"><figcaption>Belentani / São Paulo — Barcelona</figcaption></figure>
-</div></section>
-<section class="section" aria-labelledby="obra"><div class="container split">
-<div><p class="section-num">01 / La obra</p><h2 id="obra">Una historia contada con la voz.</h2></div>
-<div><p class="feature">JUDAS EXPERIENCE une composición, deseo, traición, deuda y redención en un relato artístico que continúa más allá de cada canción.</p><p>Los mundos visuales e interactivos amplían la experiencia; la música permanece en el centro.</p><div class="buttons"><a class="button" href="https://belentanies.vercel.app/judas-era">Explorar la obra</a></div></div>
-</div></section>
-<section class="section" aria-labelledby="canciones"><div class="container split">
-<div><p class="section-num">02 / Música seleccionada</p><h2 id="canciones">La música primero.</h2></div>
-<div><ol class="tracklist"><li><strong>Mon Amour</strong><span>01</span></li><li><strong>Apaga a Luz</strong><span>02</span></li><li><strong>Heart Breaking</strong><span>03</span></li></ol>
-<p>Selección de grabaciones publicadas. Escucha en los perfiles oficiales del artista.</p>
-<div class="buttons"><a class="button button-primary" href="https://open.spotify.com/artist/2bU5Ir70YHHuUnq2f3WCYl">Spotify oficial</a><a class="button" href="https://www.youtube.com/@belentani">YouTube</a></div>
-</div></div></section>
-<section class="section" aria-labelledby="contacto"><div class="container split">
-<div><p class="section-num">03 / Conversación</p><h2 id="contacto">Conocer la obra.</h2></div>
-<div><p class="feature">Biografía, contexto artístico y canales públicos para medios, colaboradores y oyentes.</p><a class="button" href="/prensa/">Prensa y contacto</a></div>
-</div></section>
-</main>
-<footer class="footer"><div class="container footer-inner"><span>© 2026 Belentani · Música y creación independiente.</span><a href="/">Volver al universo</a></div></footer>
-</body></html>
+  <section class="hero">
+    <div class="hero-canvas"></div>
+    <div class="hero-overlay">
+      <h1>Belentani7.Github.Io</h1>
+      <p>Producto completo con home hero, shader WebGL animado, y stack moderno listo para producción.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">Ver Características</a>
+        <a href="#stack" class="btn-secondary">Ver Stack</a>
+      </div>
+    </div>
+  </section>
+  <section id="stack">
+    <h2>Stack Tecnológico</h2>
+    <p>Tecnologías utilizadas en este repositorio.</p>
+    <ul class="stack-list">
+      <li>HTML5</li>
+      <li>CSS3</li>
+      <li>JavaScript</li>
+      <li>WebGL Shader</li>
+      <li>Responsive Design</li>
+    </ul>
+  </section>
+  <footer><p>© 2026 Belentani7.Github.Io - Parte del ecosistema Belentani</p></footer>
+/* Hero Shader WebGL */
+(function() {
+  const canvas = document.createElement('canvas');
+  canvas.id = 'hero-canvas';
+  canvas.style.position = 'absolute';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.zIndex = '1';
+  document.body.insertBefore(canvas, document.body.firstChild);
+  const gl = canvas.getContext('webgl');
+  if (!gl) return;
+  const vs = gl.createShader(gl.VERTEX_SHADER);
+  gl.shaderSource(vs, 'attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }');
+  gl.compileShader(vs);
+  const fs = gl.createShader(gl.FRAGMENT_SHADER);
+  gl.shaderSource(fs, 'precision mediump float; uniform vec2 u_resolution; uniform float u_time; uniform vec2 u_mouse; float hash(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y * p.z); } float noise(vec2 p) { vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f); float a = hash(i); float b = hash(i + vec2(1.0, 0.0)); float c = hash(i + vec2(0.0, 1.0)); float d = hash(i + vec2(1.0, 1.0)); return mix(mix(a, b, f.x), mix(c, d, f.x), f.y); } float fbm(vec2 p) { float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0); for (int i = 0; i < 5; ++i) { v += a * noise(p); p = p * 2.0 + shift; a *= 0.5; } return v; } void main() { vec2 uv = gl_FragCoord.xy / u_resolution.xy; uv.x *= u_resolution.x / u_resolution.y; vec2 m = uv - u_mouse; float n = fbm(uv * 3.0 + u_time * 0.5); n += fbm(uv * 6.0 - u_time * 0.3) * 0.5; n += length(m) * 0.1; n = mod(n, 1.0); vec3 color = mix(vec3(0.0, 0.5, 1.0), vec3(1.0, 0.0, 0.5), n); float vignette = 1.0 - length(uv * 2.0 - 1.0) * 0.4; color *= vignette; gl_FragColor = vec4(color, 1.0); }');
+  gl.compileShader(fs);
+  const program = gl.createProgram();
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  gl.useProgram(program);
+  const pb = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, pb);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
+  const pl = gl.getAttribLocation(program, 'position');
+  gl.enableVertexAttribArray(pl);
+  gl.vertexAttribPointer(pl, 2, gl.FLOAT, false, 0, 0);
+  const rl = gl.getUniformLocation(program, 'u_resolution');
+  const tl = gl.getUniformLocation(program, 'u_time');
+  const ml = gl.getUniformLocation(program, 'u_mouse');
+  let mouse = {x: 0.5, y: 0.5};
+  window.addEventListener('mousemove', (e) => { mouse.x = e.clientX / window.innerWidth; mouse.y = 1.0 - e.clientY / window.innerHeight; });
+  function resize() { canvas.width = canvas.clientWidth * window.devicePixelRatio; canvas.height = canvas.clientHeight * window.devicePixelRatio; gl.viewport(0, 0, canvas.width, canvas.height); gl.uniform2f(rl, canvas.width, canvas.height); }
+  window.addEventListener('resize', resize);
+  resize();
+  function render(time) { gl.uniform1f(tl, time * 0.001); gl.uniform2f(ml, mouse.x, mouse.y); gl.drawArrays(gl.TRIANGLES, 0, 6); requestAnimationFrame(render); }
+  requestAnimationFrame(render);
+})();
+</body>
+</html>
