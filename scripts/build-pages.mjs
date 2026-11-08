@@ -50,6 +50,17 @@ export async function buildPublicSite(root = process.cwd(), destination = join(r
     await mkdir(dirname(outputFile), { recursive: true });
     await copyFile(path, outputFile);
   }
+
+  // Final safety: never publish symlinks, even if a source file was replaced
+  // by a symlink after the pre-check. GitHub Pages rejects symlinked artifacts.
+  for (const { name } of checked) {
+    const outputFile = join(output, name);
+    const info = await lstat(outputFile);
+    if (info.isSymbolicLink()) {
+      throw new Error(`Refusing to publish symlink: ${name}`);
+    }
+  }
+
   return checked.map(({ name }) => name);
 }
 
