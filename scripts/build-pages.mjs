@@ -1,4 +1,4 @@
-import { copyFile, lstat, mkdir, realpath } from 'node:fs/promises';
+import { copyFile, lstat, mkdir, realpath, rm } from 'node:fs/promises';
 import { dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -41,7 +41,10 @@ export async function buildPublicSite(root = process.cwd(), destination = join(r
   }
 
   // A fresh output directory eliminates stale files from earlier builds.
-  await mkdir(output);
+  // Rebuild deterministically: stale files must never leak into the published artifact.
+  // Never remove the repository root or an ancestor of it (checked above).
+  await rm(output, { recursive: true, force: true });
+  await mkdir(output, { recursive: true });
   for (const { name, path } of checked) {
     const outputFile = join(output, name);
     await mkdir(dirname(outputFile), { recursive: true });
