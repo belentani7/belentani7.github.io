@@ -9,7 +9,7 @@ for (const path of ['artista/index.html', 'prensa/index.html']) {
   test(`${path} is a noindex redirect to belentani.es`, async () => {
     const html = await load(path);
     assert.match(html, /<!doctype html>/i);
-    assert.match(html, /<meta\s+http-equiv=["']refresh["'][^>]*url=["']https:\/\/belentani\.es\/?["']/i);
+    assert.match(html, /<meta\s+http-equiv=["']refresh["'][^>]*url=https:\/\/belentani\.es\/?["']/i);
     assert.match(html, /<meta\s+name=["']robots["'][^>]*content=["'][^"']*\bnoindex\b/i);
     assert.match(html, /<link\s+rel=["']canonical["'][^>]*href=["']https:\/\/belentani\.es\/?["']/i);
   });
