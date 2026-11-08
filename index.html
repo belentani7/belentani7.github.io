@@ -90,6 +90,16 @@
     .stack-list{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;list-style:none;margin-top:36px}
     .stack-list li{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--dim);padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.035)}
 
+    /* ---- módulos vivos ---- */
+    .modules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;list-style:none;margin-top:34px}
+    .modules a{display:flex;flex-direction:column;gap:6px;height:100%;padding:22px;border:1px solid var(--line);border-radius:18px;text-decoration:none;color:var(--ink);
+      background:linear-gradient(170deg,rgba(255,255,255,.05),rgba(255,255,255,.012));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      transition:transform .3s var(--ease),border-color .3s}
+    .modules a:hover{transform:translateY(-4px);border-color:var(--line-2)}
+    .modules .mod-id{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+    .modules b{font-size:1.05rem;letter-spacing:-.01em}
+    .modules .mod-desc{color:var(--dim);font-size:.92rem}
+
     footer{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:44px 0 64px;margin-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:.92rem}
     footer .mono{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
 
@@ -172,6 +182,7 @@
     <nav aria-label="Navegación principal">
       <a href="#capitulos">Capítulos</a>
       <a href="#universo">El universo</a>
+      <a href="#modulos">Módulos</a>
       <a href="https://github.com/belentani7/belentani.es">Repositorio</a>
     </nav>
   </header>
@@ -259,6 +270,33 @@
         </div>
         <ul class="stack-list reveal" aria-label="Stack tecnológico">
           <li>Three.js</li><li>React Three Fiber</li><li>Next.js</li><li>TypeScript</li><li>GSAP</li><li>WebGL</li><li>Vitest</li><li>GitHub Actions</li>
+        </ul>
+      </section>
+
+      <section id="modulos" aria-labelledby="mod-t">
+        <div class="sec-head reveal"><span class="no">/ 03</span><h2 id="mod-t">Módulos vivos</h2></div>
+        <p class="sec-copy reveal">Cada módulo abre su aplicación publicada y verificada. Los enlaces apuntan al despliegue real, nunca a un repositorio obsoleto.</p>
+        <ul class="modules reveal" aria-label="Aplicaciones publicadas">
+          <li><a href="https://judas-experience-v3.vercel.app/">
+            <span class="mod-id">JUDAS</span><b>Judas Experience</b>
+            <span class="mod-desc">Recorrido interactivo de la era Judas, en producción.</span>
+          </a></li>
+          <li><a href="https://myopenhands.vercel.app/">
+            <span class="mod-id">MANOS</span><b>Manos Abiertas</b>
+            <span class="mod-desc">Aplicación solidaria desplegada y accesible.</span>
+          </a></li>
+          <li><a href="https://belentani-cv-ai.vercel.app/">
+            <span class="mod-id">CV</span><b>Belentani CV AI</b>
+            <span class="mod-desc">Currículum asistido por IA, versión publicada.</span>
+          </a></li>
+          <li><a href="https://heyduck.vercel.app/">
+            <span class="mod-id">DUCK</span><b>Hey Duck</b>
+            <span class="mod-desc">Producto estático con sus propias puertas de calidad.</span>
+          </a></li>
+          <li><a href="https://belentani.es/">
+            <span class="mod-id">OMEGA</span><b>Belentani.es</b>
+            <span class="mod-desc">Dominio raíz: la obra completa en su casa definitiva.</span>
+          </a></li>
         </ul>
       </section>
     </div>

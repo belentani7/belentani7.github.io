@@ -37,7 +37,7 @@ jobs:
           test -s _site/index.html
           test -s _site/editorial.css
           test -s _site/CNAME
-          test "$(tr -d '\\r\\n' < _site/CNAME)" = "www.belentani.es"
+          test "$(tr -d '\r\n' < _site/CNAME)" = "www.belentani.es"
           for page in ecosistema.html noiacore/index.html artista/index.html prensa/index.html; do
             test -s "_site/$page"
           done
