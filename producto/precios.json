@@ -1,0 +1,23 @@
+{
+  "moneda": "EUR",
+  "iva": "21% no incluido",
+  "estado": "propuesta",
+  "actualizado": "2026-11-10",
+  "planes": [
+    {
+      "nombre": "Entrada",
+      "precio": 90,
+      "unidad": "hora",
+      "incluye": "Trabajo de ingeniería por horas, con alcance escrito antes de empezar",
+      "compromiso": "14 días de garantía"
+    },
+    {
+      "nombre": "Ampliado",
+      "precio": 162,
+      "unidad": "hora",
+      "incluye": "Trabajo de ingeniería por horas, con alcance escrito antes de empezar, dos sesiones de acompañamiento y revisión a 30 días",
+      "compromiso": "14 días de garantía"
+    }
+  ],
+  "nota": "Precios de salida sin validar. No se cobra nada en línea todavía: no hay pasarela configurada."
+}

@@ -1,0 +1,31 @@
+{
+  "nombre": "belentani7.github.io",
+  "remoto": "https://github.com/belentani7/belentani7.github.io",
+  "tipo": "web-static",
+  "modelo": "sitio personal inmersivo (terminal estético)",
+  "publico": "visitantes del universo Belentani",
+  "licencia": "MIT",
+  "medido": {
+    "archivos": 28,
+    "lineas": 2632,
+    "bytes": 113369,
+    "html": 7,
+    "tests": 3
+  },
+  "modulos": [
+    "Entrada",
+    "Módulos",
+    "Archivo",
+    "Contacto"
+  ],
+  "paleta": {
+    "bg": "#0d1117",
+    "ink": "#e6edf3",
+    "accent": "#36a84b"
+  },
+  "fuente": {
+    "ruta": "repos\\belentani7.github.io",
+    "fecha": "2026-11-10"
+  },
+  "generado_por": "repo-forge"
+}

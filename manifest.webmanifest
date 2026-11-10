@@ -1,0 +1,17 @@
+{
+  "name": "Belentani7 Github Io",
+  "short_name": "Belentani7 G",
+  "description": "sitio personal inmersivo (terminal estético)",
+  "lang": "es",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#36a84b",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

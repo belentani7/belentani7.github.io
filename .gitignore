@@ -37,3 +37,7 @@ tmp/
 
 # Pages build artifact (never commit the published site)
 _site/
+
+# repo-forge
+out/
+*.pyc
