@@ -1,0 +1,44 @@
+{
+  "principio": "sin muro: el visitante ve precio y resultado antes de dar datos",
+  "quien_paga": "el cliente final por el servicio, no por mirar",
+  "fases": [
+    {
+      "fase": 1,
+      "nombre": "Vitrina",
+      "gratis": "todo el sitio",
+      "pago": "nada",
+      "gate": "ninguno",
+      "metrica": "contactos",
+      "por_que": "el sitio vende mostrando"
+    },
+    {
+      "fase": 2,
+      "nombre": "Reserva",
+      "gratis": "consulta inicial",
+      "pago": "seña del servicio",
+      "gate": "solo la reserva",
+      "metrica": "reservas",
+      "por_que": "la seña filtra y compromete"
+    },
+    {
+      "fase": 3,
+      "nombre": "Suscripción",
+      "gratis": "contenido",
+      "pago": "mantenimiento o seguimiento",
+      "gate": "servicio recurrente",
+      "metrica": "recurrencia",
+      "por_que": "ingreso estable sin bloquear"
+    },
+    {
+      "fase": 4,
+      "nombre": "B2B",
+      "gratis": "portafolio",
+      "pago": "proyectos y licencias",
+      "gate": "nada",
+      "metrica": "ticket medio",
+      "por_que": "el volumen viene de empresas"
+    }
+  ],
+  "regla_dura": "nunca ocultar el precio para pedir el email",
+  "generado_por": "repo-forge"
+}
