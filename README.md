@@ -60,3 +60,75 @@ El repo no incluye sistema de ensamblado.
 ---
 
 *LA HERIDA SE CONVIERTE EN ARQUITECTURA VIVA — sin traición no hay redención — 432 Hz*
+
+<!-- repo-forge:readme:inicio -->
+## Qué es
+
+**Belentani7 Github Io** — sitio personal inmersivo (terminal estético).
+
+Enseñar y construir seguridad mostrando exactamente qué se hace, con qué límite y cómo se comprueba.
+
+## Estado medido
+
+| Dato | Valor |
+|---|---|
+| Lenguajes | HTML, JavaScript, CSS, Markdown, JSON |
+| Archivos / líneas | 28 / 2632 |
+| Páginas HTML | 7 |
+| Tests detectados | 3 |
+| Cumplimiento de reglas | 34/34 (100.0%) |
+
+Todo lo anterior se midió en disco el 2026-11-10; no es una estimación.
+
+## Uso
+
+```bash
+python scripts/doctor.py   # verificación sin dependencias
+```
+
+## Estructura
+
+```
+artista/
+assets/
+brand/
+data/
+docs/
+noiacore/
+plataforma/
+prensa/
+producto/
+scripts/
+```
+
+## Diseño de plataforma
+
+- Entrada
+- Módulos
+- Archivo
+- Contacto
+
+La ficha completa —máximo potencial, marca, fases de monetización y recursos— vive en
+[`plataforma/FICHA.md`](plataforma/FICHA.md). Los tokens de marca están en
+[`brand/tokens.css`](brand/tokens.css).
+
+## Reglas del proyecto
+
+Este repositorio sigue el catálogo oficial del ecosistema (`GH-*`, `WEB-*`, `ACC-*`,
+`SEO-*`, `COH-*`, `DEV-*`). El gate se ejecuta con:
+
+```bash
+python scripts/doctor.py
+```
+
+## Licencia
+
+MIT. Ver [`LICENSE`](LICENSE).
+<!-- repo-forge:readme:fin -->
+<!-- repo-forge:readme:fin -->
+<!-- repo-forge:readme:fin -->
+<!-- repo-forge:readme:fin -->
+
+## Producto
+
+Oferta, precio y cobro: [`producto/OFERTA.md`](producto/OFERTA.md) · [`producto/precios.json`](producto/precios.json) · [`producto/landing.html`](producto/landing.html)

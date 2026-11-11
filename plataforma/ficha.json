@@ -1,0 +1,75 @@
+{
+  "esquema": "repo-forge/ficha/1",
+  "nombre": "belentani7.github.io",
+  "remoto": "https://github.com/belentani7/belentani7.github.io",
+  "arquetipo": "web-static",
+  "stack": "HTML",
+  "modelo": "sitio personal inmersivo (terminal estético)",
+  "publico": "visitantes del universo Belentani",
+  "techo": "una obra navegable: cada módulo con contenido real detrás, no una maqueta de terminal",
+  "modulos": [
+    "Entrada",
+    "Módulos",
+    "Archivo",
+    "Contacto"
+  ],
+  "no_go": "efecto sin contenido",
+  "marca": {
+    "nombre": "Belentani7 Github Io",
+    "familia": "seguridad",
+    "paleta": {
+      "familia": "seguridad",
+      "bg": "#0d1117",
+      "surface": "#171b21",
+      "ink": "#e6edf3",
+      "muted": "#94999f",
+      "accent": "#36a84b",
+      "accent2": "#f0883e",
+      "ok": "#15803d",
+      "warn": "#b45309",
+      "danger": "#b91c1c",
+      "contraste_ink_bg": 16.02,
+      "contraste_accent_bg": 6.18,
+      "accent_sobre_bg_ok": true
+    },
+    "narrativa": "La confianza se gana con evidencia"
+  },
+  "paywall": {
+    "principio": "sin muro: el visitante ve precio y resultado antes de dar datos",
+    "fases": 4
+  },
+  "medido": {
+    "archivos": 28,
+    "lineas": 2632,
+    "html": 7,
+    "tests": 3,
+    "bytes": 113369,
+    "lenguajes": {
+      "HTML": 70.4,
+      "JavaScript": 15.0,
+      "CSS": 8.9,
+      "Markdown": 4.9,
+      "JSON": 0.9
+    },
+    "fecha": "2026-11-10"
+  },
+  "gate": {
+    "pass": 34,
+    "fail": 0,
+    "skip": 15,
+    "cumplimiento": 100.0,
+    "fallos": []
+  },
+  "ajustes": {
+    "total": 61,
+    "aplicados": 53,
+    "ya_estaban": 8,
+    "fallos": 0
+  },
+  "esfuerzo_dias": 41,
+  "doctor": {
+    "ok": true,
+    "detalle": "38/38 comprobaciones en verde"
+  },
+  "huella": "51904c2075d899ed"
+}
