@@ -60,3 +60,7 @@ El repo no incluye sistema de ensamblado.
 ---
 
 *LA HERIDA SE CONVIERTE EN ARQUITECTURA VIVA — sin traición no hay redención — 432 Hz*
+
+
+## Producto
+Véase `plataforma/OFERTA.md`.
