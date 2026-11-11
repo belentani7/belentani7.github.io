@@ -1,0 +1,30 @@
+/* Belentani — restrained editorial public pages. Independent from the Omega terminal. */
+:root{color-scheme:dark;--bg:#12100f;--surface:#1c1916;--paper:#f2eee8;--muted:#c6beb5;--line:#71665b;--accent:#d4b498}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--paper);font:1rem/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}a:hover{text-decoration-color:var(--accent)}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.skip{position:absolute;left:1rem;top:-6rem;background:var(--paper);color:var(--bg);padding:.6rem 1rem;z-index:20}.skip:focus{top:1rem}
+.container{width:min(100% - 3rem,1140px);margin-inline:auto}
+.header{position:relative;z-index:2;border-bottom:1px solid #71665b66}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;min-height:5.5rem;flex-wrap:wrap;padding-block:1rem}
+.brand{font:600 1.4rem/1 Georgia,serif;letter-spacing:-.04em;text-decoration:none}.brand small{display:block;margin-top:.5rem;font:600 .62rem/1.4 system-ui,sans-serif;letter-spacing:.21em;color:var(--accent)}
+.nav{display:flex;flex-wrap:wrap;gap:1.2rem}.nav a{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;text-underline-offset:.5rem}.nav [aria-current]{color:var(--accent);text-decoration-thickness:2px}
+.eyebrow,.section-num{font:.75rem/1.5 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.25em;color:var(--accent)}
+.hero{border-bottom:1px solid #71665b66}.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);min-height:640px}
+.hero-copy{display:flex;flex-direction:column;justify-content:center;padding:6rem min(5vw,4rem) 6rem 0}
+h1,h2,h3,.lede{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.055em}
+h1{font-size:clamp(4.5rem,11vw,9rem);line-height:.88;margin:2rem 0}h1 span{color:var(--accent)}
+.lede{font-size:clamp(1.8rem,3.5vw,3.1rem);line-height:1.16;margin:0 0 2rem}.body-copy{max-width:35rem;color:var(--muted);font-size:1.12rem}
+.hero-image{position:relative;min-height:420px;margin:0;background:linear-gradient(125deg,#342820,#14100e);overflow:hidden;border-left:1px solid #71665b66}
+.hero-image img{width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block;filter:saturate(.74)}
+.hero-image:after{content:"";position:absolute;inset:25% 0 0;background:linear-gradient(transparent,#12100fbf);pointer-events:none}
+.hero-image figcaption{position:absolute;bottom:2rem;left:2rem;right:2rem;z-index:1;font:.75rem/1.3 system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.buttons{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.2rem}.button{display:inline-flex;align-items:center;justify-content:center;min-height:3.3rem;border:1px solid var(--accent);padding:.8rem 1.3rem;text-decoration:none;font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.button-primary{background:var(--accent);color:#17120e}.button:hover,.button:focus-visible{background:var(--paper);color:#17120e}
+.section{padding-block:6rem;border-bottom:1px solid #71665b66}.split{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,1.25fr);gap:clamp(2rem,8vw,8rem)}
+.section h2{font-size:clamp(2.6rem,5.3vw,5rem);line-height:1.07;margin:1rem 0 0}.section p{font-size:1.15rem;color:var(--muted);max-width:42rem}.section .feature{font:400 clamp(1.5rem,2.5vw,2.2rem)/1.4 Georgia,serif;color:var(--paper)}
+.tracklist{list-style:none;padding:0;margin:2rem 0;border-top:1px solid var(--line)}.tracklist li{display:flex;gap:1.5rem;justify-content:space-between;align-items:baseline;padding:1.5rem 0;border-bottom:1px solid #71665b66}.tracklist strong{font:400 clamp(1.35rem,3vw,2rem)/1.2 Georgia,serif}.tracklist span{font-size:.8rem;color:var(--accent)}
+.links{list-style:none;margin:2rem 0 0;padding:0;border-top:1px solid var(--line)}.links a{display:flex;justify-content:space-between;gap:1rem;text-decoration:none;padding:1.2rem 0;border-bottom:1px solid #71665b66;font:400 clamp(1.3rem,2.5vw,2rem) Georgia,serif}.links a:hover{color:var(--accent)}
+.footer{padding:2rem 0 3rem;color:var(--muted);font-size:.8rem}.footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.press-hero{padding-block:7rem;border-bottom:1px solid #71665b66}.press-hero h1{font-size:clamp(3.8rem,9vw,7.5rem);max-width:15ch;line-height:1}.press-hero .body-copy{max-width:42rem}
+@media(max-width:760px){.hero-grid{grid-template-columns:1fr}.hero-copy{padding:4rem 0}.hero-image{border-left:0;border-top:1px solid #71665b66;min-height:360px}.split{grid-template-columns:1fr;gap:1rem}.section{padding-block:4rem}.press-hero{padding-block:4rem}.header-inner{align-items:flex-start}.brand small{letter-spacing:.13em}.nav{gap:1rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
