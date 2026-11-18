@@ -1,0 +1,13 @@
+{
+  "fases": {
+    "F4_test": {
+      "cmd": "F4_test",
+      "exit": 0,
+      "evidencia": "node --test tests: 12 pass, 1 skipped (EPERM symlink), 0 fail; doctor.py 47/47 verde",
+      "fecha": "2026-11-18"
+    }
+  },
+  "nota": "sin stack; revision manual",
+  "repo": "belentani7.github.io",
+  "done": true
+}

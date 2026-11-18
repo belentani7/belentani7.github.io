@@ -45,10 +45,18 @@ test('missing required public files fail closed rather than silently publishing 
   });
 });
 
-test('symlinked site content is rejected', async () => {
+test('symlinked site content is rejected', async (t) => {
   await fixture(async (dir) => {
     await rm(join(dir, 'index.html'));
-    await symlink(join(dir, '.env'), join(dir, 'index.html'));
+    try {
+      await symlink(join(dir, '.env'), join(dir, 'index.html'));
+    } catch {
+      // Windows sin SeCreateSymbolicLinkPrivilege ni Developer Mode no puede
+      // crear el enlace; el caso no es aplicable en esta máquina. En CI Linux
+      // la aserción sí se ejecuta.
+      t.skip('no se puede crear symlink en este sistema (EPERM)');
+      return;
+    }
     await assert.rejects(buildPublicSite(dir), /Unsafe or missing public file/);
     await assert.rejects(readdir(join(dir, '_site')), /ENOENT/);
   });

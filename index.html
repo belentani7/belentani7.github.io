@@ -3,34 +3,54 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Belentani · plataforma creativa</title>
-  <meta name="description" content="Entrada pública al universo Belentani: música, Judas, AI Lab, academia y archivo en una sola plataforma.">
+  <title>Pedro Belentani · artista y tecnólogo creativo</title>
+  <meta name="description" content="Obra, música, tecnología creativa y educación de Pedro Belentani, artista independiente en Barcelona.">
   <link rel="canonical" href="https://www.belentani.es/">
   <link rel="icon" href="https://www.belentani.es/assets/favicon.svg" type="image/svg+xml">
   <style>
     :root {
       color-scheme: dark;
-      --bg: #08090d;
-      --panel: #10131b;
+      --bg: #080406;
+      --panel: rgba(34, 10, 15, .78);
       --ink: #f2eee7;
-      --muted: #a7a8b4;
-      --line: rgba(242, 238, 231, .14);
-      --cyan: #64f0d2;
-      --blue: #6aa8ff;
-      --violet: #b98cff;
-      --amber: #ffd27a;
+      --muted: #d3bfc2;
+      --line: rgba(255, 218, 222, .2);
+      --cyan: #ff304f;
+      --blue: #ff7588;
+      --violet: #ff8395;
+      --amber: #f1c7cb;
       --measure: 72rem;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
+      position: relative;
+      overflow-x: hidden;
       background:
-        radial-gradient(circle at 18% 8%, rgba(100, 240, 210, .13), transparent 28rem),
-        radial-gradient(circle at 85% 18%, rgba(185, 140, 255, .13), transparent 30rem),
+        linear-gradient(135deg, transparent 0 48%, rgba(255,255,255,.025) 49% 50%, transparent 51%),
+        radial-gradient(circle at 18% 8%, rgba(255, 48, 79, .2), transparent 28rem),
+        radial-gradient(circle at 85% 18%, rgba(125, 0, 27, .28), transparent 30rem),
         var(--bg);
       color: var(--ink);
       font: 400 1rem/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    #galaxy-infinite {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .site-header, main, .site-footer {
+      position: relative;
+      z-index: 1;
+    }
+    .galaxy-btn {
+      cursor: pointer;
+      background: rgba(34, 10, 15, .78);
+      font: inherit;
     }
     a { color: inherit; }
     a:focus-visible { outline: 3px solid var(--amber); outline-offset: 4px; }
@@ -40,12 +60,12 @@
     .site-header { border-bottom: 1px solid var(--line); }
     .nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.2rem 0; }
     .brand { display: inline-flex; align-items: center; gap: .7rem; text-decoration: none; font-weight: 650; letter-spacing: .04em; }
-    .mark { width: 1.8rem; height: 1.8rem; border: 1px solid var(--cyan); border-radius: 50%; box-shadow: 0 0 2rem rgba(100, 240, 210, .35); }
+    .mark { width: 1.8rem; height: 1.8rem; border: 1px solid #ff98a7; border-radius: .35rem; background: linear-gradient(145deg, #f3dadd, #6e071a 38%, #df173d 58%, #240309); box-shadow: inset 0 1px rgba(255,255,255,.65), 0 0 2rem rgba(255, 48, 79, .45); }
     .nav-links { display: flex; flex-wrap: wrap; gap: .8rem 1.2rem; font-size: .88rem; color: var(--muted); }
     .nav-links a { text-decoration: none; }
     .nav-links a:hover { color: var(--ink); }
     main { padding: 5rem 0 6rem; }
-    .eyebrow { color: var(--cyan); font-size: .73rem; letter-spacing: .18em; text-transform: uppercase; }
+    .breadcrumb { color: var(--cyan); font-size: .85rem; letter-spacing: .08em; }
     h1, h2, h3 { line-height: 1.08; letter-spacing: -.035em; }
     h1 { max-width: 12ch; margin: 1rem 0 1.4rem; font-size: clamp(3.2rem, 10vw, 7.8rem); font-weight: 500; }
     h2 { margin: 0 0 1rem; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 500; }
@@ -53,14 +73,14 @@
     .lede { max-width: 47rem; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.35rem); }
     .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin: 2rem 0 0; }
     .button { display: inline-flex; align-items: center; gap: .45rem; padding: .75rem 1.1rem; border: 1px solid var(--cyan); border-radius: 999px; color: var(--ink); text-decoration: none; }
-    .button.primary { background: var(--cyan); color: #071411; }
+    .button.primary { background: var(--cyan); color: #170006; }
     .button:hover { transform: translateY(-1px); }
     section { margin-top: 7rem; }
     .section-intro { max-width: 44rem; color: var(--muted); }
     .module-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1px; margin-top: 2rem; background: var(--line); border: 1px solid var(--line); }
     .module { min-height: 12rem; padding: 1.4rem; background: var(--panel); text-decoration: none; transition: background .2s ease, transform .2s ease; }
     .module:hover { background: #171c27; transform: translateY(-2px); }
-    .module-id { display: block; color: var(--cyan); font-size: .72rem; letter-spacing: .16em; }
+    .module-id { display: block; color: var(--cyan); font-size: .82rem; letter-spacing: .12em; }
     .module:nth-child(2) .module-id { color: var(--blue); }
     .module:nth-child(3) .module-id { color: var(--violet); }
     .module:nth-child(4) .module-id { color: var(--amber); }
@@ -70,6 +90,11 @@
     .principle { padding: 1.25rem; border: 1px solid var(--line); border-radius: 1rem; background: rgba(16, 19, 27, .72); }
     .principle strong { color: var(--ink); }
     .principle p { margin-bottom: 0; color: var(--muted); font-size: .92rem; }
+    .terminal { overflow: hidden; margin-top: 2rem; border: 1px solid rgba(255, 188, 198, .48); border-radius: .65rem; background: linear-gradient(180deg, rgba(71, 12, 23, .88), rgba(12, 4, 7, .94)); box-shadow: inset 0 1px rgba(255,255,255,.2), 0 1.5rem 5rem rgba(178,0,33,.2); }
+    .terminal-bar { display: flex; align-items: center; gap: .5rem; padding: .65rem .8rem; border-bottom: 1px solid rgba(255,255,255,.18); background: linear-gradient(#8f263a, #3c0913); font: 600 .78rem/1 "Segoe UI", sans-serif; text-shadow: 0 1px #000; }
+    .orb { width: .72rem; height: .72rem; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; background: radial-gradient(circle at 35% 25%, #fff, #ff3152 35%, #4b020f 80%); }
+    .terminal pre { margin: 0; padding: 1.35rem; white-space: pre-wrap; color: #ffd7dc; font: 400 .9rem/1.65 Consolas, "Courier New", monospace; }
+    .prompt { color: #ff4965; }
     .site-footer { border-top: 1px solid var(--line); padding: 1.5rem 0 3rem; color: var(--muted); font-size: .88rem; }
     .site-footer p { margin: .25rem 0; }
     @media (max-width: 44rem) {
@@ -84,68 +109,90 @@
   </style>
 </head>
 <body>
+  <canvas id="galaxy-infinite" aria-hidden="true"></canvas>
   <a class="skip" href="#contenido">Saltar al contenido</a>
   <header class="site-header">
     <div class="shell nav">
       <a class="brand" href="https://www.belentani.es/" aria-label="Belentani, plataforma principal">
         <span class="mark" aria-hidden="true"></span>
-        <span>belentani · plataforma</span>
+        <span>Pedro Belentani</span>
       </a>
       <nav class="nav-links" aria-label="Navegación principal">
-        <a href="https://www.belentani.es/judas">Judas</a>
-        <a href="https://www.belentani.es/music">Música</a>
-        <a href="https://www.belentani.es/ai-lab">AI Lab</a>
-        <a href="https://www.belentani.es/school">Academia</a>
+        <a href="#bio">Bio</a>
+        <a href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/galaxia">Galaxia</a>
+        <a href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/musica">Música</a>
+        <a href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/judas">Judas</a>
+        <a href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/school">Academia</a>
+        <a href="./ecosistema.html">Ecosistema</a>
       </nav>
     </div>
   </header>
   <main id="contenido" class="shell">
     <section aria-labelledby="hero-title">
-      <p class="eyebrow">belentani · entrada pública</p>
-      <h1 id="hero-title">una sola plataforma. un universo vivo.</h1>
-      <p class="lede">La obra, la música y los sistemas creativos de Belentani viven ahora en una arquitectura común: cada puerta lleva a la plataforma principal, sin páginas huérfanas ni rutas abandonadas.</p>
+      <p class="breadcrumb">Barcelona / universo infinito / música / código</p>
+      <h1 id="hero-title">Pedro Belentani.</h1>
+      <p class="lede">Artista independiente y tecnólogo creativo. Construye obras, identidades y sistemas donde la narrativa, el sonido y el código forman un universo galáctico infinito.</p>
       <div class="actions">
-        <a class="button primary" href="https://www.belentani.es/">Entrar en la plataforma ↗</a>
-        <a class="button" href="https://www.belentani.es/judas">Abrir Judas ↗</a>
+        <a class="button primary" href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/galaxia">Atravesar la Galaxia ↗</a>
+        <a class="button" href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/musica">Escuchar música ↗</a>
+        <button class="button galaxy-btn" type="button" id="galaxy-toggle" aria-pressed="true">Galaxia: Infinita</button>
+      </div>
+      <div class="terminal" id="bio" aria-label="Biografía en terminal">
+        <div class="terminal-bar"><span class="orb" aria-hidden="true"></span><span>BELENTANI.EXE — Biografía</span></div>
+        <pre><span class="prompt">C:\ARTIST&gt;</span> bio
+PEDRO BELENTANI
+Artista · músico · tecnólogo creativo
+Barcelona, España
+
+Práctica: dirección creativa, identidad visual, música y sistemas digitales.
+Método: convertir experiencia, investigación y memoria en obra navegable.
+
+<span class="prompt">C:\ARTIST&gt;</span> status
+INDEPENDIENTE / EN PRODUCCIÓN / GALAXIA INFINITA ONLINE</pre>
       </div>
     </section>
 
     <section id="modulos" aria-labelledby="modules-title">
-      <p class="eyebrow">/ superficies</p>
-      <h2 id="modules-title">las puertas del universo</h2>
-      <p class="section-intro">Una navegación única para el recorrido creativo, musical, técnico y formativo.</p>
+      <p class="breadcrumb">Archivo / plataformas</p>
+      <h2 id="modules-title">obra y práctica</h2>
+      <p class="section-intro">Accesos directos a superficies activas del universo Belentani (Vercel + GitHub Pages).</p>
       <div class="module-grid">
-        <a class="module" href="https://www.belentani.es/judas">
+        <a class="module" href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/judas">
           <span class="module-id">JUDAS</span>
           <h3>The Judas Experience</h3>
           <p>La era visual y narrativa: memoria, traición, duelo y retorno.</p>
         </a>
-        <a class="module" href="https://www.belentani.es/music">
+        <a class="module" href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/musica">
           <span class="module-id">MUSIC</span>
           <h3>Belentani Music</h3>
-          <p>Canciones, lanzamientos, portadas y el archivo sonoro.</p>
+          <p>Lanzamientos, portadas y enlaces a plataformas oficiales.</p>
         </a>
-        <a class="module" href="https://www.belentani.es/ai-lab">
+        <a class="module" href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/ai-lab">
           <span class="module-id">AI LAB</span>
           <h3>AI Lab</h3>
           <p>Herramientas, agentes y experimentos internos del sistema.</p>
         </a>
-        <a class="module" href="https://www.belentani.es/school">
+        <a class="module" href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/school">
           <span class="module-id">ACADEMIA</span>
           <h3>Academia</h3>
           <p>Aprendizaje, investigación y prácticas compartidas.</p>
         </a>
-        <a class="module" href="https://www.belentani.es/archive">
-          <span class="module-id">ARCHIVE</span>
-          <h3>Archivo</h3>
-          <p>Obras, documentos y capas anteriores del universo.</p>
+        <a class="module" href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/starfield">
+          <span class="module-id">GALAXIA INFINITA</span>
+          <h3>Starfield &amp; Universo 3D</h3>
+          <p>Mapa estelar infinito, portales 3D y constelaciones interactivas.</p>
+        </a>
+        <a class="module" href="./ecosistema.html">
+          <span class="module-id">ECOSISTEMA</span>
+          <h3>Índice completo</h3>
+          <p>Todas las superficies estáticas, <span lang="en">noiacore</span>, prensa y archivo.</p>
         </a>
       </div>
     </section>
 
     <section aria-labelledby="principles-title">
-      <p class="eyebrow">/ criterio</p>
-      <h2 id="principles-title">cada puerta conduce a casa</h2>
+      <p class="breadcrumb">Criterio / sistema</p>
+      <h2 id="principles-title">una identidad, varias disciplinas</h2>
       <div class="principles">
         <article class="principle"><strong>un origen</strong><p>La plataforma principal es el punto de entrada y de retorno.</p></article>
         <article class="principle"><strong>rutas reales</strong><p>Cada módulo enlaza a una superficie concreta, no a un marcador vacío.</p></article>
@@ -155,8 +202,100 @@
   </main>
   <footer class="site-footer">
     <div class="shell">
-      <p>© 2026 Belentani · <a href="https://www.belentani.es/">plataforma principal</a> · <a href="https://github.com/belentani7/belentani7.github.io">código público</a></p>
+      <p>© 2026 Belentani · <a href="https://belentanies-belentani7pedro-6758s-projects.vercel.app/">plataforma galaxia (Vercel)</a> · <a href="https://github.com/belentani7/belentani7.github.io">código público</a></p>
     </div>
   </footer>
+  <script>
+    (() => {
+      const canvas = document.getElementById('galaxy-infinite');
+      const toggle = document.getElementById('galaxy-toggle');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let active = !reduced;
+      let w = 0, h = 0, dpr = 1, mx = 0, my = 0;
+      const COUNT = 420;
+      const palette = ['#ff304f', '#ff7588', '#f1c7cb', '#64f0d2', '#b98cff', '#ffffff'];
+
+      const stars = Array.from({ length: COUNT }, (_, i) => {
+        const arm = (i % 3) * ((Math.PI * 2) / 3);
+        const r = Math.pow(Math.random(), 0.7) * 1.15;
+        const theta = arm + r * 3.8 + (Math.random() - 0.5) * 0.65;
+        return {
+          x: Math.cos(theta) * r,
+          y: Math.sin(theta) * r * 0.72,
+          z: Math.random() * 1.5 + 0.05,
+          size: Math.random() * 1.7 + 0.4,
+          color: palette[i % palette.length],
+          twinkle: Math.random() * Math.PI * 2
+        };
+      });
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function draw(t) {
+        ctx.clearRect(0, 0, w, h);
+        const cx = w * 0.5 + mx * 28;
+        const cy = h * 0.46 + my * 22;
+        const scale = Math.max(w, h) * 0.55;
+        const spin = active ? t * 0.00008 : 0;
+        const cosS = Math.cos(spin);
+        const sinS = Math.sin(spin);
+
+        for (let i = 0; i < stars.length; i++) {
+          const s = stars[i];
+          if (active) {
+            s.z -= 0.0022;
+            if (s.z <= 0.04) s.z = 1.55;
+          }
+          const rx = s.x * cosS - s.y * sinS;
+          const ry = s.x * sinS + s.y * cosS;
+          const px = cx + (rx / s.z) * scale;
+          const py = cy + (ry / s.z) * scale;
+          if (px < -10 || px > w + 10 || py < -10 || py > h + 10) continue;
+
+          const alpha = Math.min(1, (1.55 - s.z) * 0.85) * (0.65 + 0.35 * Math.sin(t * 0.002 + s.twinkle));
+          const rad = Math.max(0.5, (s.size / s.z) * 0.75);
+          ctx.globalAlpha = Math.max(0.08, alpha);
+          ctx.fillStyle = s.color;
+          ctx.beginPath();
+          ctx.arc(px, py, rad, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        if (active) requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', () => { resize(); if (!active) draw(0); });
+      window.addEventListener('pointermove', (e) => {
+        mx = (e.clientX / Math.max(1, w) - 0.5) * 2;
+        my = (e.clientY / Math.max(1, h) - 0.5) * 2;
+      }, { passive: true });
+
+      if (toggle) {
+        toggle.setAttribute('aria-pressed', String(active));
+        toggle.textContent = active ? 'Galaxia: Infinita' : 'Galaxia: Pausa';
+        toggle.addEventListener('click', () => {
+          active = !active;
+          toggle.setAttribute('aria-pressed', String(active));
+          toggle.textContent = active ? 'Galaxia: Infinita' : 'Galaxia: Pausa';
+          if (active) requestAnimationFrame(draw);
+        });
+      }
+
+      resize();
+      if (active) requestAnimationFrame(draw);
+      else draw(0);
+    })();
+  </script>
 </body>
 </html>
